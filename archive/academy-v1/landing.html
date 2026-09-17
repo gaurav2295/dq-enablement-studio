@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syniti DQ Training Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #232F63;
+            --blue: #365EB9;
+            --violet: #5B30EE;
+            --violet-soft: #8B6CF3;
+            --blue-light: #83AFF8;
+            --good: #0E9F6E;
+            --warn: #B45309;
+            --critical: #DC2626;
+            --ink: #20242E;
+            --muted: #6B7492;
+            --canvas: #F6F8FE;
+            --panel: #F7F9FD;
+            --white: #FFFFFF;
+            --line: #E1E8F2;
+
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Menlo', monospace;
+
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, var(--canvas) 0%, var(--white) 100%);
+            color: var(--ink);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container { display: flex; min-height: 100vh; }
+
+        .sidebar {
+            width: 300px;
+            background: var(--navy);
+            color: var(--white);
+            padding: var(--spacing-xl);
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            box-shadow: 0 10px 34px rgba(35, 47, 99, 0.15);
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            display: flex; align-items: center; gap: var(--spacing-md);
+            margin-bottom: var(--spacing-2xl);
+            text-decoration: none; color: var(--white);
+            font-weight: 600; font-size: 1.1rem;
+        }
+
+        .sidebar-icon { font-size: 1.5rem; }
+        .sidebar-section { margin-bottom: var(--spacing-2xl); }
+
+        .sidebar-section-title {
+            font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--violet-soft);
+            margin-bottom: var(--spacing-md);
+            opacity: 0.8;
+        }
+
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav li { margin-bottom: var(--spacing-xs); }
+
+        .sidebar-nav a {
+            display: block;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.92rem;
+        }
+
+        .sidebar-nav a:hover { background: rgba(91, 48, 238, 0.2); color: var(--white); }
+        .sidebar-nav a.active { background: var(--violet); color: var(--white); font-weight: 600; }
+
+        .sidebar-nav a.nav-check {
+            font-size: 0.8rem;
+            padding-left: calc(var(--spacing-md) + 14px);
+            opacity: 0.75;
+            color: rgba(255,255,255,0.65);
+        }
+
+        .sidebar-nav a.nav-check:hover { opacity: 1; }
+        .sidebar-nav a.nav-check.active { opacity: 1; background: rgba(91, 48, 238, 0.55); }
+
+        .sidebar-nav a.nav-complete {
+            font-weight: 700;
+            color: #FFD77A;
+        }
+
+        .sidebar-nav a.nav-complete.active { background: var(--violet); color: var(--white); }
+
+        .main { flex: 1; margin-left: 300px; padding: var(--spacing-2xl); }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; padding: var(--spacing-lg); }
+            .main { margin-left: 0; padding: var(--spacing-lg); }
+            .container { flex-direction: column; }
+        }
+
+        .header { margin-bottom: var(--spacing-2xl); }
+
+        .header-title {
+            font-size: 2.5rem; font-weight: 700; color: var(--navy);
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        .header-subtitle { font-size: 1.1rem; color: var(--muted); margin-bottom: var(--spacing-lg); }
+
+        .progress-bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-top: var(--spacing-md); }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--violet), var(--blue)); border-radius: 3px; transition: width 0.5s ease; }
+
+        .section { display: none; animation: fadeIn 0.5s ease; }
+        .section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
+            border: 1px solid var(--line);
+            box-shadow: 0 2px 8px rgba(35, 47, 99, 0.05);
+            transition: var(--transition);
+        }
+
+        .section-card:hover { box-shadow: 0 8px 24px rgba(35, 47, 99, 0.1); border-color: var(--violet); }
+
+        .section-card h2 {
+            font-size: 1.5rem; color: var(--navy); margin-bottom: var(--spacing-md);
+            display: flex; align-items: center; gap: var(--spacing-md);
+        }
+
+        .section-card h2::before {
+            content: ''; width: 4px; height: 24px; background: var(--violet); border-radius: 2px;
+        }
+
+        .section-card h3 { font-size: 1.2rem; color: var(--ink); margin: var(--spacing-lg) 0 var(--spacing-md) 0; }
+        .section-card h4 { font-size: 1.05rem; color: var(--navy); margin: var(--spacing-lg) 0 var(--spacing-sm) 0; }
+        .section-card p { color: var(--muted); margin-bottom: var(--spacing-md); line-height: 1.8; }
+        .section-card ul, .section-card ol { margin-left: var(--spacing-xl); margin-bottom: var(--spacing-md); }
+        .section-card li { margin-bottom: var(--spacing-sm); color: var(--muted); line-height: 1.8; }
+
+        .dimensions-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg); margin: var(--spacing-lg) 0;
+        }
+
+        .dimension-card {
+            background: linear-gradient(135deg, var(--panel), var(--white));
+            border: 2px solid var(--line); border-radius: 12px; padding: var(--spacing-lg);
+            transition: var(--transition); position: relative; overflow: hidden;
+        }
+
+        .dimension-card:hover { border-color: var(--violet); box-shadow: 0 8px 24px rgba(91, 48, 238, 0.15); transform: translateY(-4px); }
+        .dimension-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--violet); }
+        .dimension-card h4 { font-size: 1.1rem; color: var(--navy); margin-bottom: var(--spacing-md); margin-top: var(--spacing-sm); font-weight: 600; }
+        .dimension-card p { font-size: 0.95rem; color: var(--muted); }
+
+        .lifecycle-flow {
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+            gap: var(--spacing-lg); margin: var(--spacing-2xl) 0; padding: var(--spacing-xl);
+            background: var(--canvas); border-radius: 12px;
+        }
+
+        .lifecycle-step { flex: 1; min-width: 120px; text-align: center; }
+
+        .lifecycle-step-number {
+            width: 48px; height: 48px; margin: 0 auto var(--spacing-md);
+            background: linear-gradient(135deg, var(--violet), var(--blue));
+            color: var(--white); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.2rem;
+        }
+
+        .lifecycle-step-title { font-weight: 600; color: var(--navy); margin-bottom: var(--spacing-sm); }
+        .lifecycle-step-desc { font-size: 0.9rem; color: var(--muted); }
+        .lifecycle-arrow { color: var(--violet); font-size: 1.5rem; opacity: 0.5; }
+
+        @media (max-width: 768px) {
+            .lifecycle-flow { flex-direction: column; }
+            .lifecycle-arrow { transform: rotate(90deg); }
+        }
+
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg); margin: var(--spacing-lg) 0;
+        }
+
+        .stat-box {
+            background: var(--white); border: 1px solid var(--line); border-radius: 12px;
+            padding: var(--spacing-xl); text-align: center; transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(35, 47, 99, 0.05);
+        }
+
+        .stat-box:hover { border-color: var(--violet); box-shadow: 0 8px 24px rgba(91, 48, 238, 0.15); }
+
+        .stat-number {
+            font-size: 3rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--violet), var(--blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .stat-label { font-weight: 600; color: var(--navy); margin-bottom: var(--spacing-sm); }
+        .stat-desc { font-size: 0.9rem; color: var(--muted); }
+
+        .code-block {
+            background: #1F2937; color: #E5E7EB; padding: var(--spacing-lg); border-radius: 8px;
+            font-family: var(--font-mono); font-size: 0.85rem; overflow-x: auto;
+            margin: var(--spacing-lg) 0; line-height: 1.6; white-space: pre;
+        }
+
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+        .comparison-box { padding: var(--spacing-xl); border-radius: 12px; border: 2px solid var(--line); }
+        .comparison-box.good { background: #F0FDF4; border-color: var(--good); }
+        .comparison-box.critical { background: #FEF2F2; border-color: var(--critical); }
+
+        .comparison-box h4 { display: flex; align-items: center; gap: var(--spacing-md); font-weight: 600; margin-bottom: var(--spacing-md); }
+        .comparison-box.good h4 { color: var(--good); }
+        .comparison-box.critical h4 { color: var(--critical); }
+        .comparison-box p { color: var(--ink); font-size: 0.95rem; }
+
+        @media (max-width: 1024px) { .comparison-grid { grid-template-columns: 1fr; } }
+
+        .checklist { background: var(--canvas); padding: var(--spacing-xl); border-radius: 12px; margin: var(--spacing-lg) 0; }
+        .checklist-item { display: flex; align-items: flex-start; gap: var(--spacing-md); margin-bottom: var(--spacing-md); color: var(--muted); }
+        .checklist-item:last-child { margin-bottom: 0; }
+        .checklist-icon { flex-shrink: 0; font-size: 1.2rem; color: var(--good); line-height: 1.6; }
+        .checklist-item.warn .checklist-icon { color: var(--warn); }
+        .checklist-item.bad .checklist-icon { color: var(--critical); }
+        .checklist-text { flex: 1; }
+        .checklist-text strong { color: var(--navy); }
+
+        .faq-item { background: var(--white); border: 1px solid var(--line); border-radius: 8px; margin-bottom: var(--spacing-md); overflow: hidden; }
+
+        .faq-question {
+            padding: var(--spacing-lg); cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: var(--transition); background: var(--panel);
+        }
+
+        .faq-question:hover { background: var(--canvas); }
+        .faq-question-text { font-weight: 600; color: var(--navy); flex: 1; }
+        .faq-toggle { color: var(--violet); font-size: 1.2rem; transition: transform 0.3s ease; flex-shrink: 0; }
+        .faq-toggle.open { transform: rotate(180deg); }
+
+        .faq-answer { display: none; padding: var(--spacing-lg); border-top: 1px solid var(--line); color: var(--muted); line-height: 1.8; }
+        .faq-answer.open { display: block; animation: slideDown 0.3s ease; }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 500px; }
+        }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
+            transition: var(--transition); font-size: 0.95rem; text-decoration: none;
+        }
+
+        .btn-primary { background: linear-gradient(135deg, var(--violet), var(--blue)); color: var(--white); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(91, 48, 238, 0.3); }
+        .btn-secondary { background: var(--panel); color: var(--navy); border: 1px solid var(--line); }
+        .btn-secondary:hover { border-color: var(--violet); color: var(--violet); }
+        .btn-group { display: flex; gap: var(--spacing-md); margin-top: var(--spacing-lg); flex-wrap: wrap; }
+
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); margin-top: var(--spacing-xl); }
+
+        .course-card {
+            background: var(--white); border: 2px solid var(--line); border-radius: 12px;
+            padding: var(--spacing-lg); cursor: pointer; transition: var(--transition);
+            position: relative; overflow: hidden;
+        }
+
+        .course-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--violet), var(--blue)); }
+        .course-card:hover { border-color: var(--violet); box-shadow: 0 12px 32px rgba(91, 48, 238, 0.15); transform: translateY(-4px); }
+
+        .course-status { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: var(--spacing-md); }
+        .course-status.available { background: #D1FAE5; color: var(--good); }
+        .course-status.coming-soon { background: #FEF3C7; color: var(--warn); }
+
+        .course-card h3 { font-size: 1.2rem; color: var(--navy); margin-bottom: var(--spacing-sm); }
+        .course-card p { color: var(--muted); font-size: 0.95rem; margin-bottom: var(--spacing-md); }
+
+        .course-meta { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); padding-top: var(--spacing-md); border-top: 1px solid var(--line); }
+
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            color: var(--white); padding: var(--spacing-2xl); border-radius: 12px;
+            margin-bottom: var(--spacing-2xl); position: relative; overflow: hidden;
+        }
+
+        .hero::before {
+            content: ''; position: absolute; top: -50%; right: -10%;
+            width: 400px; height: 400px; background: rgba(91, 48, 238, 0.2);
+            border-radius: 50%; pointer-events: none;
+        }
+
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 { font-size: 2rem; margin-bottom: var(--spacing-md); font-weight: 700; }
+        .hero p { font-size: 1.1rem; opacity: 0.9; margin-bottom: var(--spacing-lg); }
+
+        /* Knowledge check (per-section, scoped) */
+        .check-card {
+            background: linear-gradient(135deg, var(--canvas) 0%, #E8ECFF 100%);
+            border-radius: 12px;
+            padding: var(--spacing-2xl);
+        }
+
+        .check-card > h2 { color: var(--navy); }
+
+        .quiz-item {
+            background: var(--white); padding: var(--spacing-xl); border-radius: 12px;
+            border: 1px solid var(--line); margin-bottom: var(--spacing-lg);
+        }
+
+        .quiz-item h3 { color: var(--navy); margin-bottom: var(--spacing-md); font-size: 1.1rem; display: flex; align-items: center; gap: var(--spacing-sm); }
+
+        .quiz-number {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px;
+            background: linear-gradient(135deg, var(--violet), var(--blue));
+            color: var(--white); border-radius: 50%; font-weight: 700; font-size: 0.9rem;
+        }
+
+        .quiz-options { display: flex; flex-direction: column; gap: var(--spacing-sm); }
+
+        .quiz-option {
+            padding: var(--spacing-md); border: 2px solid var(--line); border-radius: 8px;
+            background: var(--white); cursor: pointer; transition: var(--transition); font-size: 0.95rem;
+        }
+
+        .quiz-option:hover { border-color: var(--violet); background: var(--canvas); }
+        .quiz-option input { margin-right: var(--spacing-sm); cursor: pointer; }
+        .quiz-option.selected { border-color: var(--violet); background: #EEE5FF; }
+        .quiz-option.correct { border-color: var(--good); background: #F0FDF4; color: var(--good); }
+        .quiz-option.incorrect { border-color: var(--critical); background: #FEF2F2; color: var(--critical); }
+
+        .matching-item {
+            padding: var(--spacing-md); border: 1px solid var(--line); border-radius: 8px;
+            background: var(--white); cursor: pointer; transition: var(--transition);
+        }
+
+        .matching-item:hover { border-color: var(--violet); box-shadow: 0 2px 8px rgba(91, 48, 238, 0.1); }
+        .matching-item.selected { border-color: var(--violet); background: var(--canvas); }
+        .matching-item.correct { border-color: var(--good); background: #F0FDF4; }
+        .matching-item.incorrect { border-color: var(--critical); background: #FEF2F2; }
+
+        .quiz-results { margin-top: var(--spacing-xl); padding: var(--spacing-lg); border-radius: 8px; border: 1px solid var(--line); }
+        .quiz-results.success { background: #F0FDF4; border-color: var(--good); color: var(--good); }
+        .quiz-results.pending { background: #FEF3C7; border-color: var(--warn); color: var(--warn); }
+        .quiz-results h4 { margin-bottom: var(--spacing-sm); font-weight: 600; }
+
+        .quiz-button {
+            background: linear-gradient(135deg, var(--violet), var(--blue)); color: var(--white);
+            border: none; padding: var(--spacing-sm) var(--spacing-lg); border-radius: 8px;
+            cursor: pointer; font-weight: 600; transition: var(--transition); margin-top: var(--spacing-md);
+        }
+
+        .quiz-button:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(91, 48, 238, 0.3); }
+        .quiz-button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .footer {
+            text-align: center; padding: var(--spacing-2xl); color: var(--muted);
+            border-top: 1px solid var(--line); margin-top: var(--spacing-2xl);
+        }
+
+        .footer p { margin-bottom: var(--spacing-sm); }
+
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .mt-lg { margin-top: var(--spacing-lg); }
+        .mb-lg { margin-bottom: var(--spacing-lg); }
+
+        code {
+            background: var(--panel); padding: 2px 6px; border-radius: 4px;
+            font-family: var(--font-mono); font-size: 0.88em; color: var(--navy);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <span class="sidebar-icon">📚</span>
+                <span>DQ Academy</span>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Session 1 · Fundamentals</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#" onclick="go('intro'); return false;" class="nav-link active" data-section="intro">Introduction</a></li>
+
+                    <li><a href="#" onclick="go('what-is-dq'); return false;" class="nav-link" data-section="what-is-dq">What is DQ?</a></li>
+                    <li><a href="#" onclick="go('check-what-is-dq'); return false;" class="nav-link nav-check" data-section="check-what-is-dq">📝 Knowledge Check</a></li>
+
+                    <li><a href="#" onclick="go('why-matters'); return false;" class="nav-link" data-section="why-matters">Why It Matters</a></li>
+
+                    <li><a href="#" onclick="go('dimensions'); return false;" class="nav-link" data-section="dimensions">6 Dimensions</a></li>
+                    <li><a href="#" onclick="go('check-dimensions'); return false;" class="nav-link nav-check" data-section="check-dimensions">📝 Knowledge Check</a></li>
+
+                    <li><a href="#" onclick="go('lifecycle'); return false;" class="nav-link" data-section="lifecycle">DQ Lifecycle</a></li>
+                    <li><a href="#" onclick="go('check-lifecycle'); return false;" class="nav-link nav-check" data-section="check-lifecycle">📝 Knowledge Check</a></li>
+
+                    <li><a href="#" onclick="go('rules'); return false;" class="nav-link" data-section="rules">What is a Rule?</a></li>
+                    <li><a href="#" onclick="go('check-rules'); return false;" class="nav-link nav-check" data-section="check-rules">📝 Knowledge Check</a></li>
+
+                    <li><a href="#" onclick="go('issues'); return false;" class="nav-link" data-section="issues">Common Issues</a></li>
+
+                    <li><a href="#" onclick="go('concepts'); return false;" class="nav-link" data-section="concepts">Key Concepts</a></li>
+                    <li><a href="#" onclick="go('check-concepts'); return false;" class="nav-link nav-check" data-section="check-concepts">📝 Knowledge Check</a></li>
+
+                    <li><a href="#" onclick="go('example'); return false;" class="nav-link" data-section="example">Rule Example</a></li>
+                    <li><a href="#" onclick="go('check-example'); return false;" class="nav-link nav-check" data-section="check-example">📝 Knowledge Check</a></li>
+
+                    <li><a href="#" onclick="go('faq'); return false;" class="nav-link" data-section="faq">FAQ</a></li>
+
+                    <li><a href="#" onclick="go('session1-complete'); return false;" class="nav-link nav-complete" data-section="session1-complete">🎓 Session 1 Complete</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Session 2 · SQL Best Practices</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#" onclick="go('sql-intro'); return false;" class="nav-link" data-section="sql-intro">Introduction</a></li>
+
+                    <li><a href="#" onclick="go('ctes'); return false;" class="nav-link" data-section="ctes">CTEs</a></li>
+                    <li><a href="#" onclick="go('check-ctes'); return false;" class="nav-link nav-check" data-section="check-ctes">📝 Knowledge Check</a></li>
+
+                    <li><a href="#" onclick="go('zsource'); return false;" class="nav-link" data-section="zsource">zSourceSystemID Filtering</a></li>
+                    <li><a href="#" onclick="go('check-zsource'); return false;" class="nav-link nav-check" data-section="check-zsource">📝 Knowledge Check</a></li>
+
+                    <li><a href="#" onclick="go('comments'); return false;" class="nav-link" data-section="comments">Comment Standard</a></li>
+
+                    <li><a href="#" onclick="go('aliasing'); return false;" class="nav-link" data-section="aliasing">Aliasing & Naming</a></li>
+
+                    <li><a href="#" onclick="go('sql-example'); return false;" class="nav-link" data-section="sql-example">Complete Example</a></li>
+                    <li><a href="#" onclick="go('check-sql-example'); return false;" class="nav-link nav-check" data-section="check-sql-example">📝 Knowledge Check</a></li>
+
+                    <li><a href="#" onclick="go('good-rule'); return false;" class="nav-link" data-section="good-rule">What a Good Rule Looks Like</a></li>
+
+                    <li><a href="#" onclick="go('session2-complete'); return false;" class="nav-link nav-complete" data-section="session2-complete">🎓 Session 2 Complete</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Coming Soon</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#" class="disabled" style="opacity: 0.5; cursor: not-allowed;">Methodology Studio</a></li>
+                    <li><a href="#" class="disabled" style="opacity: 0.5; cursor: not-allowed;">Advanced Derivation</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main">
+            <div class="header">
+                <h1 class="header-title">Syniti DQ Training Academy</h1>
+                <p class="header-subtitle" id="course-subtitle">Data Quality Fundamentals Course (Session 1)</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <section class="hero" id="hero-section">
+                <div class="hero-content">
+                    <h1>Data Quality Fundamentals</h1>
+                    <p>Learn the essential concepts, dimensions, and practices for building trustworthy data systems.</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">⏱️ Estimated time: 45-60 minutes | 📖 Session 1</p>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SESSION 1: DQ FUNDAMENTALS
+                 ============================================================ -->
+
+            <section class="section active" data-section="intro">
+                <div class="section-card">
+                    <h2>Welcome to Data Quality Fundamentals</h2>
+                    <p>This course introduces you to the core concepts of Data Quality, why it matters in enterprise systems, and how to build effective DQ rules using the Syniti Methodology Studio.</p>
+
+                    <h3>What You'll Learn</h3>
+                    <ul>
+                        <li><strong>DQ Fundamentals:</strong> Definitions, dimensions, and business impact</li>
+                        <li><strong>The DQ Lifecycle:</strong> Profile → Rule → Remediate → Recheck</li>
+                        <li><strong>Rule Anatomy:</strong> What makes a good rule and how to design them</li>
+                        <li><strong>Real-World Examples:</strong> Common data quality issues in SAP master data</li>
+                        <li><strong>Key Concepts:</strong> OptSel vs RptSel, error flags, and filtering</li>
+                    </ul>
+
+                    <h3>How This Course Works</h3>
+                    <p>Each topic is followed by its own short <strong>Knowledge Check</strong> — you'll see it as its own tab in the sidebar right after the lesson it belongs to. Complete the lesson, then its check, then move to the next topic.</p>
+
+                    <h3>Prerequisites</h3>
+                    <p>You should have basic familiarity with SQL (SELECT, WHERE, JOIN, CASE WHEN). Session 2 (SQL Best Practices) deepens the SQL dialect used specifically in DQ rules.</p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="go('what-is-dq')">Start Learning →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="what-is-dq">
+                <div class="section-card">
+                    <h2>What is Data Quality?</h2>
+                    <p>Data Quality (DQ) is the degree to which data conforms to defined standards and meets business expectations. It's not a single metric—it's a multidimensional measurement.</p>
+
+                    <h3>Key Definition</h3>
+                    <p style="background: var(--canvas); padding: var(--spacing-lg); border-left: 4px solid var(--violet); border-radius: 4px; font-style: italic;">
+                        "Data Quality is the fitness of data for a business purpose. Poor quality data costs your organization in rework, regulatory fines, customer churn, failed migrations, and bad decisions."
+                    </p>
+
+                    <h3>Why DQ Matters (In One Sentence)</h3>
+                    <p>A single bad record in your master data can break downstream processes, analytics, compliance checks, and entire migration projects.</p>
+
+                    <h3>Common Consequences of Poor DQ</h3>
+                    <ul>
+                        <li><strong>Rework:</strong> Manual data cleanup takes weeks or months</li>
+                        <li><strong>Regulatory Risk:</strong> Non-compliance with GDPR, HIPAA, SOX</li>
+                        <li><strong>Operational Failures:</strong> Orders not fulfilled, shipments delayed, invoices uncollectable</li>
+                        <li><strong>Migration Delays:</strong> ERP migrations fail or stall when data isn't clean</li>
+                        <li><strong>Bad Decisions:</strong> Analytics and reporting built on dirty data leads to wrong strategies</li>
+                    </ul>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('intro')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('check-what-is-dq')">Knowledge Check →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHECK: What is DQ -->
+            <section class="section" data-section="check-what-is-dq">
+                <div class="check-card">
+                    <h2>📝 Knowledge Check: What is Data Quality?</h2>
+                    <p style="color: var(--muted); margin-bottom: var(--spacing-xl);">One question testing the definition you just read.</p>
+
+                    <div class="quiz-item">
+                        <h3><span class="quiz-number">1</span> DQ Definition</h3>
+                        <p style="color: var(--muted); margin-bottom: var(--spacing-md); font-size: 0.95rem;">What is the primary focus of Data Quality?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Making data look nice in dashboards</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Ensuring data conforms to standards and meets business expectations</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Storing more data than competitors</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Reducing database storage costs</label>
+                        </div>
+                        <button class="quiz-button" onclick="checkAnswer('q1', 'b', 'Correct! DQ is about conformance to standards and business expectations.')">Check Answer</button>
+                        <div id="q1-result" class="quiz-results hidden"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('what-is-dq')">← Back to Lesson</button>
+                        <button class="btn btn-primary" onclick="go('why-matters')">Next Lesson →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="why-matters">
+                <div class="section-card">
+                    <h2>Why Data Quality Matters</h2>
+                    <p>Data quality isn't optional—it's fundamental to business success. Here are the numbers:</p>
+
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-number">43%</div>
+                            <div class="stat-label">Organizations</div>
+                            <div class="stat-desc">Report significant data quality problems in master data</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">$15M</div>
+                            <div class="stat-label">Annual Cost</div>
+                            <div class="stat-desc">Average impact per organization from poor DQ</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">60 days</div>
+                            <div class="stat-label">Risk Duration</div>
+                            <div class="stat-desc">Delay caused by data cleansing in ERP migrations</div>
+                        </div>
+                    </div>
+
+                    <h3>In the Context of SAP Migrations</h3>
+                    <p>When organizations migrate from SAP ECC to S/4HANA, master data quality is <strong>the single biggest risk factor</strong>. Projects fail or stall because:</p>
+                    <ul>
+                        <li>Master data hasn't been validated before migration</li>
+                        <li>Orphaned records exist (foreign keys without parents)</li>
+                        <li>Required fields are missing or invalid</li>
+                        <li>Duplicate records confuse business logic</li>
+                    </ul>
+
+                    <p><strong>Data Quality Rules are how you prevent this.</strong> They codify what "bad" means and let you catch issues early, before they cascade downstream.</p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('check-what-is-dq')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('dimensions')">Next →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="dimensions">
+                <div class="section-card">
+                    <h2>The Six Dimensions of Data Quality</h2>
+                    <p>Data quality is multidimensional. These six dimensions cover the full spectrum of what "good data" means:</p>
+
+                    <div class="dimensions-grid">
+                        <div class="dimension-card">
+                            <h4>📊 Accuracy</h4>
+                            <p>Data reflects reality; values are correct for their context. A material's weight should match what's actually produced.</p>
+                        </div>
+                        <div class="dimension-card">
+                            <h4>✓ Completeness</h4>
+                            <p>Required fields are populated; no critical nulls or gaps. Every vendor must have a tax ID; every material must have a UoM.</p>
+                        </div>
+                        <div class="dimension-card">
+                            <h4>🔗 Consistency</h4>
+                            <p>Same data is uniform across systems and time. A customer's name is spelled the same in ECC, CRM, and Analytics.</p>
+                        </div>
+                        <div class="dimension-card">
+                            <h4>🎯 Validity</h4>
+                            <p>Data conforms to defined formats, types, and ranges. Dates are valid, status codes are on the allowed list, numbers are positive.</p>
+                        </div>
+                        <div class="dimension-card">
+                            <h4>⏰ Timeliness</h4>
+                            <p>Data is current and available when needed. Pricing updates are daily; inventory is real-time.</p>
+                        </div>
+                        <div class="dimension-card">
+                            <h4>🔑 Uniqueness</h4>
+                            <p>No unwanted duplicates; keys are truly unique. Each material has one MATNR; each customer has one KUNNR.</p>
+                        </div>
+                    </div>
+
+                    <h3>In Practice</h3>
+                    <p>Your DQ rules will typically focus on one or two of these dimensions. For example:</p>
+                    <ul>
+                        <li>A rule checking that a material's UoM exists in the valid list = <strong>Validity</strong></li>
+                        <li>A rule flagging vendors without a tax ID = <strong>Completeness</strong></li>
+                        <li>A rule detecting duplicate customer records = <strong>Uniqueness</strong></li>
+                    </ul>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('why-matters')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('check-dimensions')">Knowledge Check →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHECK: Dimensions -->
+            <section class="section" data-section="check-dimensions">
+                <div class="check-card">
+                    <h2>📝 Knowledge Check: The Six Dimensions</h2>
+                    <p style="color: var(--muted); margin-bottom: var(--spacing-xl);">One multiple-choice question and one matching exercise, both scoped to the dimensions you just read about.</p>
+
+                    <div class="quiz-item">
+                        <h3><span class="quiz-number">1</span> Completeness</h3>
+                        <p style="color: var(--muted); margin-bottom: var(--spacing-md); font-size: 0.95rem;">Which DQ dimension refers to required fields being populated?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q6" value="a"> Accuracy</label>
+                            <label class="quiz-option"><input type="radio" name="q6" value="b"> Completeness</label>
+                            <label class="quiz-option"><input type="radio" name="q6" value="c"> Validity</label>
+                            <label class="quiz-option"><input type="radio" name="q6" value="d"> Uniqueness</label>
+                        </div>
+                        <button class="quiz-button" onclick="checkAnswer('q6', 'b', 'Correct! Completeness means required fields are populated with no critical nulls or gaps.')">Check Answer</button>
+                        <div id="q6-result" class="quiz-results hidden"></div>
+                    </div>
+
+                    <div class="quiz-item">
+                        <h3><span class="quiz-number">2</span> Matching Exercise: Rule to Dimension</h3>
+                        <p style="color: var(--muted); margin-bottom: var(--spacing-lg); font-size: 0.95rem;">Match each rule description to the DQ dimension it primarily tests:</p>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-xl);">
+                            <div>
+                                <p style="font-weight: 600; color: var(--navy); margin-bottom: var(--spacing-md);">Rules</p>
+                                <div class="matching-item" data-rule="rule1" onclick="selectMatchingItem(this)">1. Vendor master must have a non-empty Tax ID field</div>
+                                <div class="matching-item" data-rule="rule2" onclick="selectMatchingItem(this)" style="margin-top: var(--spacing-sm);">2. Customer name in ECC must match name in CRM</div>
+                                <div class="matching-item" data-rule="rule3" onclick="selectMatchingItem(this)" style="margin-top: var(--spacing-sm);">3. Material status code must be one of: ACTIVE, INACTIVE, PHASED_OUT</div>
+                                <div class="matching-item" data-rule="rule4" onclick="selectMatchingItem(this)" style="margin-top: var(--spacing-sm);">4. No duplicate employee IDs exist in the system</div>
+                            </div>
+                            <div>
+                                <p style="font-weight: 600; color: var(--navy); margin-bottom: var(--spacing-md);">Dimensions</p>
+                                <div class="matching-item" data-dimension="dim-completeness" onclick="selectMatchingItem(this)">A. Completeness</div>
+                                <div class="matching-item" data-dimension="dim-consistency" onclick="selectMatchingItem(this)" style="margin-top: var(--spacing-sm);">B. Consistency</div>
+                                <div class="matching-item" data-dimension="dim-validity" onclick="selectMatchingItem(this)" style="margin-top: var(--spacing-sm);">C. Validity</div>
+                                <div class="matching-item" data-dimension="dim-uniqueness" onclick="selectMatchingItem(this)" style="margin-top: var(--spacing-sm);">D. Uniqueness</div>
+                            </div>
+                        </div>
+
+                        <button class="quiz-button" onclick="checkMatching()">Check Matching</button>
+                        <div id="matching-result" class="quiz-results hidden"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('dimensions')">← Back to Lesson</button>
+                        <button class="btn btn-primary" onclick="go('lifecycle')">Next Lesson →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="lifecycle">
+                <div class="section-card">
+                    <h2>The DQ Lifecycle</h2>
+                    <p>Data quality is not a one-time activity. It follows a continuous cycle:</p>
+
+                    <div class="lifecycle-flow">
+                        <div class="lifecycle-step">
+                            <div class="lifecycle-step-number">1</div>
+                            <div class="lifecycle-step-title">Profile</div>
+                            <div class="lifecycle-step-desc">Understand the data as-is</div>
+                        </div>
+                        <div class="lifecycle-arrow">→</div>
+                        <div class="lifecycle-step">
+                            <div class="lifecycle-step-number">2</div>
+                            <div class="lifecycle-step-title">Rule</div>
+                            <div class="lifecycle-step-desc">Define what "bad" means</div>
+                        </div>
+                        <div class="lifecycle-arrow">→</div>
+                        <div class="lifecycle-step">
+                            <div class="lifecycle-step-number">3</div>
+                            <div class="lifecycle-step-title">Remediate</div>
+                            <div class="lifecycle-step-desc">Fix the bad records</div>
+                        </div>
+                        <div class="lifecycle-arrow">→</div>
+                        <div class="lifecycle-step">
+                            <div class="lifecycle-step-number">4</div>
+                            <div class="lifecycle-step-title">Recheck</div>
+                            <div class="lifecycle-step-desc">Verify the improvement</div>
+                        </div>
+                    </div>
+
+                    <h3>Cycle Detail</h3>
+
+                    <h4>1. Profile</h4>
+                    <p>You run a schema profile on your master data to understand:</p>
+                    <ul>
+                        <li>How many records exist</li>
+                        <li>What fields are null, empty, or unusual</li>
+                        <li>What values appear most often (low vs high cardinality)</li>
+                        <li>What distributions look abnormal</li>
+                    </ul>
+
+                    <h4>2. Rule</h4>
+                    <p>Based on profiling findings and business requirements, you define rules that codify what "bad" means. Each rule has:</p>
+                    <ul>
+                        <li>A <strong>name</strong> (concise, business-friendly)</li>
+                        <li>A <strong>description</strong> (what is being checked and why)</li>
+                        <li>A <strong>logic</strong> (the error condition in SQL)</li>
+                        <li>A <strong>scope</strong> (inclusions and exclusions)</li>
+                    </ul>
+
+                    <h4>3. Remediate</h4>
+                    <p>Once rules flag bad records, someone fixes them. This might be:</p>
+                    <ul>
+                        <li><strong>Automated:</strong> Recalculate a field, fill a null with a default, merge duplicates</li>
+                        <li><strong>Manual:</strong> Domain expert reviews and corrects the record</li>
+                        <li><strong>Process:</strong> Fix the upstream system that's creating bad data</li>
+                    </ul>
+
+                    <h4>4. Recheck</h4>
+                    <p>You run the rule again to verify the fix worked. This confirms:</p>
+                    <ul>
+                        <li>The flagged records now pass</li>
+                        <li>No new errors were introduced</li>
+                        <li>The data is now fit for business purpose</li>
+                    </ul>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: var(--canvas); border-left: 4px solid var(--good); border-radius: 4px;">
+                        <strong>Key insight:</strong> This cycle repeats. DQ is continuous improvement, not a one-off project.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('check-dimensions')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('check-lifecycle')">Knowledge Check →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHECK: Lifecycle -->
+            <section class="section" data-section="check-lifecycle">
+                <div class="check-card">
+                    <h2>📝 Knowledge Check: The DQ Lifecycle</h2>
+                    <p style="color: var(--muted); margin-bottom: var(--spacing-xl);">One question on the order of the lifecycle you just learned.</p>
+
+                    <div class="quiz-item">
+                        <h3><span class="quiz-number">1</span> Lifecycle Order</h3>
+                        <p style="color: var(--muted); margin-bottom: var(--spacing-md); font-size: 0.95rem;">What is the correct order of the DQ lifecycle?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> Remediate → Profile → Rule → Recheck</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Profile → Rule → Remediate → Recheck</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Rule → Remediate → Profile → Recheck</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Recheck → Profile → Rule → Remediate</label>
+                        </div>
+                        <button class="quiz-button" onclick="checkAnswer('q2', 'b', 'Correct! Profile first to understand data, then Rule, Remediate issues, and Recheck.')">Check Answer</button>
+                        <div id="q2-result" class="quiz-results hidden"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('lifecycle')">← Back to Lesson</button>
+                        <button class="btn btn-primary" onclick="go('rules')">Next Lesson →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="rules">
+                <div class="section-card">
+                    <h2>What is a Data Quality Rule?</h2>
+                    <p>A DQ rule is a codified business check that flags records as "bad" if they violate a condition.</p>
+
+                    <h3>Rule Anatomy</h3>
+                    <p>Every DQ rule has these four components:</p>
+
+                    <div class="dimensions-grid">
+                        <div class="dimension-card">
+                            <h4>📛 Name</h4>
+                            <p>A concise, business-friendly name (max 100 chars, target 85). Example: "Material must have valid base unit of measure"</p>
+                        </div>
+                        <div class="dimension-card">
+                            <h4>📝 Description</h4>
+                            <p>Follows the Fetch / Check / Return template. Explains what data is fetched, what condition is checked, and what the rule returns.</p>
+                        </div>
+                        <div class="dimension-card">
+                            <h4>⚙️ Logic</h4>
+                            <p>The actual error condition, written in SQL. This is where you define what "bad" means in technical terms.</p>
+                        </div>
+                        <div class="dimension-card">
+                            <h4>🔍 Scope</h4>
+                            <p>Inclusions (which records to check) and Exclusions (which records to skip). Deletions flags go here.</p>
+                        </div>
+                    </div>
+
+                    <h3>How Rules are Generated</h3>
+                    <p>Rules are expressed as SQL views:</p>
+                    <ul>
+                        <li><strong>OptSel:</strong> The "options" view. Returns ALL candidate rows with a <code>zIsErrorFlag</code> (1=error, 0=clean).</li>
+                        <li><strong>RptSel:</strong> The "report" view. A simple wrapper: <code>SELECT * FROM OptSel WHERE zIsErrorFlag = 1</code>. Only errors.</li>
+                    </ul>
+
+                    <h3>Who Writes Rules?</h3>
+                    <p>In the Syniti workflow:</p>
+                    <ul>
+                        <li><strong>Business Analysts / Data Stewards</strong> define the rule in business terms (what data should look like)</li>
+                        <li><strong>The Studio</strong> (powered by AI or local derivation) generates the SQL automatically</li>
+                        <li><strong>Reviewers</strong> validate that the generated SQL matches the business intent</li>
+                    </ul>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: #FEF3E2; border-left: 4px solid var(--warn); border-radius: 4px;">
+                        <strong>Important:</strong> Rules are not subjective opinions. They're measurable, business-defined conditions that execute reliably in SQL.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('check-lifecycle')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('check-rules')">Knowledge Check →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHECK: Rules -->
+            <section class="section" data-section="check-rules">
+                <div class="check-card">
+                    <h2>📝 Knowledge Check: What is a Rule?</h2>
+                    <p style="color: var(--muted); margin-bottom: var(--spacing-xl);">One question on the naming convention from the Rule Anatomy you just read.</p>
+
+                    <div class="quiz-item">
+                        <h3><span class="quiz-number">1</span> Rule Naming</h3>
+                        <p style="color: var(--muted); margin-bottom: var(--spacing-md); font-size: 0.95rem;">What is the recommended maximum length for a rule name?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q5" value="a"> 50 characters</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="b"> 85 characters (target); 100 characters (absolute max)</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="c"> 150 characters</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="d"> No limit; as long as needed</label>
+                        </div>
+                        <button class="quiz-button" onclick="checkAnswer('q5', 'b', 'Correct! Target ≤85 chars, absolute max 100 chars. Keep rule names concise and business-friendly.')">Check Answer</button>
+                        <div id="q5-result" class="quiz-results hidden"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('rules')">← Back to Lesson</button>
+                        <button class="btn btn-primary" onclick="go('issues')">Next Lesson →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="issues">
+                <div class="section-card">
+                    <h2>Common DQ Issues in SAP Master Data</h2>
+                    <p>These are the most frequent data quality problems encountered in SAP ECC and S/4HANA environments:</p>
+
+                    <div style="margin: var(--spacing-xl) 0;">
+                        <h3>❌ Issue 1: Missing Foreign Keys</h3>
+                        <p><strong>What:</strong> Foreign key values don't exist in the master table.</p>
+                        <p><strong>Example:</strong> A purchase order references a vendor that doesn't exist in the vendor master.</p>
+                        <p><strong>Impact:</strong> Downstream processes fail; reports show orphaned transactions.</p>
+                    </div>
+
+                    <div style="margin: var(--spacing-xl) 0;">
+                        <h3>❌ Issue 2: Orphaned Records</h3>
+                        <p><strong>What:</strong> Links to deleted or non-existent parents.</p>
+                        <p><strong>Example:</strong> A material references a cost center that was deleted.</p>
+                        <p><strong>Impact:</strong> Costing breaks; cost allocations become invalid.</p>
+                    </div>
+
+                    <div style="margin: var(--spacing-xl) 0;">
+                        <h3>❌ Issue 3: Null Required Fields</h3>
+                        <p><strong>What:</strong> Required attributes are empty or blank.</p>
+                        <p><strong>Example:</strong> A customer master record has no billing address.</p>
+                        <p><strong>Impact:</strong> Invoices can't be sent; orders can't be fulfilled.</p>
+                    </div>
+
+                    <div style="margin: var(--spacing-xl) 0;">
+                        <h3>❌ Issue 4: Invalid Status Codes</h3>
+                        <p><strong>What:</strong> Values outside the allowed list.</p>
+                        <p><strong>Example:</strong> A material has status code "ACTIVE2" when only "ACTIVE", "INACTIVE", "PHASED_OUT" are valid.</p>
+                        <p><strong>Impact:</strong> Business logic based on status fails; filtering breaks.</p>
+                    </div>
+
+                    <h3>Migration Impact</h3>
+                    <p style="padding: var(--spacing-lg); background: #FEF2F2; border-left: 4px solid var(--critical); border-radius: 4px;">
+                        <strong>S/4HANA migrations fail when these issues aren't caught and fixed first.</strong> A typical migration can be delayed 30–90 days because bad data wasn't cleaned before cutover. The cost: rework, reputational risk, missed business objectives.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('check-rules')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('concepts')">Next →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="concepts">
+                <div class="section-card">
+                    <h2>Key Concepts: OptSel vs RptSel</h2>
+                    <p>This is the most important architectural concept in DQ rule design. Understand this, and everything else makes sense.</p>
+
+                    <div class="comparison-grid">
+                        <div class="comparison-box good">
+                            <h4>✓ OptSel (The Universe)</h4>
+                            <p><strong>Purpose:</strong> Returns every row that matches your scope, whether clean or dirty.</p>
+                            <p><strong>Key Column:</strong> <code>zIsErrorFlag</code> (1 = error, 0 = clean)</p>
+                            <p><strong>Computed via:</strong> <code>CASE WHEN &lt;error_condition&gt; THEN 1 ELSE 0 END</code></p>
+                            <p><strong>Use case:</strong> Audit both good and bad records from one view. Compare trends over time.</p>
+                        </div>
+                        <div class="comparison-box critical">
+                            <h4>✗ RptSel (Errors Only)</h4>
+                            <p><strong>Purpose:</strong> Simple wrapper that filters OptSel to only errors.</p>
+                            <p><strong>Query:</strong> <code>SELECT * FROM OptSel WHERE zIsErrorFlag = 1</code></p>
+                            <p><strong>Result:</strong> Smaller, focused result set of just the problems.</p>
+                            <p><strong>Use case:</strong> What remediation and auditors work with. What gets reported to business.</p>
+                        </div>
+                    </div>
+
+                    <h3>Why This Split?</h3>
+                    <p>The separation of concerns is powerful:</p>
+                    <ul>
+                        <li><strong>Measure everything (OptSel)</strong> — you can see the full picture: how many clean, how many errors, what's the trend.</li>
+                        <li><strong>Report only problems (RptSel)</strong> — action is taken only on the errors; nobody needs to see the clean records.</li>
+                    </ul>
+
+                    <h3>Other Key Concepts</h3>
+
+                    <h4>🚩 Error Flags</h4>
+                    <p><code>zIsErrorFlag</code> is always INTEGER (1 or 0), never TEXT ("Yes"/"No"). This ensures:</p>
+                    <ul>
+                        <li>Consistent handling in downstream logic</li>
+                        <li>Easy aggregation and counting</li>
+                        <li>Predictable behavior in filters</li>
+                    </ul>
+
+                    <h4>🗑️ Deletion Flags vs Status Fields</h4>
+                    <p>These are treated differently in rules:</p>
+                    <ul>
+                        <li><strong>Deletion Flags</strong> (LVORM, LOEKZ, LOEVM) → go in <code>WHERE</code> clause (exclude deleted records outright)</li>
+                        <li><strong>Status Fields</strong> (MMSTA, PSTAT, STATU) → drive the error flag in <code>CASE</code> (status determines if record is good or bad)</li>
+                    </ul>
+
+                    <h4>📋 Standard Field Sections</h4>
+                    <p>Every generated rule includes these sections in order:</p>
+                    <ol>
+                        <li>Syniti Technical Fields (<code>zSourceSystemID</code>, <code>zConcatenatedKey</code>, <code>zIsErrorFlag</code> — always these three, always first, always in this order)</li>
+                        <li>Basic Fields (core identification/descriptive attributes)</li>
+                        <li>Organizational Context (company code, plant, etc.)</li>
+                        <li>Value Context (amounts, codes, etc.)</li>
+                        <li>Activity Context (created by, dates, etc.)</li>
+                    </ol>
+
+                    <p>Recognizing these sections helps you read any generated SQL at a glance. Session 2 (SQL Best Practices) covers this categorization in full detail.</p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('issues')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('check-concepts')">Knowledge Check →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHECK: Concepts -->
+            <section class="section" data-section="check-concepts">
+                <div class="check-card">
+                    <h2>📝 Knowledge Check: OptSel vs RptSel</h2>
+                    <p style="color: var(--muted); margin-bottom: var(--spacing-xl);">Two questions on the architectural concept you just learned.</p>
+
+                    <div class="quiz-item">
+                        <h3><span class="quiz-number">1</span> OptSel vs RptSel</h3>
+                        <p style="color: var(--muted); margin-bottom: var(--spacing-md); font-size: 0.95rem;">What is the key difference between OptSel and RptSel?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q3" value="a"> OptSel returns errors only; RptSel returns all records</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="b"> OptSel returns all records with error flags; RptSel filters to only errors</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="c"> OptSel is for SQL; RptSel is for reporting</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="d"> There is no difference; they are the same</label>
+                        </div>
+                        <button class="quiz-button" onclick="checkAnswer('q3', 'b', 'Correct! OptSel = universe (all records with flags), RptSel = wrapper (errors only).')">Check Answer</button>
+                        <div id="q3-result" class="quiz-results hidden"></div>
+                    </div>
+
+                    <div class="quiz-item">
+                        <h3><span class="quiz-number">2</span> Deletion Flags</h3>
+                        <p style="color: var(--muted); margin-bottom: var(--spacing-md); font-size: 0.95rem;">Where do deletion flags (LVORM, LOEKZ) belong in a rule?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q4" value="a"> In the CASE statement that computes zIsErrorFlag</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="b"> In the WHERE clause to exclude deleted records</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="c"> In the SELECT statement as a column</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="d"> Deletion flags are not used in DQ rules</label>
+                        </div>
+                        <button class="quiz-button" onclick="checkAnswer('q4', 'b', 'Correct! Deletion flags go in WHERE to exclude deleted records (they are out of scope).')">Check Answer</button>
+                        <div id="q4-result" class="quiz-results hidden"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('concepts')">← Back to Lesson</button>
+                        <button class="btn btn-primary" onclick="go('example')">Next Lesson →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="example">
+                <div class="section-card">
+                    <h2>A Rule in Action: Material Master Example</h2>
+                    <p>Let's walk through a real rule from start to finish.</p>
+
+                    <h3>The Rule</h3>
+                    <p style="padding: var(--spacing-lg); background: var(--canvas); border-left: 4px solid var(--blue); border-radius: 4px; font-size: 1.05rem; font-weight: 600;">
+                        "Material must have a valid, non-deleted base unit of measure"
+                    </p>
+
+                    <h3>The SQL (OptSel)</h3>
+                    <div class="code-block">WITH base_materials AS (
+  SELECT MANDT, MATNR, MEINS
+  FROM mara
+  WHERE LVORM = ''  -- Exclude deleted materials
+)
+SELECT
+  MANDT,
+  MATNR,
+  MEINS,
+  -- Syniti Technical Field
+  CASE
+    WHEN MEINS IS NULL THEN 1
+    WHEN MEINS NOT IN (SELECT MSEHI FROM t006 WHERE SPRAS = 'E') THEN 1
+    ELSE 0
+  END AS zIsErrorFlag
+FROM base_materials</div>
+
+                    <h3>What This Rule Does</h3>
+                    <ul>
+                        <li><strong>Scope:</strong> All materials where LVORM (deletion flag) is empty (not deleted)</li>
+                        <li><strong>Check:</strong> MEINS (base UoM) must exist and must be in the valid UoM list (table T006)</li>
+                        <li><strong>Flag:</strong> zIsErrorFlag = 1 if MEINS is NULL or invalid; 0 if valid</li>
+                    </ul>
+
+                    <h3>Sample Results</h3>
+                    <p>This OptSel returns 100 materials, of which 15 have errors:</p>
+
+                    <div class="comparison-grid">
+                        <div class="comparison-box good">
+                            <h4>✓ Clean Records (zIsErrorFlag = 0)</h4>
+                            <p><strong>M001</strong> → MEINS = "KG" ✓ Valid unit</p>
+                            <p><strong>M002</strong> → MEINS = "PC" ✓ Valid unit</p>
+                            <p><strong>M003</strong> → MEINS = "L" ✓ Valid unit</p>
+                            <p><em>...and 82 more clean records</em></p>
+                        </div>
+                        <div class="comparison-box critical">
+                            <h4>✗ Error Records (zIsErrorFlag = 1)</h4>
+                            <p><strong>M999</strong> → MEINS = NULL ✗</p>
+                            <p><strong>M1001</strong> → MEINS = "XYZ" ✗ Not in T006</p>
+                            <p><strong>M1002</strong> → MEINS = "ZZ" ✗ Not in T006</p>
+                            <p><em>...and 12 more error records</em></p>
+                        </div>
+                    </div>
+
+                    <h3>RptSel (The Report)</h3>
+                    <div class="code-block">SELECT * FROM OptSel WHERE zIsErrorFlag = 1</div>
+                    <p>RptSel returns only the 15 errors. These are what auditors and remediation teams use.</p>
+
+                    <h3>Next Steps (After the Rule)</h3>
+                    <ol>
+                        <li><strong>Review:</strong> Auditor looks at the 15 error records</li>
+                        <li><strong>Remediate:</strong>
+                            <ul style="margin-top: var(--spacing-sm);">
+                                <li>M999: Assign the appropriate UoM (e.g., "KG")</li>
+                                <li>M1001, M1002: Fix the typo or assign valid UoM</li>
+                            </ul>
+                        </li>
+                        <li><strong>Recheck:</strong> Run the rule again → should show 0 errors now</li>
+                    </ol>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: #FEF3E2; border-left: 4px solid var(--warn); border-radius: 4px;">
+                        <strong>Note:</strong> This simplified example is missing the mandatory <code>zSourceSystemID</code> filter and the full comment standard. Session 2 (SQL Best Practices) shows the complete, production-correct version of this exact rule.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('check-concepts')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('check-example')">Knowledge Check →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHECK: Example -->
+            <section class="section" data-section="check-example">
+                <div class="check-card">
+                    <h2>📝 Knowledge Check: Applying the Rule Example</h2>
+                    <p style="color: var(--muted); margin-bottom: var(--spacing-xl);">A scenario that applies dimensions, WHERE-vs-CASE, and rule design together — the same skills the material rule example just used.</p>
+
+                    <div class="quiz-item">
+                        <h3><span class="quiz-number">1</span> Scenario: Design a Rule</h3>
+                        <p style="color: var(--muted); margin-bottom: var(--spacing-lg); font-size: 0.95rem;"><strong>Scenario:</strong> You're designing a rule for purchase orders. The business requires: "Every open PO must have a valid vendor reference that exists in the vendor master."</p>
+
+                        <div style="background: var(--canvas); padding: var(--spacing-lg); border-radius: 8px; margin-bottom: var(--spacing-lg);">
+                            <p style="margin-bottom: var(--spacing-md);"><strong>Question:</strong> Which DQ dimension(s) does this rule test?</p>
+                            <div class="quiz-options">
+                                <label class="quiz-option"><input type="radio" name="q8" value="a"> Completeness only (vendor field must be filled)</label>
+                                <label class="quiz-option"><input type="radio" name="q8" value="b"> Validity and Completeness (field filled AND vendor exists)</label>
+                                <label class="quiz-option"><input type="radio" name="q8" value="c"> Validity only (vendor reference is valid/exists)</label>
+                                <label class="quiz-option"><input type="radio" name="q8" value="d"> Accuracy (vendor details are accurate)</label>
+                            </div>
+                            <button class="quiz-button" onclick="checkAnswer('q8', 'b', 'Correct! The rule tests both: (1) Completeness (vendor field must be filled) AND (2) Validity (vendor must exist in master).')">Check Answer</button>
+                            <div id="q8-result" class="quiz-results hidden"></div>
+                        </div>
+
+                        <div style="background: var(--canvas); padding: var(--spacing-lg); border-radius: 8px;">
+                            <p style="margin-bottom: var(--spacing-md);"><strong>Follow-up:</strong> Where would you place the condition "EKKO.EKSTAT = 'OPEN'" in the rule?</p>
+                            <div class="quiz-options">
+                                <label class="quiz-option"><input type="radio" name="q9" value="a"> In the CASE statement as part of the error condition</label>
+                                <label class="quiz-option"><input type="radio" name="q9" value="b"> In the WHERE clause as a scope filter (which POs to check)</label>
+                                <label class="quiz-option"><input type="radio" name="q9" value="c"> In the SELECT statement as an additional column</label>
+                                <label class="quiz-option"><input type="radio" name="q9" value="d"> Status fields should not appear in rules</label>
+                            </div>
+                            <button class="quiz-button" onclick="checkAnswer('q9', 'b', 'Correct! Status fields like EKSTAT go in WHERE to define scope (only open POs). Deletion flags go in WHERE; status fields go in WHERE for scope, not in CASE.')">Check Answer</button>
+                            <div id="q9-result" class="quiz-results hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('example')">← Back to Lesson</button>
+                        <button class="btn btn-primary" onclick="go('faq')">Next: FAQ →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="faq">
+                <div class="section-card">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Here are common questions about DQ rules and the methodology:</p>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div class="faq-question-text">Q: Who writes DQ rules?</div>
+                            <div class="faq-toggle">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <strong>A:</strong> Business analysts and data stewards (with domain knowledge) <em>define</em> the rule in business terms. The Syniti Methodology Studio <em>generates</em> the SQL automatically. Reviewers then validate that the generated SQL matches the business intent.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div class="faq-question-text">Q: How often should I run DQ rules?</div>
+                            <div class="faq-toggle">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <strong>A:</strong> It depends on your context:
+                            <ul style="margin-top: var(--spacing-md);">
+                                <li><strong>In production:</strong> Daily, or before critical business processes</li>
+                                <li><strong>During migrations:</strong> Continuously while data is being cleansed</li>
+                                <li><strong>On-demand:</strong> After major data loads or system changes</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div class="faq-question-text">Q: What's the difference between a rule and a validation?</div>
+                            <div class="faq-toggle">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <strong>A:</strong>
+                            <ul>
+                                <li><strong>Rule:</strong> A standing, reusable check that runs anytime (daily, ad-hoc, etc.). Can be applied to different datasets.</li>
+                                <li><strong>Validation:</strong> Often a one-time gate that checks a specific import or migration. Validation = "does this data load pass?" Rule = "does this data always meet these standards?"</li>
+                            </ul>
+                            In practice, rules are more powerful because they're reusable and measurable over time.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div class="faq-question-text">Q: What if a rule flags too many errors?</div>
+                            <div class="faq-toggle">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <strong>A:</strong> You have a few options:
+                            <ul style="margin-top: var(--spacing-md);">
+                                <li><strong>Reassess the rule:</strong> Maybe it's too strict or the business requirement was misunderstood. Refine the rule logic.</li>
+                                <li><strong>Accept the baseline:</strong> If the data baseline is worse than expected, accept it and plan remediation in phases.</li>
+                                <li><strong>Exclude a subset:</strong> If a certain domain or system has legitimately different data, add an exclusion to scope.</li>
+                            </ul>
+                            The key is to not just ignore high error rates—investigate the root cause.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div class="faq-question-text">Q: Can I automate remediation?</div>
+                            <div class="faq-toggle">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <strong>A:</strong> Sometimes, but not always:
+                            <ul style="margin-top: var(--spacing-md);">
+                                <li><strong>Automatable:</strong> Recalculate a field, fill a null with a default, merge exact duplicates, assign a default status.</li>
+                                <li><strong>Manual:</strong> Domain expert review (wrong data often has a reason), correcting typos, deciding which duplicate to keep.</li>
+                            </ul>
+                            <strong>Rule of thumb:</strong> Rules identify; humans (or smart logic) fix. Most remediation requires at least some domain judgment.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div class="faq-question-text">Q: How do I know if my DQ rules are "good"?</div>
+                            <div class="faq-toggle">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <strong>A:</strong> Good rules have these properties:
+                            <ul style="margin-top: var(--spacing-md);">
+                                <li><strong>Business-defined:</strong> Rooted in actual business requirements, not just technical constraints</li>
+                                <li><strong>Measurable:</strong> You can run the SQL and get a count of errors</li>
+                                <li><strong>Auditable:</strong> Someone can look at a flagged record and understand why it failed</li>
+                                <li><strong>Actionable:</strong> The error is something data stewards can actually fix</li>
+                            </ul>
+                            <strong>Bad rules are:</strong> Vague ("data should look nice"), technically infeasible, or so strict they're unusable. See Session 2's "What a Good Rule Looks Like" for a complete SQL-level checklist.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div class="faq-question-text">Q: What's the relationship between Profiling and Rules?</div>
+                            <div class="faq-toggle">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <strong>A:</strong> They're sequential:
+                            <ul style="margin-top: var(--spacing-md);">
+                                <li><strong>Profile first:</strong> Run a schema profile to see what your data looks like (nulls, cardinality, outliers)</li>
+                                <li><strong>Then write rules:</strong> Based on what the profile revealed + business requirements, write rules that check for the specific issues you found</li>
+                                <li><strong>Rules validate going forward:</strong> After you've profiled once and written rules, the rules check continuously</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div class="faq-question-text">Q: Can OptSel and RptSel be in separate files/views?</div>
+                            <div class="faq-toggle">▼</div>
+                        </div>
+                        <div class="faq-answer">
+                            <strong>A:</strong> Yes. Typically:
+                            <ul style="margin-top: var(--spacing-md);">
+                                <li><code>[Schema].[RuleName_OptSel]</code> — the full options view</li>
+                                <li><code>[Schema].[RuleName_RptSel]</code> — wraps OptSel to report only errors</li>
+                            </ul>
+                            Some projects put both in one view; others separate them. Either way, the logic is the same.
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('check-example')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('session1-complete')">Finish Session 1 →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SESSION 1 COMPLETE -->
+            <section class="section" data-section="session1-complete">
+                <div class="section-card" style="background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); color: var(--white);">
+                    <h2 style="color: var(--white); border-color: var(--white);">🎓 Session 1 Complete</h2>
+                    <p style="color: rgba(255,255,255,0.9);">You've completed the <strong>Data Quality Fundamentals</strong> course! You now understand:</p>
+                    <ul style="color: var(--white);">
+                        <li>✓ What data quality means and why it matters</li>
+                        <li>✓ The six dimensions of data quality</li>
+                        <li>✓ The DQ lifecycle (profile → rule → remediate → recheck)</li>
+                        <li>✓ The anatomy of a DQ rule</li>
+                        <li>✓ Common data quality issues in SAP environments</li>
+                        <li>✓ Key concepts: OptSel vs RptSel, error flags, deletion flags</li>
+                        <li>✓ A real-world example of a rule in action</li>
+                    </ul>
+
+                    <h3 style="color: var(--white); margin-top: var(--spacing-lg);">Next Steps</h3>
+                    <div class="courses-grid" style="margin-top: var(--spacing-lg);">
+                        <div class="course-card" style="border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.1);">
+                            <div class="course-status available">Available Now</div>
+                            <h3 style="color: var(--white);">SQL Best Practices</h3>
+                            <p style="color: rgba(255,255,255,0.85);">Master the SQL dialect used in DQ rules: CTEs, mandatory comments, zSourceSystemID filtering, aliasing, and what a good rule looks like.</p>
+                            <div class="course-meta" style="color: rgba(255,255,255,0.7);">
+                                <span>~45 minutes</span>
+                                <span>7 sections</span>
+                            </div>
+                        </div>
+                        <div class="course-card" style="border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.1);">
+                            <div class="course-status coming-soon">Coming Soon</div>
+                            <h3 style="color: var(--white);">Methodology Studio Intro</h3>
+                            <p style="color: rgba(255,255,255,0.85);">Learn to use the Studio to design, derive, and export DQ rules.</p>
+                            <div class="course-meta" style="color: rgba(255,255,255,0.7);">
+                                <span>~60 minutes</span>
+                                <span>8 sections</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('faq')">← Back</button>
+                        <button class="btn btn-primary" style="background: var(--white); color: var(--navy);" onclick="go('sql-intro')">Start Session 2 →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SESSION 2: SQL BEST PRACTICES
+                 ============================================================ -->
+
+            <section class="section" data-section="sql-intro">
+                <div class="section-card">
+                    <h2>Session 2: SQL Best Practices for DQ Rules</h2>
+                    <p>Session 1 taught you the concepts (OptSel/RptSel, dimensions, lifecycle). This session teaches you the exact SQL dialect the Syniti Methodology Studio requires — the same standard applied to every rule, whether it was hand-written, locally derived, or AI-generated.</p>
+
+                    <h3>Why a Dialect, Not Just "SQL"</h3>
+                    <p>Standard SQL is flexible — there are dozens of valid ways to write the same query. DQ rules can't afford that flexibility, because:</p>
+                    <ul>
+                        <li>Rules must be <strong>auditable</strong> by someone without deep SAP expertise</li>
+                        <li>Rules must be <strong>comparable</strong> across hundreds of similarly-shaped rules</li>
+                        <li>Rules must <strong>never leak data across source systems</strong> in a multi-system landscape</li>
+                        <li>Rules generated by AI must reach the <strong>same structural quality</strong> as rules written by hand — the dialect is what makes that possible</li>
+                    </ul>
+
+                    <h3>What You'll Learn in This Session</h3>
+                    <ol>
+                        <li><strong>CTEs</strong> — when to use them, and the rules that make them safe</li>
+                        <li><strong>zSourceSystemID Filtering</strong> — the single most important, most frequently missed rule</li>
+                        <li><strong>Comment Standard</strong> — the mandatory header block and inline commenting rules</li>
+                        <li><strong>Aliasing & Naming</strong> — <code>zConcatenatedKey</code>, rule-name limits, acronym preservation</li>
+                        <li><strong>Complete Example</strong> — the Session 1 material rule, now fully compliant</li>
+                        <li><strong>What a Good Rule Looks Like</strong> — a single checklist tying every rule together</li>
+                    </ol>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: var(--canvas); border-left: 4px solid var(--violet); border-radius: 4px;">
+                        <strong>Everything in this session is a rule you must follow, not a stylistic suggestion.</strong> A rule that's logically correct but violates the dialect (e.g., missing <code>zSourceSystemID</code> filtering) is still considered wrong.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('session1-complete')">← Back to Session 1</button>
+                        <button class="btn btn-primary" onclick="go('ctes')">Start: CTEs →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="ctes">
+                <div class="section-card">
+                    <h2>Common Table Expressions (CTEs)</h2>
+                    <p>A CTE (the <code>WITH ... AS (...)</code> block at the top of a query) lets you name an intermediate result and reuse it later in the same query. In DQ rules, CTEs are the standard way to pre-aggregate or pre-filter a related table before joining it to the main table.</p>
+
+                    <h3>When to Use a CTE</h3>
+                    <ul>
+                        <li>Pre-aggregating a child table before joining it to the master (e.g., counting sales orders per material)</li>
+                        <li>The rule needs to check a related table's status, and the join chain is easier to read as a separate step</li>
+                        <li>A multi-table check is clearer broken into named steps rather than one deeply nested query</li>
+                    </ul>
+
+                    <h3>The CTE Rules (All Are Mandatory)</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">1</div>
+                            <div class="checklist-text"><strong>Every CTE must be used.</strong> If you define a CTE, it must be joined or selected from in the outer query. An unused CTE doesn't just add clutter — some engines will error on it, and it always signals unfinished logic.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">2</div>
+                            <div class="checklist-text"><strong>Every CTE must output <code>zSourceSystemID</code>.</strong> Select it explicitly from the base table inside the CTE, even if nothing else in the CTE needs it — the outer query needs it to join safely.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">3</div>
+                            <div class="checklist-text"><strong>Every CTE must filter on <code>zSourceSystemID</code> internally.</strong> Inside the CTE's own <code>WHERE</code>, reference the main table's system ID so the CTE never mixes data from two source systems before it's even joined.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">4</div>
+                            <div class="checklist-text"><strong>Every join to a CTE must include a <code>zSourceSystemID</code> equality</strong> alongside the natural key columns — the same rule that applies to joining two base tables applies to joining a CTE.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">5</div>
+                            <div class="checklist-text"><strong>The CTE is an implementation detail, not a shape change.</strong> The view's outer <code>SELECT</code> must still expose the five field sections in order (Technical → Basic → Org → Value → Activity). Using a CTE internally never changes what the view looks like from the outside.</div>
+                        </div>
+                    </div>
+
+                    <h3>Worked Example: Pre-aggregating a Child Table</h3>
+                    <p><strong>Scenario:</strong> Flag materials that have zero sales orders — the rule needs a count from a child table (VBAP, sales order items) before it can decide.</p>
+
+                    <div class="code-block">-- ============================================================
+-- DQ Rule: Material must have at least one sales order line
+-- Rule ID: MM-0042
+-- View:    Opportunity View (OptSel)
+-- Generated: 2026-08-18
+-- Target: MS SQL Server
+-- ============================================================
+WITH order_summary AS (
+  -- Count sales order lines per material, scoped to the same source system
+  SELECT
+    vbap.zSourceSystemID,
+    vbap.MATNR,
+    COUNT(*) AS order_line_count
+  FROM vbap  -- Sales order item table
+  WHERE vbap.zSourceSystemID = 'Z01'  -- CTE-level system filter (mandatory)
+  GROUP BY vbap.zSourceSystemID, vbap.MATNR
+)
+SELECT
+  -- Syniti Technical Fields
+  mara.zSourceSystemID,
+  CONCAT(mara.zSourceSystemID, '_', mara.MATNR) AS zConcatenatedKey,
+  CASE
+    WHEN order_summary.MATNR IS NULL THEN 1  -- No sales order lines found = error
+    ELSE 0
+  END AS zIsErrorFlag,
+  -- Basic Fields
+  mara.MATNR,
+  mara.MAKTX,
+  -- Activity Context
+  mara.ERSDA
+FROM mara
+LEFT JOIN order_summary
+  ON mara.zSourceSystemID = order_summary.zSourceSystemID  -- CTE join carries zSourceSystemID
+  AND mara.MATNR = order_summary.MATNR
+WHERE mara.zSourceSystemID = 'Z01'  -- Main table system filter (mandatory)
+  AND mara.LVORM = ''  -- Exclude materials marked for deletion</div>
+
+                    <p>Notice: the CTE (<code>order_summary</code>) is used in the outer join, filters on <code>zSourceSystemID</code> internally, and outputs <code>zSourceSystemID</code> so the outer join can match it safely. The outer query still shows Technical Fields first, then Basic, then Activity Context — the CTE never changed that shape.</p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('sql-intro')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('check-ctes')">Knowledge Check →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHECK: CTEs -->
+            <section class="section" data-section="check-ctes">
+                <div class="check-card">
+                    <h2>📝 Knowledge Check: CTEs</h2>
+                    <p style="color: var(--muted); margin-bottom: var(--spacing-xl);">One question on the CTE rules you just read.</p>
+
+                    <div class="quiz-item">
+                        <h3><span class="quiz-number">1</span> CTE Rules</h3>
+                        <p style="color: var(--muted); margin-bottom: var(--spacing-md); font-size: 0.95rem;">What happens if you define a CTE but never reference it in the outer query?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q11" value="a"> It's fine — unused CTEs are optimized away automatically</label>
+                            <label class="quiz-option"><input type="radio" name="q11" value="b"> It's a dangling CTE — a sign of unfinished logic that must be fixed</label>
+                            <label class="quiz-option"><input type="radio" name="q11" value="c"> It automatically becomes part of the Activity Context section</label>
+                            <label class="quiz-option"><input type="radio" name="q11" value="d"> It replaces the need for a WHERE clause</label>
+                        </div>
+                        <button class="quiz-button" onclick="checkAnswer('q11', 'b', 'Correct! Every CTE must be joined or selected from in the outer query. A dangling CTE signals unfinished logic.')">Check Answer</button>
+                        <div id="q11-result" class="quiz-results hidden"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('ctes')">← Back to Lesson</button>
+                        <button class="btn btn-primary" onclick="go('zsource')">Next Lesson →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="zsource">
+                <div class="section-card">
+                    <h2>zSourceSystemID Filtering — Mandatory Everywhere</h2>
+                    <p>This is the single most important, and most frequently missed, rule in the entire dialect. In a multi-system landscape, without this filter a rule can silently mix data from two different SAP systems and produce a meaningless result.</p>
+
+                    <h3>The Four Places It Must Appear</h3>
+
+                    <h4>1. Main Table WHERE Clause</h4>
+                    <p>The primary table in the <code>FROM</code> clause must always carry a <code>WHERE</code> filter on <code>zSourceSystemID</code>:</p>
+                    <div class="code-block">FROM MARA
+LEFT OUTER JOIN ...
+WHERE MARA.zSourceSystemID = '&lt;system&gt;'</div>
+
+                    <h4>2. Every Join's ON Clause</h4>
+                    <p>When a join's <code>ON</code> clause equates the same field name across two tables (a cross-table parity/lookup check — not a foreign-key-to-description join), pair it with a <code>zSourceSystemID</code> equality:</p>
+                    <div class="code-block">ON t001.zSourceSystemID = t009.zSourceSystemID
+   AND t001.PERIV = t009.PERIV</div>
+                    <p>This applies to joins <strong>inside a CTE's own joins too</strong> — a CTE is never exempt from this rule.</p>
+
+                    <h4>3. Every CTE's Internal WHERE</h4>
+                    <p>Any CTE sourcing from a base table filters on <code>zSourceSystemID</code> in its own <code>WHERE</code>, referencing the main table's value:</p>
+                    <div class="code-block">WITH cte AS (
+  SELECT ... FROM table_a
+  WHERE zSourceSystemID = &lt;main_table&gt;.zSourceSystemID
+)</div>
+
+                    <h4>4. Every Join to a CTE's Output</h4>
+                    <div class="code-block">FROM main_table
+LEFT JOIN cte
+  ON main_table.zSourceSystemID = cte.zSourceSystemID
+  AND main_table.key_field = cte.key_field</div>
+
+                    <h3>Two Things You Must Never Write</h3>
+                    <div class="checklist">
+                        <div class="checklist-item bad">
+                            <div class="checklist-icon">✗</div>
+                            <div class="checklist-text"><strong>Never write a literal:</strong> <code>'Z01' AS [zSourceSystemID]</code>. It is always a live column reference off the driving table — a literal defeats the purpose of the filter entirely.</div>
+                        </div>
+                        <div class="checklist-item bad">
+                            <div class="checklist-icon">✗</div>
+                            <div class="checklist-text"><strong>Never hardcode <code>MANDT</code></strong> against a fixed client number anywhere in the SQL. Like <code>zSourceSystemID</code>, it is always a column reference, never a constant.</div>
+                        </div>
+                    </div>
+
+                    <h3>Why This Matters</h3>
+                    <p>Picture a rule that joins <code>MARA</code> (materials) to <code>T006</code> (units of measure) without a <code>zSourceSystemID</code> pairing. If both systems load their own <code>T006</code> rows into the same physical table, the join can match a material from System A against a unit-of-measure row that only exists in System B. The rule will produce a <em>plausible-looking but wrong</em> result — exactly the kind of silent failure this filter exists to prevent.</p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('check-ctes')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('check-zsource')">Knowledge Check →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHECK: zSourceSystemID -->
+            <section class="section" data-section="check-zsource">
+                <div class="check-card">
+                    <h2>📝 Knowledge Check: zSourceSystemID Filtering</h2>
+                    <p style="color: var(--muted); margin-bottom: var(--spacing-xl);">One question on the four mandatory placements you just read about.</p>
+
+                    <div class="quiz-item">
+                        <h3><span class="quiz-number">1</span> zSourceSystemID Filtering</h3>
+                        <p style="color: var(--muted); margin-bottom: var(--spacing-md); font-size: 0.95rem;">Which statement about zSourceSystemID is correct?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q10" value="a"> It only needs to appear in the outer query's WHERE clause</label>
+                            <label class="quiz-option"><input type="radio" name="q10" value="b"> It can be written as a literal value like 'Z01' for simplicity</label>
+                            <label class="quiz-option"><input type="radio" name="q10" value="c"> It must be filtered in the main table WHERE, paired in every join, and filtered/output inside every CTE</label>
+                            <label class="quiz-option"><input type="radio" name="q10" value="d"> CTEs are exempt from zSourceSystemID filtering since they're internal</label>
+                        </div>
+                        <button class="quiz-button" onclick="checkAnswer('q10', 'c', 'Correct! zSourceSystemID filtering is mandatory in the main table WHERE, every join ON clause, and every CTE (both filtering internally and outputting the column) — CTEs are never exempt.')">Check Answer</button>
+                        <div id="q10-result" class="quiz-results hidden"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('zsource')">← Back to Lesson</button>
+                        <button class="btn btn-primary" onclick="go('comments')">Next Lesson →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="comments">
+                <div class="section-card">
+                    <h2>The Mandatory Comment Standard</h2>
+                    <p>Every generated rule — local, AI-derived, or bulk — must carry the same commenting discipline. The goal: a reader without SAP expertise can follow the business logic just from the comments.</p>
+
+                    <h3>1. The Header Block (Non-Negotiable)</h3>
+                    <p>Every SQL output begins with this exact format — never modified, abbreviated, or omitted:</p>
+                    <div class="code-block">-- ============================================================
+-- DQ Rule: [Rule name received]
+-- Rule ID: [RuleID received]
+-- View:    [Opportunity view or Report View]
+-- Generated: [Generation Date]
+-- Target: MS SQL Server
+-- ============================================================</div>
+                    <p>Every bracketed placeholder is replaced with the real value — the rule's actual name, its ID, whether this is the OptSel ("Opportunity view") or RptSel ("Report View"), and the actual generation date.</p>
+
+                    <h3>2. Section Headers</h3>
+                    <p>Section headers use the simple dash format only:</p>
+                    <div class="code-block">-- Basic Fields
+-- Activity Context</div>
+                    <p>Never a decorative bracket/equals wrapper like <code>/* ===== Basic Fields ===== */</code>. Keep section comments clean and minimal — they're signposts, not banners.</p>
+
+                    <h3>3. Every WHERE, JOIN, and CASE Needs a Comment</h3>
+                    <p>Each condition carries a <code>/* ... */</code> or <code>--</code> comment explaining its business meaning in plain language:</p>
+                    <div class="code-block">-- Identify active customers with no sales orders
+-- Join VBAK to determine order existence</div>
+                    <p>That two-line example is the <strong>target style</strong> — the maximum, not a starting point to expand on. Comments explain only:</p>
+                    <ol>
+                        <li>The rule's purpose</li>
+                        <li>Important business logic</li>
+                        <li>Non-obvious joins</li>
+                    </ol>
+
+                    <h3>What Comments Must Never Do</h3>
+                    <div class="checklist">
+                        <div class="checklist-item bad">
+                            <div class="checklist-icon">✗</div>
+                            <div class="checklist-text">Narrate the SQL syntax line-by-line ("this selects the material number")</div>
+                        </div>
+                        <div class="checklist-item bad">
+                            <div class="checklist-icon">✗</div>
+                            <div class="checklist-text">Discuss performance tuning, indexing suggestions, or uniqueness confidence inline — that belongs in separate notes, never inside the SQL</div>
+                        </div>
+                        <div class="checklist-item bad">
+                            <div class="checklist-icon">✗</div>
+                            <div class="checklist-text">Mention AI, a model, or that the SQL (or any part of it) was generated or touched by one — every comment reads as ordinary engineering commentary, regardless of how the rule was produced</div>
+                        </div>
+                    </div>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: var(--canvas); border-left: 4px solid var(--violet); border-radius: 4px;">
+                        <strong>Why this matters:</strong> Comments are what make a rule <em>auditable</em> — one of the four properties of a good rule from Session 1's FAQ. A rule nobody can explain from its comments alone isn't finished, no matter how correct its logic is.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('check-zsource')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('aliasing')">Next: Aliasing & Naming →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="aliasing">
+                <div class="section-card">
+                    <h2>Aliasing & Naming Conventions</h2>
+                    <p>Consistent naming is what lets someone read a rule they've never seen before and immediately recognize its parts. These conventions apply across every rule in the Studio.</p>
+
+                    <h3><code>zConcatenatedKey</code> — No Space, Underscore Delimiter</h3>
+                    <p>The alias is always written as one word: <code>zConcatenatedKey</code>. Two rules govern its construction:</p>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Always use <code>_</code> (underscore)</strong> as the delimiter between concatenated parts. Never <code>|</code> (pipe) or any other delimiter — standardize to underscore across every <code>zConcatenatedKey</code> in the codebase.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>It must actually be unique at the query's grain.</strong> If a join fans the master record out to multiple child rows, the key must include enough of the child table's fields to stay unique per output row — not just the header table's key.</div>
+                        </div>
+                    </div>
+                    <div class="code-block">CONCAT(MARA.zSourceSystemID, '_', MARA.MATNR) AS zConcatenatedKey</div>
+
+                    <h3>Rule Name Length</h3>
+                    <p>Rule names are business-friendly sentences, not technical identifiers — but they still have hard limits:</p>
+                    <ul>
+                        <li><strong>Target:</strong> ≤ 85 characters</li>
+                        <li><strong>Absolute maximum:</strong> 100 characters</li>
+                    </ul>
+                    <p>If a name doesn't fit, tighten the wording rather than abbreviating into something unclear — "Material must have valid base unit of measure" beats "Matl must have valid BUoM" even though the second is shorter.</p>
+
+                    <h3>Preserve SAP Acronyms</h3>
+                    <p>Never expand or lowercase standard SAP/business acronyms in rule names or comments. These stay exactly as written:</p>
+                    <p style="font-family: var(--font-mono); background: var(--panel); padding: var(--spacing-md); border-radius: 8px; font-size: 0.9rem;">
+                        PIR · BOM · MRP · PO · SO · GL · AP · AR · UoM · CoA · FI
+                    </p>
+                    <p>"Material must have valid base <strong>UoM</strong>" is correct. "Material must have valid base unit of measure" is also acceptable prose, but never write "uom" lowercase or spell out "Unit of Measure" inconsistently within the same rule set.</p>
+
+                    <h3>Field Section Order (Recap from Session 1)</h3>
+                    <p>Every generated rule's <code>SELECT</code> exposes fields in this exact order — this is a naming/structuring convention as much as a technical one:</p>
+                    <ol>
+                        <li><strong>Syniti Technical Fields</strong> — always exactly <code>zSourceSystemID</code>, <code>zConcatenatedKey</code>, <code>zIsErrorFlag</code>, in that order, always first</li>
+                        <li><strong>Basic Fields</strong> — identification/descriptive data answering "what is this record?" (material number, customer ID, name, description)</li>
+                        <li><strong>Organizational Context</strong> — structural/hierarchical fields answering "where in the org does this belong?" (cost center, company code, plant, division) — never put these in Value Context</li>
+                        <li><strong>Value Context</strong> — only money, amounts, prices, rates, currencies — "how much is this worth?" — never dates, never org fields</li>
+                        <li><strong>Activity Context</strong> — only dates, times, temporal fields — "when did this happen?" — never monetary values, never org fields</li>
+                    </ol>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('comments')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('sql-example')">Next: Complete Example →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="sql-example">
+                <div class="section-card">
+                    <h2>Complete Example: Every Rule Applied Together</h2>
+                    <p>Session 1 showed a simplified version of the material UoM rule. Here is the same rule, now fully compliant with every standard from this session: header block, section comments, <code>zSourceSystemID</code> filtering everywhere it's required, correct aliasing, and business-language inline comments.</p>
+
+                    <h3>OptSel — Fully Compliant</h3>
+                    <div class="code-block">-- ============================================================
+-- DQ Rule: Material must have valid, non-deleted base unit of measure
+-- Rule ID: MM-0017
+-- View:    Opportunity View (OptSel)
+-- Generated: 2026-08-18
+-- Target: MS SQL Server
+-- ============================================================
+WITH valid_uom AS (
+  -- Valid units of measure for this source system, English descriptions only
+  SELECT
+    t006.zSourceSystemID,
+    t006.MSEHI
+  FROM t006
+  WHERE t006.zSourceSystemID = MARA.zSourceSystemID  -- CTE-level system filter (mandatory)
+    AND t006.SPRAS = 'E'
+)
+SELECT
+  -- Syniti Technical Fields
+  MARA.zSourceSystemID,
+  CONCAT(MARA.zSourceSystemID, '_', MARA.MATNR) AS zConcatenatedKey,
+  CASE
+    WHEN MARA.MEINS IS NULL THEN 1                 -- No base UoM assigned
+    WHEN valid_uom.MSEHI IS NULL THEN 1            -- MEINS not found in valid UoM list
+    ELSE 0
+  END AS zIsErrorFlag,
+  -- Basic Fields
+  MARA.MATNR,
+  MARA.MAKTX,
+  MARA.MEINS,
+  -- Activity Context
+  MARA.ERSDA
+FROM MARA
+LEFT JOIN valid_uom
+  ON MARA.zSourceSystemID = valid_uom.zSourceSystemID  -- CTE join carries zSourceSystemID
+  AND MARA.MEINS = valid_uom.MSEHI
+WHERE MARA.zSourceSystemID = 'Z01'   -- Main table system filter (mandatory)
+  AND MARA.LVORM = ''                -- Exclude materials marked for deletion</div>
+
+                    <h3>RptSel — The Report Wrapper</h3>
+                    <div class="code-block">-- ============================================================
+-- DQ Rule: Material must have valid, non-deleted base unit of measure
+-- Rule ID: MM-0017
+-- View:    Report View (RptSel)
+-- Generated: 2026-08-18
+-- Target: MS SQL Server
+-- ============================================================
+SELECT * FROM MM_0017_OptSel WHERE zIsErrorFlag = 1</div>
+
+                    <h3>What Changed From the Session 1 Version</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-box critical">
+                            <h4>✗ Session 1's Simplified Version</h4>
+                            <p>Missing header block</p>
+                            <p>Missing <code>zSourceSystemID</code> filter on main table and CTE</p>
+                            <p>No <code>zConcatenatedKey</code></p>
+                            <p>Minimal inline comments</p>
+                        </div>
+                        <div class="comparison-box good">
+                            <h4>✓ Fully Compliant Version</h4>
+                            <p>Header block with rule name, ID, view type, date</p>
+                            <p><code>zSourceSystemID</code> filtered on MARA and inside the CTE, paired in the join</p>
+                            <p><code>zConcatenatedKey</code> built with underscore delimiter, unique at this grain</p>
+                            <p>Every CASE branch and JOIN explains its business meaning</p>
+                        </div>
+                    </div>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: var(--canvas); border-left: 4px solid var(--violet); border-radius: 4px;">
+                        <strong>Same logic, same result set — different level of production-readiness.</strong> This is the gap this entire session exists to close.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('aliasing')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('check-sql-example')">Knowledge Check →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHECK: Complete Example -->
+            <section class="section" data-section="check-sql-example">
+                <div class="check-card">
+                    <h2>📝 Knowledge Check: Spot the Missing Standard</h2>
+                    <p style="color: var(--muted); margin-bottom: var(--spacing-xl);">A code-review scenario applying everything from CTEs through the complete example.</p>
+
+                    <div class="quiz-item">
+                        <h3><span class="quiz-number">1</span> Scenario: Spot the Missing Standard</h3>
+                        <p style="color: var(--muted); margin-bottom: var(--spacing-lg); font-size: 0.95rem;"><strong>Scenario:</strong> A colleague submits this CTE for review:</p>
+                        <div class="code-block">WITH vendor_check AS (
+  SELECT MATNR, LIFNR
+  FROM lfa1
+  WHERE LOEVM = ''
+)
+SELECT * FROM mara
+LEFT JOIN vendor_check ON mara.MATNR = vendor_check.MATNR</div>
+
+                        <div style="background: var(--canvas); padding: var(--spacing-lg); border-radius: 8px;">
+                            <p style="margin-bottom: var(--spacing-md);"><strong>Question:</strong> What is missing from this CTE and its join?</p>
+                            <div class="quiz-options">
+                                <label class="quiz-option"><input type="radio" name="q12" value="a"> Nothing — this CTE is fully compliant</label>
+                                <label class="quiz-option"><input type="radio" name="q12" value="b"> The CTE doesn't output or filter on zSourceSystemID, and the join doesn't pair it either</label>
+                                <label class="quiz-option"><input type="radio" name="q12" value="c"> The CTE should use a RIGHT JOIN instead of LEFT JOIN</label>
+                                <label class="quiz-option"><input type="radio" name="q12" value="d"> CTEs should never use WHERE clauses</label>
+                            </div>
+                            <button class="quiz-button" onclick="checkAnswer('q12', 'b', 'Correct! The CTE must select and filter zSourceSystemID internally, and the outer JOIN must pair mara.zSourceSystemID = vendor_check.zSourceSystemID alongside the MATNR match — otherwise the join can silently cross source systems.')">Check Answer</button>
+                            <div id="q12-result" class="quiz-results hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('sql-example')">← Back to Lesson</button>
+                        <button class="btn btn-primary" onclick="go('good-rule')">Next Lesson →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="good-rule">
+                <div class="section-card">
+                    <h2>What a Good Rule Looks Like</h2>
+                    <p>This is the single checklist that ties Session 1 (concepts) and Session 2 (dialect) together. Run any rule — yours or someone else's — through this list before considering it finished.</p>
+
+                    <h3>Business Correctness</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>The SQL actually tests what the rule name says.</strong> A rule named "vendor must have a tax ID" whose <code>CASE</code> checks something else is wrong, no matter how clean the SQL is.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>The error condition lives in the CASE, not the WHERE.</strong> OptSel returns the whole universe; WHERE is only for scope (system filter, deletion-flag exclusions) — never for the condition that makes a record "bad".</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Deletion flags and status fields aren't confused.</strong> Deletion flags (<code>LVORM</code>, <code>LOEKZ</code>, <code>LOEVM</code>) exclude records in <code>WHERE</code>. Status fields (<code>MMSTA</code>, <code>PSTAT</code>, <code>STATU</code>) drive the flag in <code>CASE</code>. The same condition never appears in both places.</div>
+                        </div>
+                    </div>
+
+                    <h3>Structural Correctness</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong><code>zIsErrorFlag</code> is INTEGER 1/0</strong> — never <code>'Yes'</code>/<code>'No'</code> or any text value.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>RptSel is a pure wrapper:</strong> <code>SELECT * FROM OptSel WHERE zIsErrorFlag = 1</code> — nothing more, nothing less.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>All five field sections are present, in order:</strong> Syniti Technical Fields → Basic Fields → Organizational Context → Value Context → Activity Context.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong><code>zSourceSystemID</code> filtering is present everywhere required:</strong> main table WHERE, every join's ON clause, every CTE's internal WHERE, every join to a CTE's output.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Every CTE is used</strong> — none are dangling — and each one outputs and filters on <code>zSourceSystemID</code>.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong><code>zConcatenatedKey</code> is unique at the query's grain</strong> and built with underscore delimiters.</div>
+                        </div>
+                    </div>
+
+                    <h3>Documentation Correctness</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>The header block is present and complete</strong> — rule name, rule ID, view type, generation date, target platform.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Every WHERE, JOIN, and CASE has a plain-language comment</strong> explaining the business reason — readable by someone without SAP expertise.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>The rule name is ≤ 85 characters (target), never over 100</strong>, and preserves standard SAP acronyms (PIR, BOM, MRP, PO, SO, GL, AP, AR, UoM, CoA, FI) exactly.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>The description follows Fetch / Check / Return</strong> — what data is fetched, what condition is checked, what the rule returns.</div>
+                        </div>
+                    </div>
+
+                    <h3>The Four Properties (From Session 1, Now Concrete)</h3>
+                    <p>Session 1's FAQ said good rules are business-defined, measurable, auditable, and actionable. This checklist is what those four words mean at the SQL level:</p>
+                    <ul>
+                        <li><strong>Business-defined</strong> → the SQL tests what the name says (Business Correctness)</li>
+                        <li><strong>Measurable</strong> → <code>zIsErrorFlag</code> is a clean 1/0 integer you can count (Structural Correctness)</li>
+                        <li><strong>Auditable</strong> → the header block and inline comments let anyone follow the logic (Documentation Correctness)</li>
+                        <li><strong>Actionable</strong> → RptSel isolates exactly the records someone needs to fix (Structural Correctness)</li>
+                    </ul>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: #FEF3E2; border-left: 4px solid var(--warn); border-radius: 4px;">
+                        <strong>A rule that fails even one item above is not done yet</strong> — regardless of who or what wrote it. This checklist applies identically to hand-written, locally-derived, and AI-generated rules.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('check-sql-example')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('session2-complete')">Finish Session 2 →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SESSION 2 COMPLETE -->
+            <section class="section" data-section="session2-complete">
+                <div class="section-card" style="background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); color: var(--white);">
+                    <h2 style="color: var(--white); border-color: var(--white);">🎓 Session 2 Complete</h2>
+                    <p style="color: rgba(255,255,255,0.9);">You've completed <strong>SQL Best Practices for DQ Rules</strong>! You now understand:</p>
+                    <ul style="color: var(--white);">
+                        <li>✓ When and how to use CTEs safely (every CTE used, filtered, and joined on zSourceSystemID)</li>
+                        <li>✓ Why zSourceSystemID filtering is mandatory in four specific places</li>
+                        <li>✓ The mandatory header block and inline comment standard</li>
+                        <li>✓ Aliasing conventions: zConcatenatedKey, rule name limits, acronym preservation</li>
+                        <li>✓ How a fully compliant rule differs from a simplified one</li>
+                        <li>✓ The complete checklist for what makes any DQ rule "good"</li>
+                    </ul>
+
+                    <h3 style="color: var(--white); margin-top: var(--spacing-lg);">Next Steps</h3>
+                    <div class="courses-grid" style="margin-top: var(--spacing-lg);">
+                        <div class="course-card" style="border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.1);">
+                            <div class="course-status coming-soon">Coming Soon</div>
+                            <h3 style="color: var(--white);">Methodology Studio Intro</h3>
+                            <p style="color: rgba(255,255,255,0.85);">Learn to use the Studio to design, derive, and export DQ rules — where everything from Sessions 1 & 2 gets applied hands-on.</p>
+                            <div class="course-meta" style="color: rgba(255,255,255,0.7);">
+                                <span>~60 minutes</span>
+                                <span>8 sections</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('good-rule')">← Back</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <p><strong>Syniti DQ Training Academy</strong> — Building trustworthy data systems</p>
+                <p>Questions? Reach out to your data quality team or visit the <a href="/" style="color: var(--violet); text-decoration: none; font-weight: 600;">Methodology Studio documentation</a>.</p>
+                <p style="margin-top: var(--spacing-lg); font-size: 0.85rem;">Last updated: August 2026</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let currentSection = 'intro';
+
+        // Ordered list of every section id — used for progress bar %.
+        const allSectionIds = [
+            'intro', 'what-is-dq', 'check-what-is-dq', 'why-matters', 'dimensions', 'check-dimensions',
+            'lifecycle', 'check-lifecycle', 'rules', 'check-rules', 'issues', 'concepts', 'check-concepts',
+            'example', 'check-example', 'faq', 'session1-complete',
+            'sql-intro', 'ctes', 'check-ctes', 'zsource', 'check-zsource', 'comments', 'aliasing',
+            'sql-example', 'check-sql-example', 'good-rule', 'session2-complete'
+        ];
+
+        const session2Ids = ['sql-intro', 'ctes', 'check-ctes', 'zsource', 'check-zsource', 'comments', 'aliasing', 'sql-example', 'check-sql-example', 'good-rule', 'session2-complete'];
+
+        function go(section) {
+            currentSection = section;
+            updateNavigation();
+            scrollToTop();
+        }
+
+        function updateNavigation() {
+            // Sidebar highlight
+            document.querySelectorAll('.sidebar-nav a').forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`.sidebar-nav a[data-section="${currentSection}"]`);
+            if (activeLink) activeLink.classList.add('active');
+
+            // Show only the active section — every other section (including
+            // knowledge checks and completion cards) is hidden.
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            const activeSection = document.querySelector(`.section[data-section="${currentSection}"]`);
+            if (activeSection) activeSection.classList.add('active');
+
+            // Progress bar
+            const idx = allSectionIds.indexOf(currentSection);
+            const progress = ((idx + 1) / allSectionIds.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+
+            // Subtitle
+            document.getElementById('course-subtitle').textContent = session2Ids.includes(currentSection)
+                ? 'SQL Best Practices Course (Session 2)'
+                : 'Data Quality Fundamentals Course (Session 1)';
+
+            // Hero only on the very first screen
+            document.getElementById('hero-section').style.display = currentSection === 'intro' ? 'block' : 'none';
+        }
+
+        // FAQ accordion
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const toggle = element.querySelector('.faq-toggle');
+
+            document.querySelectorAll('.faq-answer.open').forEach(open => {
+                if (open !== answer) {
+                    open.classList.remove('open');
+                    open.previousElementSibling.querySelector('.faq-toggle').classList.remove('open');
+                }
+            });
+
+            answer.classList.toggle('open');
+            toggle.classList.toggle('open');
+        }
+
+        // Quiz: single-answer check
+        function checkAnswer(questionId, correctAnswer, feedbackText) {
+            const selected = document.querySelector(`input[name="${questionId}"]:checked`);
+            const resultDiv = document.getElementById(`${questionId}-result`);
+
+            if (!selected) {
+                resultDiv.innerHTML = '<h4>⚠️ Please select an answer</h4>';
+                resultDiv.classList.remove('hidden', 'success');
+                resultDiv.classList.add('pending');
+                return;
+            }
+
+            const isCorrect = selected.value === correctAnswer;
+            document.querySelectorAll(`input[name="${questionId}"]`).forEach(option => {
+                const label = option.closest('.quiz-option');
+                if (option.value === correctAnswer) {
+                    label.classList.add('correct');
+                } else if (option.checked && !isCorrect) {
+                    label.classList.add('incorrect');
+                }
+            });
+
+            if (isCorrect) {
+                resultDiv.innerHTML = `<h4>✓ ${feedbackText}</h4>`;
+                resultDiv.classList.remove('hidden', 'pending');
+                resultDiv.classList.add('success');
+            } else {
+                resultDiv.innerHTML = `<h4>✗ Incorrect. ${feedbackText}</h4>`;
+                resultDiv.classList.remove('hidden', 'success');
+                resultDiv.classList.add('pending');
+            }
+        }
+
+        // Matching exercise (Dimensions check)
+        const correctMatches = {
+            'rule1': 'dim-completeness',
+            'rule2': 'dim-consistency',
+            'rule3': 'dim-validity',
+            'rule4': 'dim-uniqueness'
+        };
+
+        function selectMatchingItem(element) {
+            const rule = element.getAttribute('data-rule');
+            const dimension = element.getAttribute('data-dimension');
+
+            if (rule) {
+                document.querySelectorAll(`.matching-item[data-rule="${rule}"]`).forEach(el => el.classList.remove('selected'));
+                element.classList.add('selected');
+            }
+
+            if (dimension) {
+                document.querySelectorAll(`.matching-item[data-dimension="${dimension}"]`).forEach(el => el.classList.remove('selected'));
+                element.classList.add('selected');
+            }
+        }
+
+        function checkMatching() {
+            let correctCount = 0;
+
+            document.querySelectorAll('.matching-item[data-rule]').forEach(ruleItem => {
+                const rule = ruleItem.getAttribute('data-rule');
+                if (ruleItem.classList.contains('selected')) {
+                    let foundMatch = false;
+                    document.querySelectorAll('.matching-item[data-dimension]').forEach(dimItem => {
+                        if (dimItem.classList.contains('selected') && !foundMatch) {
+                            const dimension = dimItem.getAttribute('data-dimension');
+                            if (correctMatches[rule] === dimension) {
+                                dimItem.classList.add('correct');
+                                ruleItem.classList.add('correct');
+                                correctCount++;
+                                foundMatch = true;
+                            } else {
+                                dimItem.classList.add('incorrect');
+                                ruleItem.classList.add('incorrect');
+                            }
+                        }
+                    });
+                }
+            });
+
+            const resultDiv = document.getElementById('matching-result');
+            if (correctCount === 4) {
+                resultDiv.innerHTML = `<h4>✓ Perfect! All 4 rules matched correctly to their dimensions.</h4><p>Rule 1 = Completeness | Rule 2 = Consistency | Rule 3 = Validity | Rule 4 = Uniqueness</p>`;
+                resultDiv.classList.remove('hidden', 'pending');
+                resultDiv.classList.add('success');
+            } else if (correctCount > 0) {
+                resultDiv.innerHTML = `<h4>⚠️ ${correctCount}/4 correct. Review the highlighted pairs.</h4>`;
+                resultDiv.classList.remove('hidden', 'success');
+                resultDiv.classList.add('pending');
+            } else {
+                resultDiv.innerHTML = `<h4>⚠️ No correct matches yet. Think about what each rule is checking for.</h4>`;
+                resultDiv.classList.remove('hidden', 'success');
+                resultDiv.classList.add('pending');
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        updateNavigation();
+    </script>
+</body>
+</html>

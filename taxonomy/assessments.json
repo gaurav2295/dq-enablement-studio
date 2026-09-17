@@ -1,0 +1,566 @@
+{
+ "_about": "Assessment items attached to units and learning paths. kind mcq: question/options/answer/feedback. kind sql_practice: prompt/starter_sql/expected_notes (hook for future SQL practice integration). Not a browse type - rendered inline on unit pages and as path checkpoints.",
+ "items": [
+  {
+   "id": "as-fund-what-is-dq",
+   "unit_id": "con-what-is-data-quality",
+   "kind": "mcq",
+   "question": "What is the primary focus of Data Quality?",
+   "options": {
+    "a": "Making data look nice in dashboards",
+    "b": "Ensuring data conforms to standards and meets business expectations",
+    "c": "Storing more data than competitors",
+    "d": "Reducing database storage costs"
+   },
+   "answer": "b",
+   "source": "academy:landing.html#q1",
+   "feedback_correct": "Correct! DQ is about conformance to standards and business expectations."
+  },
+  {
+   "id": "as-fund-dimension-completeness",
+   "unit_id": "con-dq-dimensions",
+   "kind": "mcq",
+   "question": "Which DQ dimension refers to required fields being populated?",
+   "options": {
+    "a": "Accuracy",
+    "b": "Completeness",
+    "c": "Conformity",
+    "d": "Uniqueness"
+   },
+   "answer": "b",
+   "source": "academy:landing.html#q6",
+   "feedback_correct": "Correct! Completeness means required fields are populated with no critical nulls or gaps.",
+   "rewritten": "CONFLICT-001 seven-dimension vocabulary"
+  },
+  {
+   "id": "as-fund-lifecycle",
+   "unit_id": "con-dq-lifecycle",
+   "kind": "mcq",
+   "question": "What is the correct order of the DQ lifecycle?",
+   "options": {
+    "a": "Remediate → Profile → Rule → Recheck",
+    "b": "Profile → Rule → Remediate → Recheck",
+    "c": "Rule → Remediate → Profile → Recheck",
+    "d": "Recheck → Profile → Rule → Remediate"
+   },
+   "answer": "b",
+   "source": "academy:landing.html#q2",
+   "feedback_correct": "Correct! Profile first to understand data, then Rule, Remediate issues, and Recheck."
+  },
+  {
+   "id": "as-fund-rule-name-length",
+   "unit_id": "std-rule-name-heuristics",
+   "kind": "mcq",
+   "question": "What is the recommended maximum length for a rule name?",
+   "options": {
+    "a": "50 characters",
+    "b": "85 characters (target); 100 characters (absolute max)",
+    "c": "150 characters",
+    "d": "No limit; as long as needed"
+   },
+   "answer": "b",
+   "source": "academy:landing.html#q5",
+   "feedback_correct": "Correct! Target ≤85 chars, absolute max 100 chars. Keep rule names concise and business-friendly."
+  },
+  {
+   "id": "as-fund-view-types",
+   "unit_id": "con-view-types",
+   "kind": "mcq",
+   "question": "What is the key difference between OptSel and RptSel?",
+   "options": {
+    "a": "OptSel returns errors only; RptSel returns all records",
+    "b": "OptSel returns all records with error flags; RptSel filters to only errors",
+    "c": "OptSel is for SQL; RptSel is for reporting",
+    "d": "There is no difference; they are the same"
+   },
+   "answer": "b",
+   "source": "academy:landing.html#q3",
+   "feedback_correct": "Correct! OptSel = universe (all records with flags), RptSel = wrapper (errors only)."
+  },
+  {
+   "id": "as-fund-deletion-flags",
+   "unit_id": "prn-deletion-flags-belong-in-where",
+   "kind": "mcq",
+   "question": "Where do deletion flags (LVORM, LOEKZ) belong in a rule?",
+   "options": {
+    "a": "In the CASE statement that computes zIsErrorFlag",
+    "b": "In the WHERE clause to exclude deleted records",
+    "c": "In the SELECT statement as a column",
+    "d": "Deletion flags are not used in DQ rules"
+   },
+   "answer": "b",
+   "source": "academy:landing.html#q4",
+   "feedback_correct": "Correct! Deletion flags go in WHERE to exclude deleted records (they are out of scope)."
+  },
+  {
+   "id": "as-fund-dimension-scenario",
+   "unit_id": "con-dq-dimensions",
+   "kind": "mcq",
+   "question": "Scenario: You're designing a rule for purchase orders. The business requires: \"Every open PO must have a valid vendor reference that exists in the vendor master.\"",
+   "options": {
+    "a": "Completeness only (vendor field must be filled)",
+    "b": "Completeness and Integrity (field filled AND vendor exists in the master)",
+    "c": "Integrity only (vendor reference resolves to the vendor master)",
+    "d": "Accuracy (vendor details are accurate)"
+   },
+   "answer": "b",
+   "source": "academy:landing.html#q8",
+   "feedback_correct": "Correct! The rule tests both: (1) Completeness (vendor field must be filled) AND (2) Integrity (the reference must resolve to the vendor master).",
+   "rewritten": "CONFLICT-001 seven-dimension vocabulary"
+  },
+  {
+   "id": "as-fund-status-scope",
+   "unit_id": "con-deletion-flags-vs-status-fields",
+   "kind": "mcq",
+   "question": "Follow-up scenario: Where would you place the condition \"EKKO.EKSTAT = 'OPEN'\" in the purchase-order rule?",
+   "options": {
+    "a": "In the CASE statement as part of the error condition",
+    "b": "In the WHERE clause as a scope filter (which POs to check)",
+    "c": "In the SELECT statement as an additional column",
+    "d": "Status fields should not appear in rules"
+   },
+   "answer": "b",
+   "source": "academy:landing.html#q9",
+   "feedback_correct": "Correct! Status fields like EKSTAT go in WHERE to define scope (only open POs are in the universe) — scope filters live in WHERE, the error condition lives in CASE."
+  },
+  {
+   "id": "as-sql-unused-cte",
+   "unit_id": "std-cte-rules",
+   "kind": "mcq",
+   "question": "What happens if you define a CTE but never reference it in the outer query?",
+   "options": {
+    "a": "It's fine — unused CTEs are optimized away automatically",
+    "b": "It's a dangling CTE — a sign of unfinished logic that must be fixed",
+    "c": "It automatically becomes part of the Activity Context section",
+    "d": "It replaces the need for a WHERE clause"
+   },
+   "answer": "b",
+   "source": "academy:landing.html#q11",
+   "feedback_correct": "Correct! Every CTE must be joined or selected from in the outer query. A dangling CTE signals unfinished logic."
+  },
+  {
+   "id": "as-sql-zsource-statement",
+   "unit_id": "std-zsourcesystemid-convention",
+   "kind": "mcq",
+   "question": "Which statement about zSourceSystemID is correct?",
+   "options": {
+    "a": "It only needs to appear in the outer query's WHERE clause",
+    "b": "It can be written as a literal value like 'Z01' for simplicity",
+    "c": "It must be filtered in the main table WHERE, paired in every join, and filtered/output inside every CTE",
+    "d": "CTEs are exempt from zSourceSystemID filtering since they're internal"
+   },
+   "answer": "c",
+   "source": "academy:landing.html#q10",
+   "feedback_correct": "Correct! zSourceSystemID filtering is mandatory in the main table WHERE, every join ON clause, and every CTE (both filtering internally and outputting the column) — CTEs are never exempt."
+  },
+  {
+   "id": "as-sql-cte-review",
+   "unit_id": "std-cte-rules",
+   "kind": "mcq",
+   "question": "Scenario: A colleague submits this CTE for review:",
+   "options": {
+    "a": "Nothing — this CTE is fully compliant",
+    "b": "The CTE doesn't output or filter on zSourceSystemID, and the join doesn't pair it either",
+    "c": "The CTE should use a RIGHT JOIN instead of LEFT JOIN",
+    "d": "CTEs should never use WHERE clauses"
+   },
+   "answer": "b",
+   "source": "academy:landing.html#q12",
+   "feedback_correct": "Correct! The CTE must select and filter zSourceSystemID internally, and the outer JOIN must pair mara.zSourceSystemID = vendor_check.zSourceSystemID alongside the MATNR match — otherwise the join can silently cross source systems."
+  },
+  {
+   "id": "as-pre-optsel-rptsel",
+   "unit_id": "con-view-types",
+   "kind": "mcq",
+   "question": "OptSel vs RptSel — Which statement is correct?",
+   "options": {
+    "a": "OptSel returns only error rows; RptSel returns all rows",
+    "b": "OptSel returns all rows with zIsErrorFlag (1 or 0); RptSel wraps OptSel to show only errors",
+    "c": "OptSel and RptSel are the same thing, just different names",
+    "d": "OptSel is for performance; RptSel is for readability"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q1",
+   "feedback_correct": "✓ Correct! This is the fundamental OptSel/RptSel distinction from Session 1.",
+   "feedback_incorrect_default": "✗ Remember: OptSel = \"universe\" (all rows with flags), RptSel = wrapper (errors only). Crucial for Session 2."
+  },
+  {
+   "id": "as-pre-zsource-purpose",
+   "unit_id": "std-zsourcesystemid-convention",
+   "kind": "mcq",
+   "question": "zSourceSystemID Purpose — What does zSourceSystemID represent?",
+   "options": {
+    "a": "The date the rule was created",
+    "b": "The SAP system (Production, Quality, Development) a row belongs to",
+    "c": "The user who owns the rule",
+    "d": "A random unique identifier for each record"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q2",
+   "feedback_correct": "✓ Correct! zSourceSystemID identifies which SAP system a row belongs to.",
+   "feedback_incorrect_default": "✗ Critical for Session 2. zSourceSystemID appears in four mandatory places in every rule. Review Session 1 before proceeding."
+  },
+  {
+   "id": "as-pre-deletion-placement",
+   "unit_id": "prn-deletion-flags-belong-in-where",
+   "kind": "mcq",
+   "question": "Deletion Flags Placement — Where do you put a deletion flag (LVORM, LOEKZ) check?",
+   "options": {
+    "a": "In the CASE statement that computes zIsErrorFlag",
+    "b": "In the WHERE clause to exclude deleted records",
+    "c": "In the SELECT statement as an additional column",
+    "d": "Deletion flags should never appear in rules"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q3",
+   "feedback_correct": "✓ Correct! Deletion flags go in WHERE to exclude deleted records from scope.",
+   "feedback_incorrect_default": "✗ Session 2 non-negotiable. Deletion flags are scope exclusions (WHERE), never part of error condition (CASE)."
+  },
+  {
+   "id": "as-pre-error-flag-logic",
+   "unit_id": "prn-optsel-is-the-universe",
+   "kind": "mcq",
+   "question": "Error Flag Logic — Should the error condition go in WHERE or CASE?",
+   "options": {
+    "a": "WHERE clause — to filter out bad records",
+    "b": "CASE statement — to flag records, not exclude them",
+    "c": "Both — redundancy is safer",
+    "d": "Neither — use a separate ERROR_FLAG column instead"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q4",
+   "feedback_correct": "✓ Correct! Errors in CASE (to flag), not WHERE (which is scope only).",
+   "feedback_incorrect_default": "✗ Core Session 1 principle. Error condition in CASE, scope in WHERE. Session 2 enforces strictly."
+  },
+  {
+   "id": "as-pre-what-is-cte",
+   "unit_id": "std-cte-rules",
+   "kind": "mcq",
+   "question": "What is a CTE?",
+   "options": {
+    "a": "Comments Table Expression — used for documentation",
+    "b": "Common Table Expression (WITH...AS block) — used to pre-aggregate or pre-filter tables before joining",
+    "c": "They're required in every DQ rule",
+    "d": "They're never used because they're too slow"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q5",
+   "feedback_correct": "✓ Correct! CTEs are optional but powerful when used correctly.",
+   "feedback_incorrect_default": "✗ CTEs are optional. When used, Session 2 requires five specific rules. If new to CTEs, pay close attention to that lesson."
+  },
+  {
+   "id": "as-pre-ziserrorflag-type",
+   "unit_id": "prn-ziserrorflag-is-integer",
+   "kind": "mcq",
+   "question": "zIsErrorFlag Data Type — What should zIsErrorFlag always be?",
+   "options": {
+    "a": "Text: 'Yes' or 'No'",
+    "b": "Integer: 1 (error) or 0 (clean)",
+    "c": "Boolean: TRUE or FALSE",
+    "d": "Decimal: 0.0 to 1.0 (probability)"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q6",
+   "feedback_correct": "✓ Correct! INTEGER 1/0 is mandatory. Never text.",
+   "feedback_incorrect_default": "✗ Hard Session 2 requirement. zIsErrorFlag must be 1 (error) or 0 (clean) — never text, never decimal."
+  },
+  {
+   "id": "as-pre-join-zsource",
+   "unit_id": "std-zsourcesystemid-convention",
+   "kind": "mcq",
+   "question": "Multiple Table Joins — If a rule joins two tables without zSourceSystemID in ON, what happens?",
+   "options": {
+    "a": "The SQL still works fine",
+    "b": "The join might accidentally match rows from different source systems",
+    "c": "SQL will automatically filter by system",
+    "d": "zSourceSystemID isn't needed in joins"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q7",
+   "feedback_correct": "✓ Correct! Join without zSourceSystemID can cause silent cross-system leakage.",
+   "feedback_incorrect_default": "✗ Major compliance issue. Session 2 requires zSourceSystemID paired in every join ON clause. Missing it = data leakage."
+  },
+  {
+   "id": "as-pre-flag-vs-status",
+   "unit_id": "con-deletion-flags-vs-status-fields",
+   "kind": "mcq",
+   "question": "Status Field vs Deletion Flag — Identify which is deletion flag vs status field (LVORM, PSTAT)",
+   "options": {
+    "a": "LVORM = status, PSTAT = deletion",
+    "b": "LVORM = deletion, PSTAT = status",
+    "c": "Both are deletion flags",
+    "d": "Both are status fields"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q8",
+   "feedback_correct": "✓ Correct! LVORM deletes, PSTAT controls status.",
+   "feedback_incorrect_default": "✗ Essential distinction. Knowing the difference is required for scoping rules correctly. Session 2 builds on this."
+  },
+  {
+   "id": "as-pre-multi-system",
+   "unit_id": "con-multi-implementation-model",
+   "kind": "mcq",
+   "question": "Multi-System Rules — You have rules for three systems (Z01, Z02, Z03). Should you:",
+   "options": {
+    "a": "Write one rule with WHERE zSourceSystemID IN ('Z01', 'Z02', 'Z03')",
+    "b": "Write three separate rules, each filtered to its own system ID",
+    "c": "Write one rule with WHERE zSourceSystemID = 'Z01' (hardcode it)",
+    "d": "Use UNION to combine results from all three systems"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q9",
+   "feedback_correct": "✓ Correct! Separate rules per system ensure isolation and auditability.",
+   "feedback_incorrect_default": "✗ Session 2 and Session 3 require system isolation. Each rule scoped to one system prevents data leakage and audits cleanly."
+  },
+  {
+   "id": "as-pre-field-sections",
+   "unit_id": "std-output-field-sections",
+   "kind": "mcq",
+   "question": "Field Section Order — What is the correct order for the five field sections?",
+   "options": {
+    "a": "Basic → Org → Value → Activity → Technical",
+    "b": "Technical → Basic → Org → Value → Activity",
+    "c": "Activity → Technical → Basic → Value → Org",
+    "d": "There is no specific order"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q10",
+   "feedback_correct": "✓ Correct! Technical → Basic → Org → Value → Activity is mandatory.",
+   "feedback_incorrect_default": "✗ This order is enforced in Session 2. Every rule must respect it. Tested in \"What a Good Rule Looks Like\" checklist."
+  },
+  {
+   "id": "as-pre-rule-naming",
+   "unit_id": "std-rule-name-heuristics",
+   "kind": "mcq",
+   "question": "Rule Naming — Which rule name best fits Session 2 standards?",
+   "options": {
+    "a": "\"Material data check routine for valid UoM assignment validation procedure\"",
+    "b": "\"Matl must have valid BUoM\"",
+    "c": "\"Material must have valid base unit of measure\"",
+    "d": "\"mm_0042_check\""
+   },
+   "answer": "c",
+   "source": "academy:sql-pre-assessment.html#q11",
+   "feedback_correct": "✓ Correct! Business-friendly, ≤85 chars, preserves acronyms.",
+   "feedback_incorrect_default": "✗ Session 2 specifies exact naming rules. Rules must be readable by business users, not technical jargon."
+  },
+  {
+   "id": "as-pre-comment-standard",
+   "unit_id": "std-sql-comment-standards",
+   "kind": "mcq",
+   "question": "Comment Standards — Session 2 says rule comments should:",
+   "options": {
+    "a": "Narrate every SQL line (\"this selects the material number\")",
+    "b": "Explain business logic and non-obvious joins in plain language",
+    "c": "Include performance tuning recommendations",
+    "d": "Mention if the SQL was generated by AI"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q12",
+   "feedback_correct": "✓ Correct! Comments explain business logic for auditability.",
+   "feedback_incorrect_default": "✗ Session 2 has detailed rules about comments. Comments make rules auditable — don't narrate syntax."
+  },
+  {
+   "id": "as-pre-literal-system-id",
+   "unit_id": "std-zsourcesystemid-convention",
+   "kind": "mcq",
+   "question": "Literal System IDs — True or False: Hardcode zSourceSystemID = 'Z01' to keep SQL simple?",
+   "options": {
+    "a": "True — literals are simpler",
+    "b": "False — zSourceSystemID must always be a column reference"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q13",
+   "feedback_correct": "✓ Correct! Literals defeat the filtering purpose. Always use column references.",
+   "feedback_incorrect_default": "✗ Session 2 strict rule. Explicit prohibition. Literals cause silent data leakage bugs."
+  },
+  {
+   "id": "as-pre-deletion-in-case",
+   "unit_id": "prn-deletion-flags-belong-in-where",
+   "kind": "mcq",
+   "question": "Deletion Flag in CASE — You see: CASE WHEN LVORM = 'X' THEN 1. What should you flag?",
+   "options": {
+    "a": "Nothing — checking deletion flags in CASE is fine",
+    "b": "The deletion flag should be in WHERE (scope), not CASE (error condition)",
+    "c": "Deletion flags should never appear in rules",
+    "d": "The rule needs more CTEs"
+   },
+   "answer": "b",
+   "source": "academy:sql-pre-assessment.html#q14",
+   "feedback_correct": "✓ Correct! Deletion flags belong in WHERE (scope), never in CASE (error condition).",
+   "feedback_incorrect_default": "✗ Core Session 1 → Session 2 principle. Common mistake. Focus on \"Business Correctness\" in Session 2's checklist."
+  },
+  {
+   "id": "as-fund-match-tax-id",
+   "unit_id": "con-dq-dimensions",
+   "kind": "mcq",
+   "question": "Vendor master must have a non-empty Tax ID field — which dimension does this rule measure?",
+   "options": {
+    "a": "Accuracy",
+    "b": "Completeness",
+    "c": "Conformity",
+    "d": "Consistency",
+    "e": "Integrity",
+    "f": "Timeliness",
+    "g": "Uniqueness"
+   },
+   "answer": "b",
+   "feedback_correct": "Correct — Completeness.",
+   "source": "academy:landing.html#matching-exercise",
+   "rewritten": "converted from matching exercise; CONFLICT-001 seven-dimension vocabulary"
+  },
+  {
+   "id": "as-fund-match-name-sync",
+   "unit_id": "con-dq-dimensions",
+   "kind": "mcq",
+   "question": "Customer name in ECC must match the name in CRM — which dimension does this rule measure?",
+   "options": {
+    "a": "Accuracy",
+    "b": "Completeness",
+    "c": "Conformity",
+    "d": "Consistency",
+    "e": "Integrity",
+    "f": "Timeliness",
+    "g": "Uniqueness"
+   },
+   "answer": "d",
+   "feedback_correct": "Correct — Consistency.",
+   "source": "academy:landing.html#matching-exercise",
+   "rewritten": "converted from matching exercise; CONFLICT-001 seven-dimension vocabulary"
+  },
+  {
+   "id": "as-fund-match-status-code",
+   "unit_id": "con-dq-dimensions",
+   "kind": "mcq",
+   "question": "Material status code must be one of: ACTIVE, INACTIVE, PHASED_OUT — which dimension does this rule measure?",
+   "options": {
+    "a": "Accuracy",
+    "b": "Completeness",
+    "c": "Conformity",
+    "d": "Consistency",
+    "e": "Integrity",
+    "f": "Timeliness",
+    "g": "Uniqueness"
+   },
+   "answer": "c",
+   "feedback_correct": "Correct — Conformity.",
+   "source": "academy:landing.html#matching-exercise",
+   "rewritten": "converted from matching exercise; CONFLICT-001 seven-dimension vocabulary"
+  },
+  {
+   "id": "as-fund-match-dup-ids",
+   "unit_id": "con-dq-dimensions",
+   "kind": "mcq",
+   "question": "No duplicate employee IDs exist in the system — which dimension does this rule measure?",
+   "options": {
+    "a": "Accuracy",
+    "b": "Completeness",
+    "c": "Conformity",
+    "d": "Consistency",
+    "e": "Integrity",
+    "f": "Timeliness",
+    "g": "Uniqueness"
+   },
+   "answer": "g",
+   "feedback_correct": "Correct — Uniqueness.",
+   "source": "academy:landing.html#matching-exercise",
+   "rewritten": "converted from matching exercise; CONFLICT-001 seven-dimension vocabulary"
+  },
+  {
+   "id": "as-studio-01",
+   "unit_id": "prc-derive-a-dq-rule",
+   "kind": "mcq",
+   "question": "You derive a rule with Local Derive, save it, then derive the exact same rule again next month with identical inputs. What should the resulting SQL look like?",
+   "options": {
+    "a": "Nearly identical, but comments and field order may vary between runs",
+    "b": "Byte-identical to the first run — same structure, same comments, same field order",
+    "c": "Different, because the derivation engine incorporates recent data profiling results",
+    "d": "Different, because each derivation gets a new randomized view name"
+   },
+   "answer": "b",
+   "feedback_correct": "Correct. Local Derive is deterministic — same input always produces the same output. That's what makes the SQL diff-friendly in version control and safe to certify for audit.",
+   "feedback_incorrect_default": "✗ Local Derive is deterministic: identical inputs always produce byte-identical SQL — same field order, same comments, same zSourceSystemID placement. This is what makes rules reproducible and audit-ready.",
+   "source": "academy:index.html#deterministic-derivation"
+  },
+  {
+   "id": "as-studio-02",
+   "unit_id": "ref-ai-static-validator-gate",
+   "kind": "mcq",
+   "question": "AI Enhance returns rewritten SQL and the quality gate finds something serious in it (e.g. a hardcoded zSourceSystemID literal). What happens next?",
+   "options": {
+    "a": "The enhancement is silently discarded and the original deterministic SQL is kept",
+    "b": "The Studio asks the AI once more, telling it what was wrong, then shows you whatever comes back with its findings attached",
+    "c": "The rule is permanently locked from further AI enhancement",
+    "d": "The consultant must manually re-type the entire prompt from scratch"
+   },
+   "answer": "b",
+   "feedback_correct": "Correct. There is exactly one retry. Whatever comes back is recorded with its findings attached and shown to you, so the Reconciliation sheet shows what was caught. A finding means a human decides — it is not the Studio approving the rule.",
+   "feedback_incorrect_default": "✗ The gate retries once, telling the AI what was wrong, then hands the result back — clean or not — with its findings attached. It does not discard, lock or block; the short hard-stop list is the only thing that stops a save outright.",
+   "source": "academy:index.html#interpret-output"
+  },
+  {
+   "id": "as-studio-03",
+   "unit_id": "con-multi-implementation-model",
+   "kind": "mcq",
+   "question": "A conceptual rule fans out into three per-system implementations (P02, P03, P06). Which of these is shared across all three, rather than unique to each?",
+   "options": {
+    "a": "The DQOps rule_id",
+    "b": "The view names",
+    "c": "The SKP_RULE_NNNN and the rule's description",
+    "d": "The zSourceSystemID filter value"
+   },
+   "answer": "c",
+   "feedback_correct": "Correct. Rule name, domain/attribute/dimension, description, and SKP_RULE_NNNN are shared across siblings. Each implementation gets its own DQOps rule_id, view names, and zSourceSystemID filter.",
+   "feedback_incorrect_default": "✗ DQOps rule_id, view names, and the zSourceSystemID filter are all per-implementation — they must differ so each system's data stays isolated. What stays shared is the rule name, description, and the SKP_RULE_NNNN that groups the siblings together.",
+   "source": "academy:index.html#sibling-rules"
+  },
+  {
+   "id": "as-studio-04",
+   "unit_id": "prc-run-the-bulk-pipeline",
+   "kind": "mcq",
+   "question": "In the bulk pipeline's reconciliation table, a row shows status 'Failed'. What does that tell you?",
+   "options": {
+    "a": "The rule ran successfully and found a high volume of data errors (zIsErrorFlag = 1)",
+    "b": "SQL generation for that rule did not complete — for example AI Derive hit a missing or rate-limited API key",
+    "c": "The rule's RptSel returned zero rows",
+    "d": "The rule was flagged by a client reviewer during audit"
+   },
+   "answer": "b",
+   "feedback_correct": "Correct. 'Failed' is a pipeline-generation status, not a data-quality outcome — it means the rule never got as far as usable SQL. A rule that generated fine and then found lots of defects shows a normal status with a high error count, not 'Failed'.",
+   "feedback_incorrect_default": "✗ Don't confuse pipeline status with data results. 'Failed' means SQL generation itself broke (a common cause: 'AI Derive failed' from a missing or rate-limited API key) — it says nothing about how many records the rule would flag once it has valid SQL.",
+   "source": "academy:index.html#bulk-execution"
+  },
+  {
+   "id": "as-studio-05",
+   "unit_id": "prc-derive-a-dq-rule",
+   "kind": "mcq",
+   "question": "You accept Claude's AI enhancement on the lead implementation (P02) of a multi-system rule and want it to reach the P03 and P06 siblings too. One sibling was already independently AI-enhanced with different logic. What does the Studio do with that sibling?",
+   "options": {
+    "a": "Overwrites it silently with the lead's new SQL, since siblings should always match",
+    "b": "Skips it by default and reports the skip — it does not silently overwrite a sibling that has already diverged",
+    "c": "Deletes the sibling implementation entirely",
+    "d": "Blocks the enhancement from reaching any of the siblings, including the untouched ones"
+   },
+   "answer": "b",
+   "feedback_correct": "Correct. Siblings are meant to stay identical apart from their system token, so propagation is the default — but a sibling that's already been independently enhanced or has diverged is always skipped and reported, never silently clobbered.",
+   "feedback_incorrect_default": "✗ The Studio propagates one enhancement across a sibling group to avoid re-running AI per system, but it protects against overwriting real work: an already-enhanced or diverged sibling is skipped and reported, not silently replaced. Untouched siblings still get the propagated fix.",
+   "source": "academy:index.html#apply-corrected"
+  },
+  {
+   "id": "as-studio-06",
+   "unit_id": "prc-studio-onboarding",
+   "kind": "mcq",
+   "question": "A session has an API key entered in its settings, and the environment also has ANTHROPIC_API_KEY set. Which key does an AI call actually use?",
+   "options": {
+    "a": "Whichever key was set first",
+    "b": "The session's key — resolution order is request > session > env ANTHROPIC_API_KEY",
+    "c": "The environment variable always wins, since it's the system default",
+    "d": "Both keys are combined into one request"
+   },
+   "answer": "b",
+   "feedback_correct": "Correct. Key resolution is request > session > env. A per-session key (set during Session Configuration) overrides the environment default; if neither is set, the call fails with a clear 'API key required' error rather than going out silently empty.",
+   "feedback_incorrect_default": "✗ Resolution order is request > session > env ANTHROPIC_API_KEY. A session-level key you configure takes priority over the environment variable; only when no request or session key is set does the app fall back to the environment default.",
+   "source": "academy:index.html#session-config"
+  }
+ ]
+}

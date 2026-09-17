@@ -1,0 +1,218 @@
+{
+  "schema": "em-changeset/1",
+  "exported_at": "2026-08-24T13:26:28.647Z",
+  "author": "deprecate_dq_enablement_studio",
+  "app_build": "2026-08-21-a6a3baba",
+  "ops": [
+    {
+      "op": "note",
+      "unit_id": "prc-assess-and-discover",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "prc-estimate-blueprint-effort",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "prc-handle-the-cold-room",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "prc-qa-a-blueprint",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "prc-run-the-blueprint-room",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "prc-ingest-a-client-dd-dictionary",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "ref-deliverables-inventory",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "ref-value-description-resolution",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-as-of-date",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-bob-dq",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-bob-vs-boa",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-business-outcome",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-bob-canvas",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-blueprint",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-capacity-check",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-cleanse-atom",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-client-instrument",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-confidence-label",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-distinguishing-predicate",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-evaluation-sheet",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-eam",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-evidenced-volume",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-gdc",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-headline",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-indicative",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-internal-workbench",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-literal-1-fallback",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-methodology-banner",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-outcome-category",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-provenance",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-sales-area-key",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-solution-proposal",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-sow",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-walkability",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-variant",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    }
+  ]
+}

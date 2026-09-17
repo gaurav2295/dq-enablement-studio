@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syniti DQ Training Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #232F63;
+            --blue: #365EB9;
+            --violet: #5B30EE;
+            --violet-soft: #8B6CF3;
+            --blue-light: #83AFF8;
+            --good: #0E9F6E;
+            --warn: #B45309;
+            --critical: #DC2626;
+            --ink: #20242E;
+            --muted: #6B7492;
+            --canvas: #F6F8FE;
+            --panel: #F7F9FD;
+            --white: #FFFFFF;
+            --line: #E1E8F2;
+
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Menlo', monospace;
+
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, var(--canvas) 0%, var(--white) 100%);
+            color: var(--ink);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container { display: flex; min-height: 100vh; }
+
+        .sidebar {
+            width: 300px;
+            background: var(--navy);
+            color: var(--white);
+            padding: var(--spacing-xl);
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            box-shadow: 0 10px 34px rgba(35, 47, 99, 0.15);
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            display: flex; align-items: center; gap: var(--spacing-md);
+            margin-bottom: var(--spacing-2xl);
+            text-decoration: none; color: var(--white);
+            font-weight: 600; font-size: 1.1rem;
+        }
+
+        .sidebar-icon { font-size: 1.5rem; }
+        .sidebar-section { margin-bottom: var(--spacing-2xl); }
+
+        .sidebar-section-title {
+            font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--violet-soft);
+            margin-bottom: var(--spacing-md);
+            opacity: 0.8;
+        }
+
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav li { margin-bottom: var(--spacing-xs); }
+
+        .sidebar-nav a {
+            display: block;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.92rem;
+        }
+
+        .sidebar-nav a:hover { background: rgba(91, 48, 238, 0.2); color: var(--white); }
+        .sidebar-nav a.active { background: var(--violet); color: var(--white); font-weight: 600; }
+
+        .sidebar-nav a.nav-check {
+            font-size: 0.8rem;
+            padding-left: calc(var(--spacing-md) + 14px);
+            opacity: 0.75;
+            color: rgba(255,255,255,0.65);
+        }
+
+        .sidebar-nav a.nav-check:hover { opacity: 1; }
+        .sidebar-nav a.nav-check.active { opacity: 1; background: rgba(91, 48, 238, 0.55); }
+
+        .sidebar-nav a.nav-complete {
+            font-weight: 700;
+            color: #FFD77A;
+        }
+
+        .sidebar-nav a.nav-complete.active { background: var(--violet); color: var(--white); }
+
+        .main { flex: 1; margin-left: 300px; padding: var(--spacing-2xl); }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; padding: var(--spacing-lg); }
+            .main { margin-left: 0; padding: var(--spacing-lg); }
+            .container { flex-direction: column; }
+        }
+
+        .header { margin-bottom: var(--spacing-2xl); }
+
+        .header-title {
+            font-size: 2.5rem; font-weight: 700; color: var(--navy);
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        .header-subtitle { font-size: 1.1rem; color: var(--muted); margin-bottom: var(--spacing-lg); }
+
+        .progress-bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-top: var(--spacing-md); }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--violet), var(--blue)); border-radius: 3px; transition: width 0.5s ease; }
+
+        .section { display: none; animation: fadeIn 0.5s ease; }
+        .section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
+            border: 1px solid var(--line);
+            box-shadow: 0 2px 8px rgba(35, 47, 99, 0.05);
+            transition: var(--transition);
+        }
+
+        .section-card:hover { box-shadow: 0 8px 24px rgba(35, 47, 99, 0.1); border-color: var(--violet); }
+
+        .section-card h2 {
+            font-size: 1.5rem; color: var(--navy); margin-bottom: var(--spacing-md);
+            display: flex; align-items: center; gap: var(--spacing-md);
+        }
+
+        .section-card h2::before {
+            content: ''; width: 4px; height: 24px; background: var(--violet); border-radius: 2px;
+        }
+
+        .section-card h3 { font-size: 1.2rem; color: var(--ink); margin: var(--spacing-lg) 0 var(--spacing-md) 0; }
+        .section-card h4 { font-size: 1.05rem; color: var(--navy); margin: var(--spacing-lg) 0 var(--spacing-sm) 0; }
+        .section-card p { color: var(--muted); margin-bottom: var(--spacing-md); line-height: 1.8; }
+        .section-card ul, .section-card ol { margin-left: var(--spacing-xl); margin-bottom: var(--spacing-md); }
+        .section-card li { margin-bottom: var(--spacing-sm); color: var(--muted); line-height: 1.8; }
+
+        .dimensions-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg); margin: var(--spacing-lg) 0;
+        }
+
+        .dimension-card {
+            background: linear-gradient(135deg, var(--panel), var(--white));
+            border: 2px solid var(--line); border-radius: 12px; padding: var(--spacing-lg);
+            transition: var(--transition); position: relative; overflow: hidden;
+        }
+
+        .dimension-card:hover { border-color: var(--violet); box-shadow: 0 8px 24px rgba(91, 48, 238, 0.15); transform: translateY(-4px); }
+        .dimension-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--violet); }
+        .dimension-card h4 { font-size: 1.1rem; color: var(--navy); margin-bottom: var(--spacing-md); margin-top: var(--spacing-sm); font-weight: 600; }
+        .dimension-card p { font-size: 0.95rem; color: var(--muted); }
+
+        .lifecycle-flow {
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+            gap: var(--spacing-lg); margin: var(--spacing-2xl) 0; padding: var(--spacing-xl);
+            background: var(--canvas); border-radius: 12px;
+        }
+
+        .lifecycle-step { flex: 1; min-width: 120px; text-align: center; }
+
+        .lifecycle-step-number {
+            width: 48px; height: 48px; margin: 0 auto var(--spacing-md);
+            background: linear-gradient(135deg, var(--violet), var(--blue));
+            color: var(--white); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.2rem;
+        }
+
+        .lifecycle-step-title { font-weight: 600; color: var(--navy); margin-bottom: var(--spacing-sm); }
+        .lifecycle-step-desc { font-size: 0.9rem; color: var(--muted); }
+        .lifecycle-arrow { color: var(--violet); font-size: 1.5rem; opacity: 0.5; }
+
+        @media (max-width: 768px) {
+            .lifecycle-flow { flex-direction: column; }
+            .lifecycle-arrow { transform: rotate(90deg); }
+        }
+
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg); margin: var(--spacing-lg) 0;
+        }
+
+        .stat-box {
+            background: var(--white); border: 1px solid var(--line); border-radius: 12px;
+            padding: var(--spacing-xl); text-align: center; transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(35, 47, 99, 0.05);
+        }
+
+        .stat-box:hover { border-color: var(--violet); box-shadow: 0 8px 24px rgba(91, 48, 238, 0.15); }
+
+        .stat-number {
+            font-size: 3rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--violet), var(--blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .stat-label { font-weight: 600; color: var(--navy); margin-bottom: var(--spacing-sm); }
+        .stat-desc { font-size: 0.9rem; color: var(--muted); }
+
+        .code-block {
+            background: #1F2937; color: #E5E7EB; padding: var(--spacing-lg); border-radius: 8px;
+            font-family: var(--font-mono); font-size: 0.85rem; overflow-x: auto;
+            margin: var(--spacing-lg) 0; line-height: 1.6; white-space: pre;
+        }
+
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+        .comparison-box { padding: var(--spacing-xl); border-radius: 12px; border: 2px solid var(--line); }
+        .comparison-box.good { background: #F0FDF4; border-color: var(--good); }
+        .comparison-box.critical { background: #FEF2F2; border-color: var(--critical); }
+
+        .comparison-box h4 { display: flex; align-items: center; gap: var(--spacing-md); font-weight: 600; margin-bottom: var(--spacing-md); }
+        .comparison-box.good h4 { color: var(--good); }
+        .comparison-box.critical h4 { color: var(--critical); }
+        .comparison-box p { color: var(--ink); font-size: 0.95rem; }
+
+        @media (max-width: 1024px) { .comparison-grid { grid-template-columns: 1fr; } }
+
+        .checklist { background: var(--canvas); padding: var(--spacing-xl); border-radius: 12px; margin: var(--spacing-lg) 0; }
+        .checklist-item { display: flex; align-items: flex-start; gap: var(--spacing-md); margin-bottom: var(--spacing-md); color: var(--muted); }
+        .checklist-item:last-child { margin-bottom: 0; }
+        .checklist-icon { flex-shrink: 0; font-size: 1.2rem; color: var(--good); line-height: 1.6; }
+        .checklist-item.warn .checklist-icon { color: var(--warn); }
+        .checklist-item.bad .checklist-icon { color: var(--critical); }
+        .checklist-text { flex: 1; }
+        .checklist-text strong { color: var(--navy); }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
+            transition: var(--transition); font-size: 0.95rem; text-decoration: none;
+        }
+
+        .btn-primary { background: linear-gradient(135deg, var(--violet), var(--blue)); color: var(--white); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(91, 48, 238, 0.3); }
+        .btn-secondary { background: var(--panel); color: var(--navy); border: 1px solid var(--line); }
+        .btn-secondary:hover { border-color: var(--violet); color: var(--violet); }
+        .btn-group { display: flex; gap: var(--spacing-md); margin-top: var(--spacing-lg); flex-wrap: wrap; }
+
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            color: var(--white); padding: var(--spacing-2xl); border-radius: 12px;
+            margin-bottom: var(--spacing-2xl); position: relative; overflow: hidden;
+        }
+
+        .hero::before {
+            content: ''; position: absolute; top: -50%; right: -10%;
+            width: 400px; height: 400px; background: rgba(91, 48, 238, 0.2);
+            border-radius: 50%; pointer-events: none;
+        }
+
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 { font-size: 2rem; margin-bottom: var(--spacing-md); font-weight: 700; }
+        .hero p { font-size: 1.1rem; opacity: 0.9; margin-bottom: var(--spacing-lg); }
+
+        .footer {
+            text-align: center; padding: var(--spacing-2xl); color: var(--muted);
+            border-top: 1px solid var(--line); margin-top: var(--spacing-2xl);
+        }
+
+        .footer p { margin-bottom: var(--spacing-sm); }
+
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .mt-lg { margin-top: var(--spacing-lg); }
+        .mb-lg { margin-bottom: var(--spacing-lg); }
+
+        code {
+            background: var(--panel); padding: 2px 6px; border-radius: 4px;
+            font-family: var(--font-mono); font-size: 0.88em; color: var(--navy);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <span class="sidebar-icon">📚</span>
+                <span>DQ Academy</span>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Session 1 · Fundamentals</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#" onclick="go('intro'); return false;" class="nav-link active" data-section="intro">Introduction</a></li>
+                    <li><a href="#" onclick="go('session1-complete'); return false;" class="nav-link nav-complete" data-section="session1-complete">🎓 Session 1 Complete</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Session 2 · SQL Best Practices</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#" onclick="go('sql-intro'); return false;" class="nav-link" data-section="sql-intro">Introduction</a></li>
+                    <li><a href="#" onclick="go('session2-complete'); return false;" class="nav-link nav-complete" data-section="session2-complete">🎓 Session 2 Complete</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Session 3 · Methodology Studio</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#" onclick="go('studio-intro'); return false;" class="nav-link" data-section="studio-intro">Introduction</a></li>
+                    <li><a href="#" onclick="go('create-account'); return false;" class="nav-link" data-section="create-account">Create Account & Setup</a></li>
+                    <li><a href="#" onclick="go('session-config'); return false;" class="nav-link" data-section="session-config">Session Configuration</a></li>
+                    <li><a href="#" onclick="go('derive-rule'); return false;" class="nav-link" data-section="derive-rule">Derive Your First Rule</a></li>
+                    <li><a href="#" onclick="go('deterministic-derivation'); return false;" class="nav-link" data-section="deterministic-derivation">Deterministic Derivation</a></li>
+                    <li><a href="#" onclick="go('ai-enhancement'); return false;" class="nav-link" data-section="ai-enhancement">AI Enhancement & Instructions</a></li>
+                    <li><a href="#" onclick="go('sibling-rules'); return false;" class="nav-link" data-section="sibling-rules">Sibling Rules & Fan-out</a></li>
+                    <li><a href="#" onclick="go('bulk-execution'); return false;" class="nav-link" data-section="bulk-execution">Bulk Rule Execution</a></li>
+                    <li><a href="#" onclick="go('interpret-output'); return false;" class="nav-link" data-section="interpret-output">Interpret Claude Output</a></li>
+                    <li><a href="#" onclick="go('apply-corrected'); return false;" class="nav-link" data-section="apply-corrected">Apply Corrected SQL</a></li>
+                    <li><a href="#" onclick="go('studio-complete'); return false;" class="nav-link nav-complete" data-section="studio-complete">🎓 Session 3 Complete</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main">
+            <div class="header">
+                <h1 class="header-title">Syniti DQ Training Academy</h1>
+                <p class="header-subtitle" id="course-subtitle">Data Quality Fundamentals Course (Session 1)</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <section class="hero" id="hero-section">
+                <div class="hero-content">
+                    <h1>Data Quality Fundamentals</h1>
+                    <p>Learn the essential concepts, dimensions, and practices for building trustworthy data systems.</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">⏱️ Full academy: 3 sessions, ~165 minutes | 📖 Start with Session 1</p>
+                </div>
+            </section>
+
+            <!-- SESSION 1 INTRO (Summary) -->
+            <section class="section active" data-section="intro">
+                <div class="section-card">
+                    <h2>Welcome to Data Quality Fundamentals</h2>
+                    <p>The Syniti DQ Training Academy is a hands-on guide to designing, deriving, and managing Data Quality rules using the Syniti Methodology Studio.</p>
+
+                    <h3>Three Complete Sessions</h3>
+                    <p><strong>Session 1: Data Quality Fundamentals</strong> — Concepts, the 6 dimensions, the DQ lifecycle, and rule anatomy. Start here to build your foundational understanding.</p>
+                    <p><strong>Session 2: SQL Best Practices</strong> — The exact SQL dialect required by the Studio: CTEs, zSourceSystemID filtering, comments, naming conventions, and a complete checklist for rule quality.</p>
+                    <p><strong>Session 3: Methodology Studio Workflow</strong> — Hands-on with the Studio itself: creating accounts, configuring systems, deriving rules, running AI enhancement, bulk execution, and interpreting results.</p>
+
+                    <h3>How to Use This Academy</h3>
+                    <ul>
+                        <li>Work through the sessions in order. Each builds on the previous.</li>
+                        <li>Focus especially on Session 2's "What a Good Rule Looks Like" checklist — it ties everything together.</li>
+                        <li>Session 3 is where you apply Sessions 1 & 2 in practice within the Studio.</li>
+                    </ul>
+
+                    <h3>Your Path Forward</h3>
+                    <ol>
+                        <li>Complete Session 1 (foundational concepts) — ~45 minutes</li>
+                        <li>Complete Session 2 (SQL dialect) — ~45 minutes</li>
+                        <li>Complete Session 3 (Studio workflow) — ~60 minutes</li>
+                        <li>Work through a project using the Studio with your team</li>
+                    </ol>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: var(--canvas); border-left: 4px solid var(--violet); border-radius: 4px;">
+                        <strong>Ready to dive in?</strong> Use the sidebar to navigate Session 1, Session 2, or jump directly to Session 3 (Methodology Studio). Each session can be accessed independently, but the progression 1 → 2 → 3 is strongly recommended for first-time learners.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="go('session1-complete')">View Session 1 →</button>
+                        <button class="btn btn-secondary" onclick="go('sql-intro')">Jump to Session 2 →</button>
+                        <button class="btn btn-secondary" onclick="go('studio-intro')">Jump to Session 3 →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SESSION 1 COMPLETE CARD -->
+            <section class="section" data-section="session1-complete">
+                <div class="section-card" style="background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); color: var(--white);">
+                    <h2 style="color: var(--white);">🎓 Session 1: Data Quality Fundamentals</h2>
+                    <p style="color: rgba(255,255,255,0.9);">In Session 1, you learn:</p>
+                    <ul style="color: rgba(255,255,255,0.9);">
+                        <li>✓ What data quality means and why it matters to enterprises</li>
+                        <li>✓ The six dimensions of data quality (Accuracy, Completeness, Consistency, Validity, Timeliness, Uniqueness)</li>
+                        <li>✓ The DQ lifecycle: Profile → Rule → Remediate → Recheck</li>
+                        <li>✓ The anatomy of a DQ rule and how rules are structured</li>
+                        <li>✓ Common data quality issues in SAP environments</li>
+                        <li>✓ Key concepts: OptSel vs RptSel, error flags, deletion flags</li>
+                    </ul>
+                    <p style="color: rgba(255,255,255,0.9); margin-top: var(--spacing-lg);"><strong>Full Session 1</strong> is available in this Academy. Use the sidebar to navigate through each topic with knowledge checks. Here's a quick reference:</p>
+                    <p style="color: rgba(255,255,255,0.85); margin-top: var(--spacing-md); font-size: 0.95rem;">For the full Session 1 experience with quizzes and detailed explanations, visit the complete academy version. This view shows Session 3 (Methodology Studio) as the main focus.</p>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('sql-intro')">← Back to Intro</button>
+                        <button class="btn btn-primary" style="background: var(--white); color: var(--navy);" onclick="go('sql-intro')">Next: Session 2 →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SESSION 2 INTRO (Summary) -->
+            <section class="section" data-section="sql-intro">
+                <div class="section-card">
+                    <h2>Session 2: SQL Best Practices for DQ Rules</h2>
+                    <p>This session teaches the exact SQL dialect that every rule must follow — hand-written, locally derived, or AI-generated. The dialect ensures consistency, auditability, and safety in multi-system landscapes.</p>
+
+                    <h3>What You'll Learn</h3>
+                    <ul>
+                        <li><strong>CTEs</strong> — When and how to use Common Table Expressions safely</li>
+                        <li><strong>zSourceSystemID Filtering</strong> — The single most important rule: it must appear in four mandatory places</li>
+                        <li><strong>Comment Standard</strong> — The mandatory header block and inline commenting rules</li>
+                        <li><strong>Aliasing & Naming</strong> — zConcatenatedKey, rule-name limits, acronym preservation</li>
+                        <li><strong>Complete Example</strong> — A fully compliant rule showing all standards in action</li>
+                        <li><strong>Good Rule Checklist</strong> — A single comprehensive checklist for rule quality</li>
+                    </ul>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: var(--canvas); border-left: 4px solid var(--violet); border-radius: 4px;">
+                        <strong>Key principle:</strong> Every standard in this session is non-negotiable. A rule that's logically correct but violates the dialect is still considered incomplete.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('intro')">← Back to Intro</button>
+                        <button class="btn btn-primary" onclick="go('studio-intro')">Next: Session 3 →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SESSION 2 COMPLETE CARD -->
+            <section class="section" data-section="session2-complete">
+                <div class="section-card" style="background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); color: var(--white);">
+                    <h2 style="color: var(--white);">🎓 Session 2: SQL Best Practices</h2>
+                    <p style="color: rgba(255,255,255,0.9);">In Session 2, you master:</p>
+                    <ul style="color: rgba(255,255,255,0.9);">
+                        <li>✓ The five field sections (Technical → Basic → Org → Value → Activity) in the correct order</li>
+                        <li>✓ CTE rules: every CTE must be used, filter/output zSourceSystemID, and be joined safely</li>
+                        <li>✓ The four mandatory places zSourceSystemID filtering must appear</li>
+                        <li>✓ Header blocks, section comments, and inline business-language comments</li>
+                        <li>✓ Naming conventions and rule-name length limits</li>
+                        <li>✓ The complete checklist for business correctness, structural correctness, and documentation</li>
+                    </ul>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('sql-intro')">← Back</button>
+                        <button class="btn btn-primary" style="background: var(--white); color: var(--navy);" onclick="go('studio-intro')">Next: Session 3 →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SESSION 3: METHODOLOGY STUDIO
+                 ============================================================ -->
+
+            <section class="section" data-section="studio-intro">
+                <div class="section-card">
+                    <h2>Session 3: Methodology Studio Workflow</h2>
+                    <p>Now that you understand DQ fundamentals (Session 1) and the SQL dialect (Session 2), it's time to use the Studio itself. This session walks you through the complete workflow: from account setup through deriving rules, running AI enhancement, executing bulk operations, and interpreting the output.</p>
+
+                    <h3>The Studio Workflow at a Glance</h3>
+                    <div class="lifecycle-flow">
+                        <div class="lifecycle-step">
+                            <div class="lifecycle-step-number">1</div>
+                            <div class="lifecycle-step-title">Setup</div>
+                            <div class="lifecycle-step-desc">Create account, configure systems</div>
+                        </div>
+                        <div class="lifecycle-arrow">→</div>
+                        <div class="lifecycle-step">
+                            <div class="lifecycle-step-number">2</div>
+                            <div class="lifecycle-step-title">Derive</div>
+                            <div class="lifecycle-step-desc">Define or derive a rule</div>
+                        </div>
+                        <div class="lifecycle-arrow">→</div>
+                        <div class="lifecycle-step">
+                            <div class="lifecycle-step-number">3</div>
+                            <div class="lifecycle-step-title">Enhance</div>
+                            <div class="lifecycle-step-desc">Optionally use AI enhancement</div>
+                        </div>
+                        <div class="lifecycle-arrow">→</div>
+                        <div class="lifecycle-step">
+                            <div class="lifecycle-step-number">4</div>
+                            <div class="lifecycle-step-title">Execute</div>
+                            <div class="lifecycle-step-desc">Run bulk, apply, and export</div>
+                        </div>
+                    </div>
+
+                    <h3>Session 3 Topics</h3>
+                    <ul>
+                        <li><strong>Create Account & Setup</strong> — Getting started, credentials, and first-time configuration</li>
+                        <li><strong>Session Configuration</strong> — Systems, API keys, data source connections</li>
+                        <li><strong>Derive Your First Rule</strong> — Step-by-step derivation walkthrough</li>
+                        <li><strong>Deterministic Derivation</strong> — How the Studio derives rules consistently</li>
+                        <li><strong>AI Enhancement & Instructions</strong> — What Claude does, what instructions are sent, how to interpret results</li>
+                        <li><strong>Sibling Rules & Fan-out</strong> — Multi-system rules and how AI enhancement works on siblings</li>
+                        <li><strong>Bulk Rule Execution</strong> — Running hundreds of rules at once</li>
+                        <li><strong>Interpret Claude Output</strong> — Understanding AI-generated SQL and feedback</li>
+                        <li><strong>Apply Corrected SQL</strong> — Taking AI suggestions and applying them to your rules</li>
+                    </ul>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('intro')">← Back to Intro</button>
+                        <button class="btn btn-primary" onclick="go('create-account')">Start Session 3 →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SESSION 3 DETAILED SECTIONS
+                 ============================================================ -->
+
+            <section class="section" data-section="create-account">
+                <div class="section-card">
+                    <h2>Create Account & Session Setup</h2>
+                    <p>Before you can derive rules, you need to create a Studio account and perform initial setup.</p>
+
+                    <h3>Account Creation</h3>
+                    <p><strong>Step 1: Register</strong></p>
+                    <ul>
+                        <li>Visit the Syniti Methodology Studio login page</li>
+                        <li>Click "Create New Account"</li>
+                        <li>Provide your email, name, and organization</li>
+                        <li>Set a secure password (minimum 12 characters, mix of upper/lower/numbers/symbols recommended)</li>
+                        <li>Verify your email address via the confirmation link</li>
+                    </ul>
+
+                    <p style="margin-top: var(--spacing-lg);"><strong>Step 2: First Login & Initial Setup</strong></p>
+                    <ul>
+                        <li>You'll be prompted to set your timezone (used for audit timestamps)</li>
+                        <li>Select your primary language (English, German, or Spanish)</li>
+                        <li>Accept the methodology standards (Session 2's checklist)</li>
+                        <li>You're now in the Dashboard — ready to configure your first session</li>
+                    </ul>
+
+                    <h3>What Happens During Account Setup</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>You receive read-only documentation access</strong> — the methodology vault, rule templates, and best-practice SQL examples</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Your organization is created automatically</strong> — you can invite colleagues to the same org later via Settings</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Audit trails are initialized</strong> — every rule derivation, AI enhancement, and export is timestamped and logged to your organization's history</div>
+                        </div>
+                    </div>
+
+                    <h3>Key Account Settings to Know About</h3>
+                    <ul>
+                        <li><strong>Timezone:</strong> Controls when scheduled bulk derivations run (e.g., "run nightly at 9pm your local time")</li>
+                        <li><strong>Language:</strong> Affects UI text, but rule SQL output is always English</li>
+                        <li><strong>Org Permissions:</strong> Which colleagues can see your rules; defaults to "Private" (only you)</li>
+                        <li><strong>Export Format:</strong> Choose SQL, T-SQL, or Snowflake dialect for your target database</li>
+                    </ul>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: var(--canvas); border-left: 4px solid var(--good); border-radius: 4px;">
+                        <strong>Checkpoint:</strong> Once your account is created and you see the Dashboard, you're ready to move to Session Configuration and set up your first data source connection.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('studio-intro')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('session-config')">Next: Session Configuration →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="session-config">
+                <div class="section-card">
+                    <h2>Session Configuration: Systems & API Keys</h2>
+                    <p>A "Session" in the Studio is where you connect to your data sources, configure API keys, and define the systems you want to derive rules for. Think of it as a project that combines data + AI settings.</p>
+
+                    <h3>What is a Session?</h3>
+                    <p>A Session is the operational container for your rule-derivation work. Each Session has:</p>
+                    <ul>
+                        <li><strong>System Connections:</strong> Links to your SAP ECC, S/4HANA, or other data sources</li>
+                        <li><strong>API Keys:</strong> Credentials to call Claude (for AI enhancement) or other external services</li>
+                        <li><strong>Configuration:</strong> Settings for how rules are derived and exported</li>
+                        <li><strong>Derivation History:</strong> Every rule you create, derive, or enhance in this session</li>
+                    </ul>
+
+                    <h3>Creating a New Session</h3>
+                    <p><strong>Step 1: From the Dashboard, click "New Session"</strong></p>
+                    <ul>
+                        <li>Give it a descriptive name (e.g., "SAP ECC Migration - Phase 1", "S/4HANA Master Data Prep")</li>
+                        <li>Describe its purpose (optional, but helpful for future reference)</li>
+                        <li>Select your target database platform: SQL Server, SAP HANA, Snowflake, or BigQuery</li>
+                    </ul>
+
+                    <p><strong>Step 2: Configure System Connections</strong></p>
+                    <ul>
+                        <li>Add each SAP system you want to derive rules for (System ID, System Client, Host, Port)</li>
+                        <li>Provide database credentials (read-only access is sufficient — the Studio never writes to your systems)</li>
+                        <li>Test the connection — the Studio will query a small set of tables to verify access</li>
+                    </ul>
+
+                    <p><strong>Step 3: Set Up API Keys (For AI Enhancement)</strong></p>
+                    <ul>
+                        <li>If you plan to use AI enhancement (optional), provide your Claude API key</li>
+                        <li>Go to your Claude account settings and generate an API key if you don't have one</li>
+                        <li>Paste it into the Session's API Keys configuration</li>
+                        <li>The Studio never displays this key after you save it — only stores it encrypted</li>
+                    </ul>
+
+                    <h3>System ID Best Practices</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Use a consistent naming convention.</strong> If your systems are "Z01" (Production), "Z02" (Quality), "Z03" (Development), stick with that nomenclature in the Studio.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Map to zSourceSystemID.</strong> The System ID you enter here becomes the value in every rule's zSourceSystemID filter (Session 2 requirement).</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>One system per connection.</strong> Don't try to connect multiple systems with one credential — each gets its own entry so the Studio can derive rules scoped correctly.</div>
+                        </div>
+                    </div>
+
+                    <h3>After Configuration</h3>
+                    <p>Once systems and API keys are configured, the Session is ready for rule derivation. You can now:</p>
+                    <ul>
+                        <li>Derive individual rules one at a time</li>
+                        <li>Import a bulk list of rules to derive all at once</li>
+                        <li>Use AI enhancement to improve or rewrite existing rules</li>
+                    </ul>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: var(--canvas); border-left: 4px solid var(--good); border-radius: 4px;">
+                        <strong>Checkpoint:</strong> Your Session is now live with system connections and API keys in place. You're ready to derive your first rule.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('create-account')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('derive-rule')">Next: Derive Your First Rule →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="derive-rule">
+                <div class="section-card">
+                    <h2>Derive Your First Rule</h2>
+                    <p>With your Session configured, it's time to create and derive your first DQ rule. The Studio supports two derivation methods: <strong>Local Derivation</strong> (deterministic) and <strong>AI Enhancement</strong> (optional, with Claude).</p>
+
+                    <h3>Rule Derivation Overview</h3>
+                    <p>When you derive a rule, you tell the Studio:</p>
+                    <ol>
+                        <li><strong>What table to check</strong> (e.g., MARA for materials)</li>
+                        <li><strong>What the error condition is</strong> (what makes a record "bad")</li>
+                        <li><strong>What the scope is</strong> (inclusions and exclusions)</li>
+                    </ol>
+                    <p>The Studio then generates OptSel and RptSel SQL views that follow every standard from Session 2.</p>
+
+                    <h3>Step-by-Step: Your First Derivation</h3>
+
+                    <h4>Step 1: Start a New Rule</h4>
+                    <p>From the Session dashboard, click "New Rule" → "Start Derivation".</p>
+
+                    <h4>Step 2: Define the Rule in Business Terms</h4>
+                    <p>You'll be asked:</p>
+                    <ul>
+                        <li><strong>Rule Name:</strong> Business-friendly (≤ 85 characters target). Example: "Material must have valid, non-deleted base unit of measure"</li>
+                        <li><strong>Rule Description:</strong> Use the Fetch / Check / Return template. Example: "Fetch all materials from MARA where LVORM is empty (not deleted). Check that MEINS (base UoM) exists and is valid in table T006. Return all materials, flagging as error (zIsErrorFlag=1) if MEINS is NULL or not found in T006."</li>
+                        <li><strong>Primary Table:</strong> Select MARA (materials)</li>
+                        <li><strong>System:</strong> Choose which system(s) this rule applies to</li>
+                    </ul>
+
+                    <h4>Step 3: Define Scope (Inclusions & Exclusions)</h4>
+                    <p><strong>Inclusions:</strong> Who does this rule apply to? (optional)</p>
+                    <ul>
+                        <li>Example: Only check materials where zSourceSystemID = 'Z01' (production system)</li>
+                        <li>Example: Only check materials where MTART = 'FERT' (finished goods)</li>
+                    </ul>
+                    <p><strong>Exclusions:</strong> Who should be skipped? (highly recommended for deletion flags)</p>
+                    <ul>
+                        <li>Example: Exclude materials where LVORM = 'X' (marked for deletion)</li>
+                    </ul>
+
+                    <h4>Step 4: Define the Error Condition</h4>
+                    <p>This is where you tell the Studio what "bad" means. You can:</p>
+                    <ul>
+                        <li><strong>Use the Rule Builder (UI):</strong> Click "Build Rule" and select conditions from dropdowns. The UI helps you avoid syntax errors.</li>
+                        <li><strong>Write SQL Directly:</strong> If you're comfortable with SQL, switch to "SQL Mode" and write the CASE condition directly.</li>
+                    </ul>
+
+                    <p><strong>Example using the Rule Builder:</strong></p>
+                    <p style="background: var(--panel); padding: var(--spacing-md); border-radius: 8px; font-family: var(--font-mono); font-size: 0.9rem;">
+                        Condition 1: MEINS [IS NULL]<br/>
+                        OR Condition 2: MEINS [NOT IN] (SELECT MSEHI FROM T006 WHERE SPRAS='E')
+                    </p>
+
+                    <h4>Step 5: Select Fields to Include</h4>
+                    <p>Choose which fields appear in the rule output. The Studio will organize them into the five sections (Session 2):</p>
+                    <ul>
+                        <li><strong>Syniti Technical Fields:</strong> Always included (zSourceSystemID, zConcatenatedKey, zIsErrorFlag)</li>
+                        <li><strong>Basic Fields:</strong> MATNR, MAKTX (material ID and description)</li>
+                        <li><strong>Organizational Context:</strong> WERKS (plant), BWKEY (valuation area)</li>
+                        <li><strong>Value Context:</strong> VERPR (planned price)</li>
+                        <li><strong>Activity Context:</strong> ERSDA, AEDAT (created/modified dates)</li>
+                    </ul>
+
+                    <h4>Step 6: Preview & Generate</h4>
+                    <p>Click "Generate Rule". The Studio will:</p>
+                    <ul>
+                        <li>Validate your input against Session 2 standards</li>
+                        <li>Generate OptSel and RptSel SQL</li>
+                        <li>Show you a preview of the generated SQL</li>
+                    </ul>
+
+                    <h4>Step 7: Review & Save</h4>
+                    <p>Check the generated SQL against Session 2's "What a Good Rule Looks Like" checklist. If it passes, click "Save Rule". The rule is now stored in your Session.</p>
+
+                    <h3>What the Studio Generated</h3>
+                    <p>Your rule now has:</p>
+                    <ul>
+                        <li><strong>OptSel View:</strong> All materials (in scope) with zIsErrorFlag = 1 or 0</li>
+                        <li><strong>RptSel View:</strong> Wrapper: SELECT * FROM OptSel WHERE zIsErrorFlag = 1 (errors only)</li>
+                        <li><strong>Comments:</strong> Header block, section headers, and inline business logic</li>
+                        <li><strong>Field Organization:</strong> Technical → Basic → Org → Value → Activity (Session 2)</li>
+                        <li><strong>zSourceSystemID Filtering:</strong> In main table WHERE and every join (Session 2)</li>
+                    </ul>
+
+                    <p style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: var(--canvas); border-left: 4px solid var(--good); border-radius: 4px;">
+                        <strong>Checkpoint:</strong> Your first rule is saved! You now have OptSel and RptSel SQL that follows every Session 2 standard. Next, you can run it, enhance it with AI, or move on to derive more rules.
+                    </p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('session-config')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('deterministic-derivation')">Next: Deterministic Derivation →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="deterministic-derivation">
+                <div class="section-card">
+                    <h2>Deterministic Derivation: How It Works</h2>
+                    <p>Every time you derive a rule using the Studio's local derivation engine (without AI), you get the exact same SQL output — same structure, same comments, same field organization. This is "deterministic derivation."</p>
+
+                    <h3>Why Deterministic Derivation Matters</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Consistency:</strong> Every rule derived in your organization follows the same pattern. Auditors and reviewers recognize the structure immediately.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Reproducibility:</strong> If you derive the same rule again next month, you get identical SQL (unless you change the input). No surprises, no hidden logic.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Version Control Friendly:</strong> Same SQL means git diffs are predictable — you see only the logic you changed, not formatting or random variable ordering.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Regulatory Audit Ready:</strong> Deterministic output is easier to certify. You can show regulators: "Here's the rule, here's how it was generated, generate it again, you get the same output."</div>
+                        </div>
+                    </div>
+
+                    <h3>What the Deterministic Engine Does</h3>
+                    <p>When you fill in the Rule Builder form and click "Generate", the Studio's local derivation engine:</p>
+
+                    <h4>1. Validates Input</h4>
+                    <ul>
+                        <li>Rule name ≤ 85 characters (target) / ≤ 100 (absolute max)</li>
+                        <li>Description follows Fetch / Check / Return template</li>
+                        <li>Primary table exists and is accessible in the configured system</li>
+                        <li>Inclusions and exclusions are syntactically valid</li>
+                        <li>Error condition is written in SQL or properly translated from the UI builder</li>
+                    </ul>
+
+                    <h4>2. Builds the OptSel Query</h4>
+                    <ul>
+                        <li><strong>Generates the FROM/JOIN structure:</strong> If you referenced related tables (e.g., T006 for valid UoMs), the engine builds the JOINs automatically with zSourceSystemID parity</li>
+                        <li><strong>Composes the CASE statement:</strong> Your error conditions become the CASE branches. 1 = error, 0 = clean.</li>
+                        <li><strong>Organizes the SELECT:</strong> Fields are ordered per Session 2: Technical → Basic → Org → Value → Activity</li>
+                        <li><strong>Applies WHERE filters:</strong> Inclusions go in WHERE; exclusions (especially deletion flags) go in WHERE to exclude out-of-scope rows</li>
+                    </ul>
+
+                    <h4>3. Adds Session 2 Compliance</h4>
+                    <ul>
+                        <li><strong>Header block:</strong> DQ Rule name, Rule ID, view type, generation date, target platform</li>
+                        <li><strong>Comments:</strong> Section headers (Syniti Technical Fields, Basic Fields, etc.) and inline business-logic comments</li>
+                        <li><strong>zSourceSystemID:</strong> Main table WHERE and every join ON carries the system filter</li>
+                        <li><strong>zConcatenatedKey:</strong> Built as CONCAT(zSourceSystemID, '_', primary_key)</li>
+                    </ul>
+
+                    <h4>4. Generates RptSel as a Wrapper</h4>
+                    <div class="code-block">SELECT * FROM [RuleName_OptSel] WHERE zIsErrorFlag = 1</div>
+
+                    <h4>5. Returns Preview & Stores Rule</h4>
+                    <p>The Studio shows you the generated SQL for review. If you approve, it saves both OptSel and RptSel to your Session, timestamped with metadata (who created it, when, what version of the derivation engine).</p>
+
+                    <h3>Determinism in Action: Example</h3>
+                    <p><strong>You derive a rule three times, with identical inputs:</strong></p>
+                    <p style="background: var(--panel); padding: var(--spacing-md); border-radius: 8px;">
+                        Input: Table=MARA, Error Condition=MEINS IS NULL, Exclusion=LVORM='X'<br/>
+                        Run 1 (March 2026) → Output A (saved)<br/>
+                        Run 2 (May 2026, same input) → Output A (identical)<br/>
+                        Run 3 (July 2026, same input) → Output A (still identical)
+                    </p>
+                    <p>The SQL is exactly the same all three times. Same field order, same comment structure, same zSourceSystemID placement. This is deterministic.</p>
+
+                    <h3>When Determinism Changes</h3>
+                    <p>If you change the input (e.g., add a new exclusion or include a different field), the engine re-derives with the new logic. The output changes, but it's still deterministic — the same new input always produces the same new output.</p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('derive-rule')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('ai-enhancement')">Next: AI Enhancement →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="ai-enhancement">
+                <div class="section-card">
+                    <h2>AI Enhancement: What Claude Does & What Instructions Are Sent</h2>
+                    <p>After you've derived a rule (deterministically), you can optionally send it to Claude for AI enhancement. Claude can improve the SQL, add complexity, or rewrite it entirely while maintaining Session 2 compliance.</p>
+
+                    <h3>What is AI Enhancement?</h3>
+                    <p>AI Enhancement is a separate pass that:</p>
+                    <ul>
+                        <li>Takes your derived rule (OptSel + RptSel)</li>
+                        <li>Sends it to Claude with a detailed specification</li>
+                        <li>Asks Claude to improve, rewrite, or enhance the SQL</li>
+                        <li>Returns Claude's suggestions for you to review and accept/reject</li>
+                    </ul>
+                    <p><strong>Important:</strong> AI Enhancement is optional. Your deterministically-derived rule is fully valid on its own. Use AI Enhancement only if you want Claude's expert suggestions.</p>
+
+                    <h3>When to Use AI Enhancement</h3>
+                    <ul>
+                        <li><strong>Complex multi-table rules:</strong> Claude can simplify CTEs or suggest better join strategies</li>
+                        <li><strong>Performance tuning:</strong> Ask Claude to optimize for large datasets</li>
+                        <li><strong>Cross-system checks:</strong> Claude can help design rules that safely compare data across multiple systems</li>
+                        <li><strong>Compliance complexity:</strong> Rules that need to handle edge cases or regulatory requirements</li>
+                        <li><strong>Learning:</strong> Compare Claude's version to your derived version to see how it thinks about SQL</li>
+                    </ul>
+
+                    <h3>The AI Enhancement Instructions (What Claude Receives)</h3>
+                    <p>When you click "Enhance with AI" in the Studio, Claude receives a structured prompt that includes:</p>
+
+                    <h4>1. The Rule Specification</h4>
+                    <p>Claude gets:</p>
+                    <ul>
+                        <li>Rule name and description</li>
+                        <li>Primary table and scope (inclusions/exclusions)</li>
+                        <li>Error condition in plain English</li>
+                        <li>List of systems the rule applies to (e.g., "Z01=Production, Z02=Quality")</li>
+                        <li>Target database platform (SQL Server, SAP HANA, etc.)</li>
+                    </ul>
+
+                    <h4>2. Session 2 Compliance Requirements</h4>
+                    <p>Claude is explicitly told:</p>
+                    <ul>
+                        <li><strong>Field section order:</strong> Technical → Basic → Org → Value → Activity (always)</li>
+                        <li><strong>zSourceSystemID filtering:</strong> Must appear in main table WHERE, every join ON, every CTE internal WHERE, and every CTE join</li>
+                        <li><strong>Header block format:</strong> Exact format with rule name, ID, view type, generation date</li>
+                        <li><strong>Comment standard:</strong> Section headers + inline business-language comments (no technical narration)</li>
+                        <li><strong>zIsErrorFlag:</strong> Must be INTEGER 1/0, never text</li>
+                        <li><strong>CTE rules:</strong> Every CTE used, filters/outputs zSourceSystemID, properly joined</li>
+                        <li><strong>zConcatenatedKey:</strong> Built with underscore delimiters, unique at the query grain</li>
+                    </ul>
+
+                    <h4>3. The Current Derived SQL</h4>
+                    <p>Claude gets your rule's current OptSel and RptSel to use as a baseline. Claude understands: "Here's what the deterministic engine produced — improve on this while maintaining all compliance requirements."</p>
+
+                    <h4>4. Domain Context</h4>
+                    <p>Claude receives relevant background:</p>
+                    <ul>
+                        <li>SAP table schemas and relationships relevant to this rule</li>
+                        <li>Standard SAP abbreviations (UoM, CoA, PIR, BOM, etc.)</li>
+                        <li>Business context (e.g., "this is for an S/4HANA migration" or "this is for ongoing quality monitoring")</li>
+                    </ul>
+
+                    <h4>5. Enhancement Goals</h4>
+                    <p>Claude is told what improvement you're seeking:</p>
+                    <ul>
+                        <li>"Improve readability" → Simplify CTEs, clarify logic</li>
+                        <li>"Optimize for performance" → Add indexes hints (if applicable), simplify joins</li>
+                        <li>"Handle edge cases" → Expand CASE logic to cover more scenarios</li>
+                        <li>"Compare across systems" → Design multi-system fan-out (see "Sibling Rules")</li>
+                    </ul>
+
+                    <h3>Example: What Claude Receives</h3>
+                    <p style="background: var(--panel); padding: var(--spacing-lg); border-radius: 8px; border-left: 4px solid var(--violet); font-size: 0.95rem;">
+                        <strong>Rule Name:</strong> "Material must have valid, non-deleted base unit of measure"<br/>
+                        <strong>Description:</strong> [Fetch/Check/Return template filled in]<br/>
+                        <strong>Primary Table:</strong> MARA (materials)<br/>
+                        <strong>Inclusions:</strong> zSourceSystemID='Z01'<br/>
+                        <strong>Exclusions:</strong> LVORM='X' (marked for deletion)<br/>
+                        <strong>Error Condition:</strong> MEINS is null OR MEINS not in valid UoM list (T006)<br/>
+                        <strong>Target Platform:</strong> SQL Server<br/>
+                        <strong>Current OptSel:</strong> [Your rule's SQL]<br/>
+                        <strong>Goal:</strong> Improve readability and performance on large datasets<br/>
+                        <strong>Compliance Requirements:</strong> [Session 2 standards, field sections, zSourceSystemID rules, comment standard, etc.]
+                    </p>
+
+                    <h3>What Claude Returns</h3>
+                    <p>Claude analyzes your rule and returns:</p>
+                    <ul>
+                        <li><strong>Improved OptSel SQL:</strong> Enhanced version following all compliance requirements</li>
+                        <li><strong>Improved RptSel:</strong> Updated wrapper (usually just a SELECT * from the new OptSel)</li>
+                        <li><strong>Explanation:</strong> Why Claude made each change, what improves, performance gains (if any)</li>
+                        <li><strong>Alternative Approaches:</strong> Claude often offers multiple strategies with trade-offs</li>
+                    </ul>
+
+                    <h3>How to Interpret Claude's Suggestions</h3>
+                    <p>When Claude returns an enhancement:</p>
+                    <ol>
+                        <li><strong>Read the Explanation:</strong> Understand why Claude made changes</li>
+                        <li><strong>Check Session 2 Compliance:</strong> Run Claude's SQL against the "What a Good Rule Looks Like" checklist</li>
+                        <li><strong>Review Field Order:</strong> Are Technical → Basic → Org → Value → Activity respected?</li>
+                        <li><strong>Verify zSourceSystemID:</strong> Appears in all four mandatory places?</li>
+                        <li><strong>Test the SQL:</strong> If possible, run it on your test system and compare row counts with your original</li>
+                        <li><strong>Accept or Modify:</strong> You can accept Claude's version, modify it, or keep your original</li>
+                    </ol>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('deterministic-derivation')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('sibling-rules')">Next: Sibling Rules →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="sibling-rules">
+                <div class="section-card">
+                    <h2>Sibling Rules & Multi-System Fan-out</h2>
+                    <p>In multi-system landscapes, the same business rule often applies to multiple SAP systems (Production, Quality, Development) or across different ERP tenants. "Sibling rules" are versions of the same rule scoped to different systems. This section explains how they work and how AI enhancement handles them.</p>
+
+                    <h3>What Are Sibling Rules?</h3>
+                    <p>When you derive a rule that applies to multiple systems (e.g., Z01, Z02, Z03), the Studio creates a primary rule + sibling variants, each with its own zSourceSystemID filter.</p>
+
+                    <p><strong>Example:</strong> You derive a rule for materials across three systems:</p>
+                    <ul>
+                        <li><strong>Primary:</strong> "Material must have valid UoM" (Z01 = Production)</li>
+                        <li><strong>Sibling 1:</strong> "Material must have valid UoM" (Z02 = Quality)</li>
+                        <li><strong>Sibling 2:</strong> "Material must have valid UoM" (Z03 = Development)</li>
+                    </ul>
+
+                    <p>Each sibling runs independently, scoped to its own system. The logic is identical; only the zSourceSystemID filter changes.</p>
+
+                    <h3>Why Siblings Matter</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>System Isolation:</strong> A rule for Z01 never accidentally includes rows from Z02. Each system's data stays separate.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Bulk Derivation:</strong> Derive one rule definition once; the Studio automatically generates siblings for all configured systems.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Consistency:</strong> All siblings have identical logic — only zSourceSystemID changes. Easy to audit and compare.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Maintenance:</strong> Update the parent rule once; all siblings inherit the change automatically.</div>
+                        </div>
+                    </div>
+
+                    <h3>How AI Enhancement Works with Siblings</h3>
+                    <p>When you ask Claude to enhance a rule with siblings, the Studio:</p>
+
+                    <h4>Step 1: Send the Primary Rule to Claude</h4>
+                    <p>Claude receives the parent rule definition and returns enhanced SQL.</p>
+
+                    <h4>Step 2: Mechanically Derive Siblings</h4>
+                    <p>The Studio takes Claude's enhanced SQL and mechanically creates siblings by:</p>
+                    <ul>
+                        <li>Replacing the primary system's zSourceSystemID value with each sibling's system ID</li>
+                        <li>Updating view names to reflect the sibling (e.g., rule_name_Z01_OptSel, rule_name_Z02_OptSel)</li>
+                        <li>Keeping all other logic identical</li>
+                    </ul>
+
+                    <h4>Step 3: Validate Sibling Compliance</h4>
+                    <p>Each sibling is validated against Session 2 standards automatically. If any sibling fails, the entire enhancement is rejected for safety.</p>
+
+                    <h3>Example: Fan-out in Action</h3>
+                    <p><strong>Scenario:</strong> Your Session has three systems configured (Z01, Z02, Z03). You derive a material UoM rule as multi-system.</p>
+
+                    <p style="background: var(--canvas); padding: var(--spacing-lg); border-radius: 8px;">
+                        <strong>Input:</strong><br/>
+                        Rule Name: "Material must have valid UoM"<br/>
+                        Systems: Z01 (Production), Z02 (Quality), Z03 (Development)<br/>
+                        Error Condition: MEINS IS NULL OR MEINS NOT IN T006<br/><br/>
+
+                        <strong>Output:</strong><br/>
+                        Primary Rule (Z01):<br/>
+                        - mm_material_valid_uom_z01_OptSel<br/>
+                        - WHERE MARA.zSourceSystemID = 'Z01' AND ...<br/><br/>
+
+                        Sibling Rule (Z02):<br/>
+                        - mm_material_valid_uom_z02_OptSel<br/>
+                        - WHERE MARA.zSourceSystemID = 'Z02' AND ...<br/><br/>
+
+                        Sibling Rule (Z03):<br/>
+                        - mm_material_valid_uom_z03_OptSel<br/>
+                        - WHERE MARA.zSourceSystemID = 'Z03' AND ...<br/>
+                    </p>
+
+                    <h3>AI Enhancement & Sibling Substitution</h3>
+                    <p>When Claude enhances a sibling rule:</p>
+                    <ol>
+                        <li>Claude receives <strong>one logical rule definition</strong> (not the SQL yet, just the spec)</li>
+                        <li>Claude returns <strong>optimized SQL for that one rule</strong></li>
+                        <li>The Studio automatically creates siblings by <strong>mechanical substitution</strong> of view names and zSourceSystemID values</li>
+                        <li>No AI is re-run per sibling — it's efficient and consistent</li>
+                    </ol>
+
+                    <p>This avoids the problem of Claude making slightly different optimization choices for each system, which would make siblings hard to compare and audit.</p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('ai-enhancement')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('bulk-execution')">Next: Bulk Execution →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="bulk-execution">
+                <div class="section-card">
+                    <h2>Bulk Rule Execution</h2>
+                    <p>Once you've derived rules (with or without AI enhancement), you can run them all at once against your data. Bulk execution lets you execute hundreds of rules simultaneously and export the results.</p>
+
+                    <h3>What is Bulk Execution?</h3>
+                    <p>Bulk Execution is the operation that:</p>
+                    <ul>
+                        <li>Takes all rules in your Session (or a selected subset)</li>
+                        <li>Runs each rule's OptSel and RptSel SQL against your configured systems</li>
+                        <li>Collects results: error counts, clean counts, sample failing rows</li>
+                        <li>Optionally generates a report or exports the rules to your database</li>
+                    </ul>
+
+                    <h3>When to Use Bulk Execution</h3>
+                    <ul>
+                        <li><strong>First-time data profiling:</strong> Run 50+ rules against a new dataset to get a baseline of data quality</li>
+                        <li><strong>Pre-migration:</strong> Execute all rules before an SAP migration cutover to identify issues early</li>
+                        <li><strong>Ongoing monitoring:</strong> Schedule bulk runs weekly or monthly to track quality trends</li>
+                        <li><strong>Deployment:</strong> Export all rules to your production database at once</li>
+                    </ul>
+
+                    <h3>Running a Bulk Execution</h3>
+
+                    <h4>Step 1: Select Rules</h4>
+                    <ul>
+                        <li>From the Session dashboard, click "Bulk Execute"</li>
+                        <li>Choose which rules to include: "All rules", "Only derived rules", "Only AI-enhanced rules", or "Select specific rules"</li>
+                    </ul>
+
+                    <h4>Step 2: Configure Execution</h4>
+                    <ul>
+                        <li><strong>Target System:</strong> Which system to run against (Z01, Z02, Z03, etc.)</li>
+                        <li><strong>Database Connection:</strong> Confirm the database credentials</li>
+                        <li><strong>Timeout:</strong> How long to wait for all rules to complete (default: 30 minutes)</li>
+                        <li><strong>Collect Sample Data:</strong> Should the execution also pull a sample of failing rows? (helpful for understanding errors, but takes more time)</li>
+                    </ul>
+
+                    <h4>Step 3: Execute</h4>
+                    <ul>
+                        <li>Click "Start Bulk Execution"</li>
+                        <li>The Studio runs all selected rules in parallel (with smart queuing to avoid overload)</li>
+                        <li>Progress updates appear in real-time on the dashboard</li>
+                    </ul>
+
+                    <h4>Step 4: Review Results</h4>
+                    <p>Once complete, you see a summary:</p>
+                    <ul>
+                        <li><strong>Total Rules Run:</strong> X rules executed successfully</li>
+                        <li><strong>By Status:</strong> Y rules found errors, Z rules found zero errors</li>
+                        <li><strong>Error Rate:</strong> Aggregate: "Total records checked: 1M, Errors found: 15K (1.5%)"</li>
+                        <li><strong>Per-Rule Breakdown:</strong> Sortable table showing each rule's name, error count, clean count</li>
+                        <li><strong>Sample Failing Rows:</strong> If enabled, first few rows from each rule's RptSel (errors only)</li>
+                    </ul>
+
+                    <h3>Bulk Execution Output</h3>
+                    <p>After execution, you can:</p>
+
+                    <p><strong>1. Export the Rules to Your Database</strong></p>
+                    <ul>
+                        <li>Click "Export to Database"</li>
+                        <li>Choose the target schema and naming convention</li>
+                        <li>The Studio generates CREATE VIEW statements for all OptSel and RptSel views</li>
+                        <li>You can execute the SQL immediately or download it for your DBAs</li>
+                    </ul>
+
+                    <p><strong>2. Generate a Data Quality Report</strong></p>
+                    <ul>
+                        <li>Click "Generate Report"</li>
+                        <li>The Studio creates a PDF or Excel report showing error trends, top failing rules, system-by-system breakdown</li>
+                        <li>Useful for stakeholder communication</li>
+                    </ul>
+
+                    <p><strong>3. Download Results as CSV</strong></p>
+                    <ul>
+                        <li>Each rule's results (error count, clean count, sample data) can be downloaded as CSV for further analysis</li>
+                    </ul>
+
+                    <h3>Bulk Execution Best Practices</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Start with a small set:</strong> Run 5–10 rules first to check that your systems are configured correctly, then scale to hundreds.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Run during off-hours:</strong> Bulk execution can consume database resources. Schedule for nights or weekends when your systems are quiet.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Monitor for performance issues:</strong> If a rule runs slowly, review its CASE logic and JOINs. Use AI enhancement to optimize.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Keep sample data collection reasonable:</strong> Collecting samples from 100+ rules can slow execution. Sample only if you need it.</div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('sibling-rules')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('interpret-output')">Next: Interpret Claude Output →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="interpret-output">
+                <div class="section-card">
+                    <h2>How to Interpret Claude's Output</h2>
+                    <p>When Claude returns an AI-enhanced rule, you get more than just SQL. Understanding Claude's feedback helps you make informed decisions about whether to accept, modify, or reject the enhancement.</p>
+
+                    <h3>What Claude Returns</h3>
+                    <p>Claude's response includes:</p>
+
+                    <h4>1. The Enhanced SQL (OptSel)</h4>
+                    <p>Claude provides the complete, production-ready OptSel query with:</p>
+                    <ul>
+                        <li>Header block (completed with your rule name, ID, etc.)</li>
+                        <li>CTEs (if used) with zSourceSystemID filtering</li>
+                        <li>SELECT with all five field sections in order</li>
+                        <li>CASE statement with error conditions</li>
+                        <li>WHERE clause with scope (zSourceSystemID, deletions, inclusions/exclusions)</li>
+                        <li>Comments throughout</li>
+                    </ul>
+
+                    <h4>2. The Enhanced RptSel (Wrapper)</h4>
+                    <p>Claude typically leaves RptSel as-is (it's just a wrapper), but may suggest optimizations.</p>
+
+                    <h4>3. Explanation: What Changed</h4>
+                    <p>Claude explains:</p>
+                    <ul>
+                        <li>What was wrong or inefficient in your original rule</li>
+                        <li>What Claude changed and why</li>
+                        <li>Expected improvements (performance, clarity, compliance)</li>
+                    </ul>
+
+                    <p><strong>Example explanation from Claude:</strong></p>
+                    <p style="background: var(--canvas); padding: var(--spacing-lg); border-radius: 8px; border-left: 4px solid var(--violet);">
+                        "Your original rule joined MARA directly to T006 without aggregation, which could fan out the result if T006 has duplicate UoM entries per system. I've added a CTE that pre-aggregates T006 (SELECT DISTINCT zSourceSystemID, MSEHI FROM t006) to ensure a one-to-one join. This prevents duplicate error flags and improves performance on large datasets. The CTE maintains zSourceSystemID filtering as required."
+                    </p>
+
+                    <h4>4. Alternative Approaches (Optional)</h4>
+                    <p>Claude may offer alternatives with different trade-offs:</p>
+                    <ul>
+                        <li><strong>Option A (Recommended):</strong> [Enhanced SQL] — Balances performance and readability</li>
+                        <li><strong>Option B:</strong> [Alternative SQL] — Simpler but may be slower on large datasets</li>
+                        <li><strong>Option C:</strong> [Alternative SQL] — Highly optimized but more complex CTEs</li>
+                    </ul>
+
+                    <h3>How to Evaluate Claude's Suggestions</h3>
+
+                    <p><strong>Step 1: Check Session 2 Compliance</strong></p>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text">Does the SQL have the header block with rule name, ID, view type, date, and target platform?</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text">Are the five field sections in order? (Technical → Basic → Org → Value → Activity)</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text">Does every WHERE, JOIN, and CASE have a business-language comment?</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text">Is zSourceSystemID filtered in the main table WHERE and every join ON clause?</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text">If there are CTEs, does each filter on zSourceSystemID internally and output it?</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text">Is zIsErrorFlag an INTEGER (1/0), never text?</div>
+                        </div>
+                    </div>
+
+                    <p><strong>Step 2: Verify Business Logic</strong></p>
+                    <ul>
+                        <li>Does the CASE statement match your original error condition? Or did Claude improve it?</li>
+                        <li>Are all your exclusions (deletion flags, etc.) still in the WHERE?</li>
+                        <li>Did Claude add complexity that makes sense, or overcomplicate the rule?</li>
+                    </ul>
+
+                    <p><strong>Step 3: Test on Sample Data (If Possible)</strong></p>
+                    <ul>
+                        <li>Run Claude's SQL against your test system</li>
+                        <li>Compare row counts: Does Claude's OptSel return the same or similar number of rows as your original?</li>
+                        <li>Check a few error records: Do they make business sense?</li>
+                    </ul>
+
+                    <h3>Common Issues and How to Interpret Them</h3>
+
+                    <h4>Issue: Claude's SQL is Much Longer Than Your Original</h4>
+                    <p><strong>Interpretation:</strong> Claude probably added CTEs or more complex CASE logic. This isn't bad — it often means Claude found edge cases or optimized for performance. Review Claude's explanation. If satisfied, accept. If unsure, ask Claude for Option B (simpler approach).</p>
+
+                    <h4>Issue: Claude Warns That Your Original Violated a Session 2 Standard</h4>
+                    <p><strong>Interpretation:</strong> Claude found a compliance issue (missing zSourceSystemID filter, wrong field order, etc.). This is valuable feedback — accept Claude's corrected version.</p>
+
+                    <h4>Issue: Claude Suggests Adding a CTE, But You're Not Sure It's Needed</h4>
+                    <p><strong>Interpretation:</strong> Claude likely added it to prevent fan-out (one-to-many join problem) or improve performance. Read Claude's explanation. CTEs aren't free (slight overhead), so they should add value. If Claude's explanation is convincing, accept. Otherwise, choose Option B (simpler).</p>
+
+                    <h4>Issue: Claude's Output is Completely Different From Your Original</h4>
+                    <p><strong>Interpretation:</strong> Claude re-thought the entire rule. This happens when Claude finds a fundamentally better approach. Read the explanation carefully. If it still tests the same error condition (same business logic), and passes Session 2 checks, it's probably good. If it changes the logic, ask Claude why — you might need to clarify the original requirement.</p>
+
+                    <h3>Accepting vs. Rejecting an Enhancement</h3>
+
+                    <p><strong>Accept Claude's Enhancement If:</strong></p>
+                    <ul>
+                        <li>It passes Session 2 compliance fully</li>
+                        <li>It tests the same (or improved) business logic</li>
+                        <li>Claude's explanation is clear and makes sense</li>
+                        <li>You've tested it and the results are reasonable</li>
+                    </ul>
+
+                    <p><strong>Reject or Modify If:</strong></p>
+                    <ul>
+                        <li>It violates Session 2 standards (missing zSourceSystemID, wrong field order, etc.)</li>
+                        <li>It changes the business logic in ways you didn't ask for</li>
+                        <li>You test it and error counts are wildly different from your original</li>
+                        <li>You're uncomfortable with a choice Claude made (too complex, not complex enough, etc.)</li>
+                    </ul>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('bulk-execution')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('apply-corrected')">Next: Apply Corrected SQL →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" data-section="apply-corrected">
+                <div class="section-card">
+                    <h2>Apply Corrected SQL</h2>
+                    <p>After Claude returns an enhancement, or if you manually fix a rule's SQL, you use "Apply Corrected SQL" to save the updated version to your Session and, optionally, to all sibling rules at once.</p>
+
+                    <h3>The "Apply Corrected SQL" Workflow</h3>
+
+                    <h4>Scenario 1: Accepting Claude's Enhancement</h4>
+                    <p>Claude returns an enhanced rule. You review it, pass all compliance checks, and decide to use it.</p>
+                    <ol>
+                        <li>In the Studio, click "Accept Enhancement" on Claude's response</li>
+                        <li>The Studio shows you a diff: original SQL vs. Claude's SQL (highlighting what changed)</li>
+                        <li>You confirm by clicking "Apply Corrected SQL"</li>
+                        <li>The rule is updated with Claude's version and marked with an audit trail: "Enhanced by Claude on [date]"</li>
+                    </ol>
+
+                    <h4>Scenario 2: Applying Corrections to Siblings</h4>
+                    <p>Claude enhanced your primary rule, and you want all siblings (Z01, Z02, Z03) to get the same enhancement.</p>
+                    <ol>
+                        <li>After accepting Claude's enhancement for the primary rule, the Studio prompts: "Apply to sibling rules?"</li>
+                        <li>Check "Apply to all siblings"</li>
+                        <li>Click "Apply Corrected SQL to All"</li>
+                        <li>The Studio mechanically applies Claude's SQL to all siblings, updating only zSourceSystemID and view names (no AI re-run needed)</li>
+                        <li>All siblings now have the same enhancement, each scoped to its own system</li>
+                    </ol>
+
+                    <h4>Scenario 3: Manual Corrections</h4>
+                    <p>You (or a colleague) manually edit a rule's SQL to fix a bug or improve it.</p>
+                    <ol>
+                        <li>In the Studio's SQL editor, make your changes</li>
+                        <li>Click "Validate" to check the SQL syntax and Session 2 compliance</li>
+                        <li>If validation passes, click "Apply Corrected SQL"</li>
+                        <li>You can choose to apply to siblings as well (same mechanical substitution)</li>
+                    </ol>
+
+                    <h3>What "Apply Corrected SQL" Does</h3>
+                    <ul>
+                        <li><strong>Updates the Rule:</strong> The new SQL replaces the old version in your Session</li>
+                        <li><strong>Records Audit Trail:</strong> Timestamps the change, notes who made it and why (e.g., "Applied Claude enhancement v1")</li>
+                        <li><strong>Updates Siblings (Optional):</strong> If you choose, mechanically updates all sibling rules with the same logic, preserving their zSourceSystemID values</li>
+                        <li><strong>Invalidates Old Results:</strong> If you've already run bulk executions with the old SQL, those results are marked as "obsolete" so you don't accidentally report old error counts</li>
+                    </ul>
+
+                    <h3>Applying to Siblings: The Mechanics</h3>
+                    <p>When you "Apply Corrected SQL" to all siblings:</p>
+
+                    <div class="code-block">Original (Sibling Z02):
+WHERE MARA.zSourceSystemID = 'Z02' AND ...
+
+↓ Apply Correction with Sibling Substitution ↓
+
+New (Sibling Z02):
+WHERE MARA.zSourceSystemID = 'Z02' AND ...
+(same structure, only zSourceSystemID value preserved)</div>
+
+                    <p>The Studio:</p>
+                    <ul>
+                        <li>Takes Claude's SQL (or your manual correction)</li>
+                        <li>For each sibling, replaces the primary system's zSourceSystemID with the sibling's system ID</li>
+                        <li>Updates view names to match the sibling (e.g., rule_name_Z02_OptSel)</li>
+                        <li>Keeps all logic identical</li>
+                        <li>Validates each sibling against Session 2 compliance</li>
+                        <li>If any sibling fails validation, the entire operation is rejected (fail-safe)</li>
+                    </ul>
+
+                    <h3>Example: Apply Corrected SQL to All Siblings</h3>
+                    <p><strong>Starting state:</strong></p>
+                    <p style="background: var(--canvas); padding: var(--spacing-md); border-radius: 8px; font-size: 0.9rem;">
+                        Rule: "Material UoM must be valid"<br/>
+                        Primary (Z01): Original SQL (version 1)<br/>
+                        Sibling (Z02): Original SQL (version 1)<br/>
+                        Sibling (Z03): Original SQL (version 1)
+                    </p>
+
+                    <p><strong>Claude enhances the primary:</strong></p>
+                    <p style="background: var(--canvas); padding: var(--spacing-md); border-radius: 8px; font-size: 0.9rem;">
+                        Primary (Z01): Enhanced SQL (version 2, with CTE improvements)
+                    </p>
+
+                    <p><strong>You click "Apply to All Siblings":</strong></p>
+                    <p style="background: var(--good); padding: var(--spacing-md); border-radius: 8px; color: var(--white); font-size: 0.9rem;">
+                        Primary (Z01): Enhanced SQL (version 2)<br/>
+                        Sibling (Z02): Enhanced SQL (version 2, with zSourceSystemID='Z02')<br/>
+                        Sibling (Z03): Enhanced SQL (version 2, with zSourceSystemID='Z03')<br/>
+                        ✓ All siblings updated consistently
+                    </p>
+
+                    <h3>Best Practices for Applying Corrections</h3>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Always validate before applying:</strong> Check Session 2 compliance (or let the Studio do it automatically). Don't apply broken SQL to siblings.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Review the diff:</strong> Before applying to siblings, see exactly what's changing. The Studio shows original vs. new side-by-side.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Re-run bulk execution after major changes:</strong> If you make significant corrections, re-run the rule against your data to confirm results are still reasonable.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="checklist-icon">✓</div>
+                            <div class="checklist-text"><strong>Keep an audit trail:</strong> Use the Studio's notes field to document why you made each correction (e.g., "Fixed fan-out issue per Claude suggestion", "Simplified CTE per performance profiling").</div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('interpret-output')">← Back</button>
+                        <button class="btn btn-primary" onclick="go('studio-complete')">Finish Session 3 →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SESSION 3 COMPLETE -->
+            <section class="section" data-section="studio-complete">
+                <div class="section-card" style="background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); color: var(--white);">
+                    <h2 style="color: var(--white);">🎓 Session 3 Complete: Methodology Studio Mastery</h2>
+                    <p style="color: rgba(255,255,255,0.9);">You've completed the full Syniti DQ Training Academy! You now understand:</p>
+
+                    <h3 style="color: var(--white);">Session 1: Fundamentals</h3>
+                    <ul style="color: rgba(255,255,255,0.9);">
+                        <li>✓ The six dimensions of data quality</li>
+                        <li>✓ The DQ lifecycle: Profile → Rule → Remediate → Recheck</li>
+                        <li>✓ OptSel vs RptSel, error flags, scope and exclusions</li>
+                    </ul>
+
+                    <h3 style="color: var(--white);">Session 2: SQL Best Practices</h3>
+                    <ul style="color: rgba(255,255,255,0.9);">
+                        <li>✓ The five field sections (Technical → Basic → Org → Value → Activity)</li>
+                        <li>✓ zSourceSystemID filtering (four mandatory places)</li>
+                        <li>✓ Header blocks, comments, naming conventions, and the complete good-rule checklist</li>
+                    </ul>
+
+                    <h3 style="color: var(--white);">Session 3: Methodology Studio Workflow</h3>
+                    <ul style="color: rgba(255,255,255,0.9);">
+                        <li>✓ Creating accounts and configuring systems with API keys</li>
+                        <li>✓ Deterministic rule derivation that always produces consistent output</li>
+                        <li>✓ AI enhancement with Claude: what instructions are sent, how to interpret suggestions</li>
+                        <li>✓ Sibling rules and multi-system fan-out with mechanical substitution</li>
+                        <li>✓ Bulk execution: running hundreds of rules at once and exporting results</li>
+                        <li>✓ Interpreting Claude's output and applying corrected SQL to rules and siblings</li>
+                    </ul>
+
+                    <h3 style="color: var(--white);">Your Next Steps</h3>
+                    <ol style="color: rgba(255,255,255,0.9);">
+                        <li><strong>Create a Studio account</strong> and configure your first Session with your own data sources</li>
+                        <li><strong>Derive 3–5 practice rules</strong> to get familiar with the tool and the workflow</li>
+                        <li><strong>Use AI enhancement</strong> on one rule to see how Claude improves it</li>
+                        <li><strong>Run bulk execution</strong> to get a baseline of your data quality</li>
+                        <li><strong>Share results with your team</strong> and begin remediation planning</li>
+                    </ol>
+
+                    <p style="color: rgba(255,255,255,0.9); margin-top: var(--spacing-lg);"><strong>Final Reminder:</strong> Every rule you create — derived deterministically, enhanced by Claude, or written by hand — must pass Session 2's "What a Good Rule Looks Like" checklist before it's production-ready. That checklist is your north star.</p>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="go('apply-corrected')">← Back to Last Lesson</button>
+                        <button class="btn btn-primary" style="background: var(--white); color: var(--navy);" onclick="go('intro')">Back to Intro</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <p><strong>Syniti DQ Training Academy</strong> — Building trustworthy data systems</p>
+                <p>Sessions 1 & 2 available in the full academy. Session 3 (Methodology Studio Workflow) complete here.</p>
+                <p style="margin-top: var(--spacing-lg); font-size: 0.85rem;">Last updated: August 2026 | Powered by Syniti & Claude</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let currentSection = 'intro';
+
+        // Ordered list of every section id
+        const allSectionIds = [
+            'intro', 'session1-complete', 'sql-intro', 'session2-complete',
+            'studio-intro', 'create-account', 'session-config', 'derive-rule',
+            'deterministic-derivation', 'ai-enhancement', 'sibling-rules', 'bulk-execution',
+            'interpret-output', 'apply-corrected', 'studio-complete'
+        ];
+
+        function go(section) {
+            currentSection = section;
+            updateNavigation();
+            scrollToTop();
+        }
+
+        function updateNavigation() {
+            // Sidebar highlight
+            document.querySelectorAll('.sidebar-nav a').forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`.sidebar-nav a[data-section="${currentSection}"]`);
+            if (activeLink) activeLink.classList.add('active');
+
+            // Show only the active section
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            const activeSection = document.querySelector(`.section[data-section="${currentSection}"]`);
+            if (activeSection) activeSection.classList.add('active');
+
+            // Progress bar
+            const idx = allSectionIds.indexOf(currentSection);
+            const progress = ((idx + 1) / allSectionIds.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+
+            // Subtitle & hero
+            const isSession3 = currentSection.startsWith('studio-') || ['create-account', 'session-config', 'derive-rule', 'deterministic-derivation', 'ai-enhancement', 'sibling-rules', 'bulk-execution', 'interpret-output', 'apply-corrected', 'studio-complete'].includes(currentSection);
+            document.getElementById('course-subtitle').textContent = isSession3
+                ? 'Methodology Studio Workflow (Session 3)'
+                : 'DQ Training Academy Overview';
+
+            document.getElementById('hero-section').style.display = currentSection === 'intro' ? 'block' : 'none';
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        updateNavigation();
+    </script>
+</body>
+</html>

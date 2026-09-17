@@ -1,0 +1,289 @@
+{
+  "_about": "Learning paths - curated ordered sequences over knowledge units. Unit steps are {unit: '<unit-id>', checks: ['<as-id>', ...]} - checks render as a Reinforce section after the unit's content and the step completes when all are answered correctly. Standalone {assessment: '<as-id>'} steps are for diagnostic paths (question sequences). Built by build/build.py.",
+  "paths": [
+    {
+      "id": "dq-fundamentals",
+      "title": "Session 1 — Data Quality Fundamentals",
+      "blurb": "What data quality is, the seven dimensions, the lifecycle, rule anatomy and the view model — the foundation every consultant needs before touching SQL. ~60 minutes.",
+      "steps": [
+        {
+          "unit": "con-what-is-data-quality",
+          "checks": [
+            "as-fund-what-is-dq"
+          ]
+        },
+        {
+          "unit": "con-dq-dimensions",
+          "checks": [
+            "as-fund-dimension-completeness",
+            "as-fund-match-tax-id",
+            "as-fund-match-name-sync",
+            "as-fund-match-status-code",
+            "as-fund-match-dup-ids"
+          ]
+        },
+        {
+          "unit": "con-dq-lifecycle",
+          "checks": [
+            "as-fund-lifecycle"
+          ]
+        },
+        {
+          "unit": "con-rule-types"
+        },
+        {
+          "unit": "prn-fetch-check-return",
+          "checks": [
+            "as-fund-rule-name-length"
+          ]
+        },
+        {
+          "unit": "con-view-types",
+          "checks": [
+            "as-fund-view-types"
+          ]
+        },
+        {
+          "unit": "prn-optsel-is-the-universe"
+        },
+        {
+          "unit": "con-deletion-flags-vs-status-fields",
+          "checks": [
+            "as-fund-deletion-flags",
+            "as-fund-status-scope",
+            "as-fund-dimension-scenario"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sql-best-practices",
+      "title": "Session 2 — SQL Best Practices",
+      "blurb": "The exact SQL dialect the methodology requires: CTE rules, zSourceSystemID filtering, the comment standard, naming, field sections and what a good rule looks like. ~60 minutes.",
+      "steps": [
+        {
+          "unit": "std-cte-rules",
+          "checks": [
+            "as-sql-unused-cte"
+          ]
+        },
+        {
+          "unit": "std-zsourcesystemid-convention",
+          "checks": [
+            "as-sql-zsource-statement"
+          ]
+        },
+        {
+          "unit": "std-sql-comment-standards"
+        },
+        {
+          "unit": "prn-sql-comments-must-match-local-derive-quality"
+        },
+        {
+          "unit": "std-rule-name-heuristics"
+        },
+        {
+          "unit": "prc-write-a-quality-rule-name"
+        },
+        {
+          "unit": "std-output-field-sections"
+        },
+        {
+          "unit": "std-optsel-select-structure"
+        },
+        {
+          "unit": "std-view-naming-patterns",
+          "checks": [
+            "as-sql-cte-review"
+          ]
+        },
+        {
+          "unit": "prc-audit-rule-quality"
+        }
+      ]
+    },
+    {
+      "id": "sql-readiness-check",
+      "title": "SQL Readiness Check",
+      "blurb": "The 14-question diagnostic to take before Session 2 — it tells you whether to review Session 1 first. ~10 minutes.",
+      "steps": [
+        {
+          "assessment": "as-pre-optsel-rptsel"
+        },
+        {
+          "assessment": "as-pre-zsource-purpose"
+        },
+        {
+          "assessment": "as-pre-deletion-placement"
+        },
+        {
+          "assessment": "as-pre-error-flag-logic"
+        },
+        {
+          "assessment": "as-pre-what-is-cte"
+        },
+        {
+          "assessment": "as-pre-ziserrorflag-type"
+        },
+        {
+          "assessment": "as-pre-join-zsource"
+        },
+        {
+          "assessment": "as-pre-flag-vs-status"
+        },
+        {
+          "assessment": "as-pre-multi-system"
+        },
+        {
+          "assessment": "as-pre-field-sections"
+        },
+        {
+          "assessment": "as-pre-rule-naming"
+        },
+        {
+          "assessment": "as-pre-comment-standard"
+        },
+        {
+          "assessment": "as-pre-literal-system-id"
+        },
+        {
+          "assessment": "as-pre-deletion-in-case"
+        }
+      ]
+    },
+    {
+      "id": "studio-workflow",
+      "title": "Session 3 — DQ Studio Workflow",
+      "blurb": "Hands-on with the Studio: getting set up, deriving your first rule, what AI Enhance does for you and when it stops you, sibling fan-out, bulk execution, auditing what came out and exporting the SKP AssetUpload. ~60 minutes.",
+      "steps": [
+        {
+          "unit": "prc-studio-onboarding",
+          "checks": [
+            "as-studio-06"
+          ]
+        },
+        {
+          "unit": "prc-derive-a-dq-rule"
+        },
+        {
+          "unit": "con-catalog-vs-bespoke-rules"
+        },
+        {
+          "unit": "ref-local-deriver",
+          "checks": [
+            "as-studio-01"
+          ]
+        },
+        {
+          "unit": "prc-format-an-implication"
+        },
+        {
+          "unit": "ref-ai-derive-and-enhance-internals"
+        },
+        {
+          "unit": "ref-ai-static-validator-gate",
+          "checks": [
+            "as-studio-02"
+          ]
+        },
+        {
+          "unit": "con-multi-implementation-model",
+          "checks": [
+            "as-studio-03"
+          ]
+        },
+        {
+          "unit": "prc-fan-out-a-rule-per-system",
+          "checks": [
+            "as-studio-05"
+          ]
+        },
+        {
+          "unit": "prc-run-the-bulk-pipeline",
+          "checks": [
+            "as-studio-04"
+          ]
+        },
+        {
+          "unit": "prc-audit-rule-quality"
+        },
+        {
+          "unit": "prc-generate-the-skp-assetupload"
+        }
+      ]
+    },
+    {
+      "id": "delivery-method",
+      "title": "Delivering a Blueprint Engagement",
+      "blurb": "The delivery spine end to end: the three phases, the five solution components, assess and discover, who is on the team, how to size the work, how to run the room and QA what ships. ~75 minutes.",
+      "hidden": true,
+      "steps": [
+        {
+          "unit": "con-engagement-phases"
+        },
+        {
+          "unit": "con-solution-components"
+        },
+        {
+          "unit": "prc-assess-and-discover"
+        },
+        {
+          "unit": "con-engagement-team-shape"
+        },
+        {
+          "unit": "prc-estimate-blueprint-effort"
+        },
+        {
+          "unit": "con-audience-altitude"
+        },
+        {
+          "unit": "std-client-vocabulary"
+        },
+        {
+          "unit": "prc-run-the-blueprint-room"
+        },
+        {
+          "unit": "prc-handle-the-cold-room"
+        },
+        {
+          "unit": "prc-qa-a-blueprint"
+        },
+        {
+          "unit": "ref-deliverables-inventory"
+        }
+      ]
+    },
+    {
+      "id": "value-outcomes",
+      "title": "From Rules to Business Value",
+      "blurb": "How a rule result becomes a number a CFO will accept: the value chain, the L1-L5 outcome hierarchy, levers, valuation discipline, key issues as the primary tier, and the provenance and schema that keep the claim auditable. ~60 minutes.",
+      "hidden": true,
+      "steps": [
+        {
+          "unit": "con-value-chain"
+        },
+        {
+          "unit": "con-outcome-hierarchy-l1-l5"
+        },
+        {
+          "unit": "gls-value-lever"
+        },
+        {
+          "unit": "prn-value-discipline"
+        },
+        {
+          "unit": "prn-key-issues-primary-tier"
+        },
+        {
+          "unit": "con-rule-provenance-model"
+        },
+        {
+          "unit": "ref-key-issue-vocabulary"
+        },
+        {
+          "unit": "ref-rule-record-schema"
+        }
+      ]
+    }
+  ]
+}

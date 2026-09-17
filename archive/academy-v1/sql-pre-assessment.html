@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Best Practices — Pre-Session Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #232F63;
+            --blue: #365EB9;
+            --violet: #5B30EE;
+            --blue-light: #83AFF8;
+            --good: #0E9F6E;
+            --warn: #B45309;
+            --critical: #DC2626;
+            --ink: #20242E;
+            --muted: #6B7492;
+            --canvas: #F6F8FE;
+            --panel: #F7F9FD;
+            --white: #FFFFFF;
+            --line: #E1E8F2;
+
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Menlo', monospace;
+
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, var(--canvas) 0%, var(--white) 100%);
+            color: var(--ink);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: var(--spacing-xl);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: var(--navy);
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: var(--muted);
+            font-size: 1.05rem;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            color: var(--white);
+            padding: var(--spacing-2xl);
+            border-radius: 12px;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .intro-box h2 {
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .intro-box p {
+            opacity: 0.95;
+            line-height: 1.8;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .intro-box ul {
+            margin-left: var(--spacing-lg);
+            opacity: 0.95;
+        }
+
+        .intro-box li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .assessment-section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
+            border: 1px solid var(--line);
+            box-shadow: 0 2px 8px rgba(35, 47, 99, 0.05);
+        }
+
+        .section-header {
+            font-size: 1.2rem;
+            color: var(--navy);
+            margin: var(--spacing-xl) 0 var(--spacing-lg) 0;
+            padding-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--violet);
+        }
+
+        .section-header:first-child {
+            margin-top: 0;
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            font-size: 0.9rem;
+            color: var(--muted);
+            padding: var(--spacing-md);
+            background: var(--canvas);
+            border-radius: 8px;
+        }
+
+        .question {
+            background: var(--panel);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin-bottom: var(--spacing-lg);
+            border-left: 4px solid var(--violet);
+        }
+
+        .question-number {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--violet);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            color: var(--ink);
+            margin-bottom: var(--spacing-md);
+            font-weight: 600;
+        }
+
+        .question-context {
+            font-size: 0.95rem;
+            color: var(--muted);
+            margin-bottom: var(--spacing-md);
+            font-style: italic;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .option {
+            padding: var(--spacing-md);
+            border: 2px solid var(--line);
+            border-radius: 6px;
+            background: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            font-size: 0.95rem;
+        }
+
+        .option:hover {
+            border-color: var(--violet);
+            background: #EEE5FF;
+        }
+
+        .option input[type="radio"] {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .option.selected {
+            border-color: var(--violet);
+            background: #EEE5FF;
+        }
+
+        .option.correct {
+            border-color: var(--good);
+            background: #F0FDF4;
+        }
+
+        .option.incorrect {
+            border-color: var(--critical);
+            background: #FEF2F2;
+        }
+
+        .why-this-matters {
+            background: #F0F9FF;
+            border-left: 4px solid var(--blue-light);
+            padding: var(--spacing-md);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--navy);
+        }
+
+        .why-this-matters strong {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .feedback {
+            margin-top: var(--spacing-lg);
+            padding: var(--spacing-md);
+            border-radius: 6px;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #F0FDF4;
+            color: var(--good);
+            border: 1px solid var(--good);
+        }
+
+        .feedback.incorrect {
+            background: #FEF2F2;
+            color: var(--critical);
+            border: 1px solid var(--critical);
+        }
+
+        .feedback strong {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .results-section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: var(--spacing-2xl);
+            margin-top: var(--spacing-2xl);
+            border: 2px solid var(--violet);
+            text-align: center;
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+        }
+
+        .results-section h2 {
+            font-size: 1.5rem;
+            color: var(--navy);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--violet);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .score-label {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .recommendation {
+            background: var(--canvas);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            margin-bottom: var(--spacing-lg);
+            text-align: left;
+        }
+
+        .recommendation.ready {
+            border: 2px solid var(--good);
+            background: #F0FDF4;
+        }
+
+        .recommendation.prepare {
+            border: 2px solid var(--warn);
+            background: #FEF3E2;
+        }
+
+        .recommendation h3 {
+            color: var(--navy);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.1rem;
+        }
+
+        .recommendation p {
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--violet), var(--blue));
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(91, 48, 238, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--panel);
+            color: var(--navy);
+            border: 1px solid var(--line);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--violet);
+            color: var(--violet);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: var(--spacing-2xl);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .scoring-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .scoring-table th {
+            background: var(--violet);
+            color: var(--white);
+            padding: var(--spacing-md);
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .scoring-table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .scoring-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: var(--spacing-md);
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .assessment-section {
+                padding: var(--spacing-lg);
+            }
+
+            .intro-box {
+                padding: var(--spacing-lg);
+            }
+
+            .progress-indicator {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SQL Best Practices — Pre-Session Assessment</h1>
+            <p>Before diving into Session 2, take this assessment to gauge your readiness.</p>
+        </div>
+
+        <div class="intro-box">
+            <h2>What This Assessment Does</h2>
+            <p>This 15-question pre-assessment checks your understanding of:</p>
+            <ul>
+                <li><strong>Session 1 concepts:</strong> OptSel vs RptSel, error flags, scope, deletion flags</li>
+                <li><strong>SQL fundamentals:</strong> SELECT, WHERE, JOIN, CASE WHEN, CTEs</li>
+                <li><strong>SAP context:</strong> Deletion flags, status fields, multi-system rules</li>
+                <li><strong>Your readiness:</strong> Are you prepared for Session 2's dialect standards?</li>
+            </ul>
+            <p><strong>This is not graded.</strong> It's a self-check. Your score helps you identify which Session 2 topics to focus on, and whether you need to review Session 1 first.</p>
+        </div>
+
+        <div class="assessment-section">
+            <div class="progress-indicator">
+                <span id="question-counter">Question 1 of 15</span>
+                <span id="answered-counter">0 answered</span>
+            </div>
+
+            <!-- SECTION 1: SESSION 1 RETENTION -->
+            <div class="section-header">Section 1: Session 1 Retention (Foundation Check)</div>
+
+            <!-- Q1 -->
+            <div class="question">
+                <div class="question-number">Question 1</div>
+                <div class="question-text">OptSel vs RptSel — Which statement is correct?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q1" value="a">
+                        <span>OptSel returns only error rows; RptSel returns all rows</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="b">
+                        <span>OptSel returns all rows with zIsErrorFlag (1 or 0); RptSel wraps OptSel to show only errors</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="c">
+                        <span>OptSel and RptSel are the same thing, just different names</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="d">
+                        <span>OptSel is for performance; RptSel is for readability</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q1"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> This is the foundational concept. Session 2 is entirely about building correct OptSel and RptSel. If unsure, review Session 1's "Key Concepts: OptSel vs RptSel."
+                </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="question">
+                <div class="question-number">Question 2</div>
+                <div class="question-text">zSourceSystemID Purpose — What does zSourceSystemID represent?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q2" value="a">
+                        <span>The date the rule was created</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="b">
+                        <span>The SAP system (Production, Quality, Development) a row belongs to</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="c">
+                        <span>The user who owns the rule</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="d">
+                        <span>A random unique identifier for each record</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q2"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> zSourceSystemID filtering is THE most important concept in Session 2. Session 2 has an entire lesson dedicated to it (four mandatory places). Non-negotiable.
+                </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="question">
+                <div class="question-number">Question 3</div>
+                <div class="question-text">Deletion Flags Placement — Where do you put a deletion flag (LVORM, LOEKZ) check?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q3" value="a">
+                        <span>In the CASE statement that computes zIsErrorFlag</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="b">
+                        <span>In the WHERE clause to exclude deleted records</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="c">
+                        <span>In the SELECT statement as an additional column</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="d">
+                        <span>Deletion flags should never appear in rules</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q3"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> This tests the critical distinction: deletion flags (WHERE = exclude scope) vs status fields (CASE = error condition). Core architectural principle.
+                </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="question">
+                <div class="question-number">Question 4</div>
+                <div class="question-text">Error Flag Logic — Should the error condition go in WHERE or CASE?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q4" value="a">
+                        <span>WHERE clause — to filter out bad records</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="b">
+                        <span>CASE statement — to flag records, not exclude them</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="c">
+                        <span>Both — redundancy is safer</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="d">
+                        <span>Neither — use a separate ERROR_FLAG column instead</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q4"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> Core Session 1 principle. Errors in CASE (measure what's wrong), not WHERE (which is scope only). Session 2 enforces strictly.
+                </div>
+            </div>
+
+            <!-- SECTION 2: SQL FUNDAMENTALS -->
+            <div class="section-header">Section 2: SQL Fundamentals (Technical Readiness)</div>
+
+            <!-- Q5 -->
+            <div class="question">
+                <div class="question-number">Question 5</div>
+                <div class="question-text">What is a CTE?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q5" value="a">
+                        <span>Comments Table Expression — used for documentation</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="b">
+                        <span>Common Table Expression (WITH...AS block) — used to pre-aggregate or pre-filter tables before joining</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="c">
+                        <span>They're required in every DQ rule</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="d">
+                        <span>They're never used because they're too slow</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q5"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> CTEs are optional but powerful. Session 2 has five mandatory rules for using them safely. If CTEs are new, pay close attention.
+                </div>
+            </div>
+
+            <!-- Q6 -->
+            <div class="question">
+                <div class="question-number">Question 6</div>
+                <div class="question-text">zIsErrorFlag Data Type — What should zIsErrorFlag always be?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q6" value="a">
+                        <span>Text: 'Yes' or 'No'</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="b">
+                        <span>Integer: 1 (error) or 0 (clean)</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="c">
+                        <span>Boolean: TRUE or FALSE</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="d">
+                        <span>Decimal: 0.0 to 1.0 (probability)</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q6"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> INTEGER 1/0 is a hard Session 2 requirement. Ensures consistent downstream handling and aggregation.
+                </div>
+            </div>
+
+            <!-- Q7 -->
+            <div class="question">
+                <div class="question-number">Question 7</div>
+                <div class="question-text">Multiple Table Joins — If a rule joins two tables without zSourceSystemID in ON, what happens?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q7" value="a">
+                        <span>The SQL still works fine</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="b">
+                        <span>The join might accidentally match rows from different source systems</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="c">
+                        <span>SQL will automatically filter by system</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="d">
+                        <span>zSourceSystemID isn't needed in joins</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q7"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> Major compliance issue. Session 2 requires zSourceSystemID paired in every join ON clause. Missing it causes silent data leakage.
+                </div>
+            </div>
+
+            <!-- SECTION 3: SAP CONTEXT -->
+            <div class="section-header">Section 3: SAP Context (Domain Knowledge)</div>
+
+            <!-- Q8 -->
+            <div class="question">
+                <div class="question-number">Question 8</div>
+                <div class="question-text">Status Field vs Deletion Flag — Identify which is deletion flag vs status field (LVORM, PSTAT)</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q8" value="a">
+                        <span>LVORM = status, PSTAT = deletion</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q8" value="b">
+                        <span>LVORM = deletion, PSTAT = status</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q8" value="c">
+                        <span>Both are deletion flags</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q8" value="d">
+                        <span>Both are status fields</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q8"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> Knowing the difference is essential for scoping rules correctly. Session 2 builds on this distinction.
+                </div>
+            </div>
+
+            <!-- Q9 -->
+            <div class="question">
+                <div class="question-number">Question 9</div>
+                <div class="question-text">Multi-System Rules — You have rules for three systems (Z01, Z02, Z03). Should you:</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q9" value="a">
+                        <span>Write one rule with WHERE zSourceSystemID IN ('Z01', 'Z02', 'Z03')</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q9" value="b">
+                        <span>Write three separate rules, each filtered to its own system ID</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q9" value="c">
+                        <span>Write one rule with WHERE zSourceSystemID = 'Z01' (hardcode it)</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q9" value="d">
+                        <span>Use UNION to combine results from all three systems</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q9"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> Session 2 and Session 3 (siblings) require system isolation. Each rule scoped to one system prevents data leakage and audits cleanly.
+                </div>
+            </div>
+
+            <!-- SECTION 4: SESSION 2 READINESS -->
+            <div class="section-header">Section 4: Session 2 Readiness (Standards & Compliance)</div>
+
+            <!-- Q10 -->
+            <div class="question">
+                <div class="question-number">Question 10</div>
+                <div class="question-text">Field Section Order — What is the correct order for the five field sections?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q10" value="a">
+                        <span>Basic → Org → Value → Activity → Technical</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q10" value="b">
+                        <span>Technical → Basic → Org → Value → Activity</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q10" value="c">
+                        <span>Activity → Technical → Basic → Value → Org</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q10" value="d">
+                        <span>There is no specific order</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q10"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> Session 2 requires this exact order in every rule, every time. Non-negotiable. Tested in "What a Good Rule Looks Like" checklist.
+                </div>
+            </div>
+
+            <!-- Q11 -->
+            <div class="question">
+                <div class="question-number">Question 11</div>
+                <div class="question-text">Rule Naming — Which rule name best fits Session 2 standards?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q11" value="a">
+                        <span>"Material data check routine for valid UoM assignment validation procedure"</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q11" value="b">
+                        <span>"Matl must have valid BUoM"</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q11" value="c">
+                        <span>"Material must have valid base unit of measure"</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q11" value="d">
+                        <span>"mm_0042_check"</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q11"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> Business-friendly, ≤85 chars (target) / ≤100 (max), preserve SAP acronyms (UoM, BOM, PIR, etc.). Session 2 specifies exactly.
+                </div>
+            </div>
+
+            <!-- Q12 -->
+            <div class="question">
+                <div class="question-number">Question 12</div>
+                <div class="question-text">Comment Standards — Session 2 says rule comments should:</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q12" value="a">
+                        <span>Narrate every SQL line ("this selects the material number")</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q12" value="b">
+                        <span>Explain business logic and non-obvious joins in plain language</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q12" value="c">
+                        <span>Include performance tuning recommendations</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q12" value="d">
+                        <span>Mention if the SQL was generated by AI</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q12"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> Comments make rules auditable. Session 2 has strict rules about what comments should (and should NOT) do.
+                </div>
+            </div>
+
+            <!-- Q13 -->
+            <div class="question">
+                <div class="question-number">Question 13</div>
+                <div class="question-text">Literal System IDs — True or False: Hardcode zSourceSystemID = 'Z01' to keep SQL simple?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q13" value="a">
+                        <span>True — literals are simpler</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q13" value="b">
+                        <span>False — zSourceSystemID must always be a column reference</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q13"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> Session 2 strict rule. Literals defeat zSourceSystemID filtering purpose. Explicit prohibition in Session 2.
+                </div>
+            </div>
+
+            <!-- Q14 -->
+            <div class="question">
+                <div class="question-number">Question 14</div>
+                <div class="question-text">Deletion Flag in CASE — You see: CASE WHEN LVORM = 'X' THEN 1. What should you flag?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q14" value="a">
+                        <span>Nothing — checking deletion flags in CASE is fine</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q14" value="b">
+                        <span>The deletion flag should be in WHERE (scope), not CASE (error condition)</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q14" value="c">
+                        <span>Deletion flags should never appear in rules</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q14" value="d">
+                        <span>The rule needs more CTEs</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q14"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> Core architectural mistake. Deletion flags in WHERE only. Common error. Session 2's "Business Correctness" checklist tests this.
+                </div>
+            </div>
+
+            <!-- Q15 -->
+            <div class="question">
+                <div class="question-number">Question 15</div>
+                <div class="question-text">Session 2 Readiness Self-Assessment — How confident are you with these concepts?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q15" value="a">
+                        <span>1 = Not confident — review Session 1 fully before Session 2</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q15" value="b">
+                        <span>2 = Somewhat confident — quick Session 1 review, then proceed to Session 2</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q15" value="c">
+                        <span>3 = Very confident — ready to start Session 2</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q15"></div>
+                <div class="why-this-matters">
+                    <strong>Why this matters:</strong> Honest self-assessment. Session 2 is technical and assumes solid Session 1 foundation.
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="submitAssessment()">Check Answers</button>
+                <button class="btn btn-secondary" onclick="resetAssessment()">Reset</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="results-section">
+            <h2>Your Assessment Results</h2>
+            <div class="score" id="score-display">0/15</div>
+            <div class="score-label" id="score-label"></div>
+
+            <div id="recommendation-container"></div>
+
+            <h3 style="margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md); color: var(--navy);">Scoring Guide</h3>
+            <table class="scoring-table">
+                <thead>
+                    <tr>
+                        <th>Score</th>
+                        <th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>13–15</strong></td>
+                        <td>✓ Ready for Session 2. Strong foundation.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>11–12</strong></td>
+                        <td>✓ Ready with quick review. Check missed answers before Session 2.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>9–10</strong></td>
+                        <td>⚠️ Review Session 1 first. Spend 20–30 minutes on "Key Concepts."</td>
+                    </tr>
+                    <tr>
+                        <td><strong>7–8</strong></td>
+                        <td>⚠️ Complete Session 1 again. Session 2 builds directly on these concepts.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&lt;7</strong></td>
+                        <td>⚠️ Session 1 review essential before Session 2.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="goToSession2()">Start Session 2</button>
+                <button class="btn btn-secondary" onclick="resetAssessment()">Review Answers</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>SQL Best Practices — Pre-Session Assessment</strong> | Syniti DQ Training Academy</p>
+            <p style="margin-top: var(--spacing-sm); font-size: 0.85rem;">This assessment is self-scored. Use it to identify areas to focus on, not as a pass/fail gate.</p>
+        </div>
+    </div>
+
+    <script>
+        const answers = {
+            q1: 'b', q2: 'b', q3: 'b', q4: 'b', q5: 'b',
+            q6: 'b', q7: 'b', q8: 'b', q9: 'b', q10: 'b',
+            q11: 'c', q12: 'b', q13: 'b', q14: 'b', q15: 'c'
+        };
+
+        const feedback = {
+            q1: { correct: '✓ Correct! This is the fundamental OptSel/RptSel distinction from Session 1.', incorrect: '✗ Remember: OptSel = "universe" (all rows with flags), RptSel = wrapper (errors only). Crucial for Session 2.' },
+            q2: { correct: '✓ Correct! zSourceSystemID identifies which SAP system a row belongs to.', incorrect: '✗ Critical for Session 2. zSourceSystemID appears in four mandatory places in every rule. Review Session 1 before proceeding.' },
+            q3: { correct: '✓ Correct! Deletion flags go in WHERE to exclude deleted records from scope.', incorrect: '✗ Session 2 non-negotiable. Deletion flags are scope exclusions (WHERE), never part of error condition (CASE).' },
+            q4: { correct: '✓ Correct! Errors in CASE (to flag), not WHERE (which is scope only).', incorrect: '✗ Core Session 1 principle. Error condition in CASE, scope in WHERE. Session 2 enforces strictly.' },
+            q5: { correct: '✓ Correct! CTEs are optional but powerful when used correctly.', incorrect: '✗ CTEs are optional. When used, Session 2 requires five specific rules. If new to CTEs, pay close attention to that lesson.' },
+            q6: { correct: '✓ Correct! INTEGER 1/0 is mandatory. Never text.', incorrect: '✗ Hard Session 2 requirement. zIsErrorFlag must be 1 (error) or 0 (clean) — never text, never decimal.' },
+            q7: { correct: '✓ Correct! Join without zSourceSystemID can cause silent cross-system leakage.', incorrect: '✗ Major compliance issue. Session 2 requires zSourceSystemID paired in every join ON clause. Missing it = data leakage.' },
+            q8: { correct: '✓ Correct! LVORM deletes, PSTAT controls status.', incorrect: '✗ Essential distinction. Knowing the difference is required for scoping rules correctly. Session 2 builds on this.' },
+            q9: { correct: '✓ Correct! Separate rules per system ensure isolation and auditability.', incorrect: '✗ Session 2 and Session 3 require system isolation. Each rule scoped to one system prevents data leakage and audits cleanly.' },
+            q10: { correct: '✓ Correct! Technical → Basic → Org → Value → Activity is mandatory.', incorrect: '✗ This order is enforced in Session 2. Every rule must respect it. Tested in "What a Good Rule Looks Like" checklist.' },
+            q11: { correct: '✓ Correct! Business-friendly, ≤85 chars, preserves acronyms.', incorrect: '✗ Session 2 specifies exact naming rules. Rules must be readable by business users, not technical jargon.' },
+            q12: { correct: '✓ Correct! Comments explain business logic for auditability.', incorrect: '✗ Session 2 has detailed rules about comments. Comments make rules auditable — don\'t narrate syntax.' },
+            q13: { correct: '✓ Correct! Literals defeat the filtering purpose. Always use column references.', incorrect: '✗ Session 2 strict rule. Explicit prohibition. Literals cause silent data leakage bugs.' },
+            q14: { correct: '✓ Correct! Deletion flags belong in WHERE (scope), never in CASE (error condition).', incorrect: '✗ Core Session 1 → Session 2 principle. Common mistake. Focus on "Business Correctness" in Session 2\'s checklist.' },
+            q15: { correct: '✓ Self-assessment recorded. Use your rating to guide Session 2 preparation.', incomplete: '✓ Self-assessment recorded. Your confidence level guides next steps.' }
+        };
+
+        function submitAssessment() {
+            let score = 0;
+            let answered = 0;
+
+            for (let i = 1; i <= 15; i++) {
+                const questionId = `q${i}`;
+                const selected = document.querySelector(`input[name="${questionId}"]:checked`);
+
+                if (selected) {
+                    answered++;
+                    const isCorrect = selected.value === answers[questionId];
+
+                    const feedbackDiv = document.getElementById(`feedback-${questionId}`);
+                    feedbackDiv.classList.add('show');
+
+                    if (isCorrect) {
+                        score++;
+                        feedbackDiv.classList.add('correct');
+                        feedbackDiv.classList.remove('incorrect');
+                        feedbackDiv.innerHTML = `<strong>${feedback[questionId].correct}</strong>`;
+                    } else {
+                        feedbackDiv.classList.add('incorrect');
+                        feedbackDiv.classList.remove('correct');
+                        feedbackDiv.innerHTML = `<strong>${feedback[questionId].incorrect}</strong>`;
+                    }
+
+                    // Mark options
+                    const options = document.querySelectorAll(`input[name="${questionId}"]`);
+                    options.forEach(opt => {
+                        const label = opt.closest('.option');
+                        label.classList.remove('selected', 'correct', 'incorrect');
+
+                        if (opt.value === answers[questionId]) {
+                            label.classList.add('correct');
+                        } else if (opt.checked) {
+                            label.classList.add('incorrect');
+                        }
+                    });
+                }
+            }
+
+            document.getElementById('answered-counter').textContent = `${answered} answered`;
+            showResults(score, answered);
+            window.scrollTo({ top: document.getElementById('results-section').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function showResults(score, answered) {
+            const resultsDiv = document.getElementById('results-section');
+            const scoreDisplay = document.getElementById('score-display');
+            const scoreLabel = document.getElementById('score-label');
+            const recommendationContainer = document.getElementById('recommendation-container');
+
+            scoreDisplay.textContent = `${score}/15`;
+
+            let label = '';
+            let recommendation = '';
+
+            if (score >= 13) {
+                label = 'Excellent! You\'re ready for Session 2.';
+                recommendation = `<div class="recommendation ready"><h3>✓ You're Ready for Session 2</h3><p>You have a strong grasp of Session 1 concepts and SQL fundamentals. Dive into Session 2 with confidence. Pay special attention to the zSourceSystemID filtering lesson — it's the most important new concept.</p></div>`;
+            } else if (score >= 11) {
+                label = 'Great! You understand the core concepts.';
+                recommendation = `<div class="recommendation ready"><h3>✓ Ready with Minor Review</h3><p>You have solid understanding of Session 1 and SQL basics. Before starting Session 2, quickly review the questions you missed. Session 2 builds heavily on these foundational concepts.</p></div>`;
+            } else if (score >= 9) {
+                label = 'Good effort. A quick review will help.';
+                recommendation = `<div class="recommendation prepare"><h3>⚠️ Recommended: Review Session 1 First</h3><p>You're close, but there are gaps in Session 1 concepts (OptSel/RptSel, zSourceSystemID, deletion flags). Before starting Session 2, spend 20–30 minutes reviewing Session 1's "Key Concepts" and "What a Good Rule Looks Like" sections.</p></div>`;
+            } else if (score >= 7) {
+                label = 'Let\'s strengthen your foundation first.';
+                recommendation = `<div class="recommendation prepare"><h3>⚠️ Strongly Recommended: Complete Session 1 Again</h3><p>Session 2 assumes you're comfortable with OptSel/RptSel, error flags, scope/exclusions, deletion flags, and the DQ lifecycle. These are Session 1 topics. Please review Session 1 in full before starting Session 2.</p></div>`;
+            } else {
+                label = 'Session 1 review is essential.';
+                recommendation = `<div class="recommendation prepare"><h3>⚠️ Session 1 Review Required</h3><p>Session 2 is quite technical and builds directly on Session 1's foundation. Please review Session 1 thoroughly before starting Session 2. Focus on "Key Concepts" and the "What a Good Rule Looks Like" checklist.</p></div>`;
+            }
+
+            scoreLabel.textContent = label;
+            recommendationContainer.innerHTML = recommendation;
+            resultsDiv.classList.add('show');
+        }
+
+        function resetAssessment() {
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+            document.querySelectorAll('.feedback').forEach(div => {
+                div.classList.remove('show', 'correct', 'incorrect');
+                div.innerHTML = '';
+            });
+            document.querySelectorAll('.option').forEach(div => {
+                div.classList.remove('selected', 'correct', 'incorrect');
+            });
+            document.getElementById('answered-counter').textContent = '0 answered';
+            document.getElementById('results-section').classList.remove('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goToSession2() {
+            window.location.href = 'syniti-training-academy.html';
+        }
+
+        // Track selections in real-time
+        document.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const label = this.closest('.option');
+                label.classList.add('selected');
+                document.querySelectorAll(`input[name="${this.name}"]`).forEach(sibling => {
+                    if (sibling !== this) sibling.closest('.option').classList.remove('selected');
+                });
+                const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+                document.getElementById('answered-counter').textContent = `${answered} answered`;
+                document.getElementById('question-counter').textContent = `Question ${Math.ceil(answered)} of 15`;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{
+  "schema": "em-changeset/1",
+  "exported_at": "2026-08-26T18:27:37.875Z",
+  "author": "concept_1_&_2_26_08_2026",
+  "app_build": "2026-08-21-53e4ac4d",
+  "ops": [
+    {
+      "op": "note",
+      "unit_id": "con-what-is-data-quality",
+      "anchor": "Fitness of data for a business purpose",
+      "text": "We could consider adding an example here."
+    },
+    {
+      "op": "note",
+      "unit_id": "con-what-is-data-quality",
+      "anchor": "Regulatory risk",
+      "text": "For people out of the domain, the acronyms GDPR, HIPAA, SOX could seem unfamiliar.\nNot a full explanation, but enough context could be added here."
+    },
+    {
+      "op": "question",
+      "unit_id": "con-dq-dimensions",
+      "text": "How do we distinguish between Accuracy and Conformity when a value is technically valid but not realistically possible? For example, if a material creation year is 1905, would that be classified as an Accuracy issue or a Conformity issue?"
+    },
+    {
+      "op": "question",
+      "unit_id": "con-dq-dimensions",
+      "text": "Are Accuracy and Integrity always higher priority than other dimensions, or does the priority depend on the business process and client requirements?"
+    },
+    {
+      "op": "question",
+      "unit_id": "con-dq-dimensions",
+      "text": "Why are Completeness gaps considered more tolerable than Accuracy or Integrity issues? Are there examples where a Completeness issue can also block a transaction?"
+    },
+    {
+      "op": "question",
+      "unit_id": "con-dq-dimensions",
+      "text": "Under the 'In Studio' section - Why is \"consistent format\" mapped to Accuracy instead of Conformity, since Conformity is defined as adherence to a required format, range, or standard?"
+    },
+    {
+      "op": "question",
+      "unit_id": "notes",
+      "text": "Could we provide a brief explanation of DAMA-DMBOK and its relevance to Data Quality?"
+    }
+  ]
+}

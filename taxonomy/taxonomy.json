@@ -1,0 +1,87 @@
+{
+  "_about": "Closed vocabularies for the DQ Enablement Studio knowledge corpus. Every knowledge unit's frontmatter is validated against these lists by build/build.py. Adding a value here is a deliberate CoE decision - commit message should say why.",
+  "types": {
+    "concept": {
+      "prefix": "con",
+      "folder": "concepts",
+      "label": "Concepts",
+      "blurb": "What things are - the ideas and constructs of the methodology."
+    },
+    "principle": {
+      "prefix": "prn",
+      "folder": "principles",
+      "label": "Principles",
+      "blurb": "Why we work this way - doctrine, rationale, and decided positions (ADRs carry kind: decision)."
+    },
+    "standard": {
+      "prefix": "std",
+      "folder": "standards",
+      "label": "Standards",
+      "blurb": "Enforceable rules for artefacts - SQL shape, naming, comments, structure (reusable shapes carry kind: pattern)."
+    },
+    "procedure": {
+      "prefix": "prc",
+      "folder": "procedures",
+      "label": "Procedures",
+      "blurb": "How to do it, step by step - SOPs and runbooks."
+    },
+    "reference": {
+      "prefix": "ref",
+      "folder": "reference",
+      "label": "Reference",
+      "blurb": "Dense lookup material - SAP facts, schemas, vocabularies, catalogues."
+    },
+    "glossary": {
+      "prefix": "gls",
+      "folder": "glossary",
+      "label": "Glossary",
+      "blurb": "The ubiquitous language - one term per unit, cross-linked everywhere."
+    },
+    "qa": {
+      "prefix": "qa",
+      "folder": "qa",
+      "label": "Q&A",
+      "blurb": "Real questions with built answers - grows from the consultant feedback loop."
+    }
+  },
+  "kinds": {
+    "decision": "A decided position (ADR-style) - valid on principles.",
+    "pattern": "A reusable solution shape - valid on standards."
+  },
+  "domains": {
+    "dq-fundamentals": "What data quality is: dimensions, lifecycle, why it matters.",
+    "rule-design": "Designing DQ rules: anatomy, naming, derivation, patterns, scoring.",
+    "sql-standards": "The Syniti SQL dialect: views, sections, comments, technical fields.",
+    "studio": "The DQ Studio application: architecture, pages, workflow.",
+    "sap": "SAP knowledge: systems, modules, tables, fields, processes.",
+    "value-outcomes": "Business outcomes, value levers, key issues, valuation discipline.",
+    "cleanse": "Cleanse execution: actions, tasks, process areas, status models.",
+    "ai-enhancement": "AI derivation and enhancement: prompts, guardrails, harness.",
+    "delivery": "Engagement delivery: phases, method, resourcing, client-facing practice.",
+    "platform": "The Syniti platform beyond the Studio: SKP, DPaaS, deployment."
+  },
+  "audiences": {
+    "consultant": "DQ consultants designing and executing rules.",
+    "lead": "Engagement leads and CoE leadership.",
+    "developer": "People building or extending the CoE applications.",
+    "instructor": "People teaching or facilitating enablement."
+  },
+  "levels": ["foundation", "practitioner", "advanced"],
+  "statuses": ["draft", "review", "approved", "deprecated"],
+  "link_relations": {
+    "prereq": "Target should be understood before this unit.",
+    "relates": "General association worth surfacing.",
+    "parent": "This unit is a child/detail of the target.",
+    "contrast": "Deliberately compared or conflicting perspectives.",
+    "implements": "This unit implements or operationalises the target."
+  },
+  "source_repos": {
+    "vault": "syniti-dq-coe-estate-hub/knowledge/methodology (Obsidian vault mirror - seed only)",
+    "dq-studio": "github.com/truwaynegordon/dq-studio",
+    "bob-dq": "github.com/truwaynegordon/bob-dq",
+    "cleanse-canvas": "github.com/truwaynegordon/data-cleanse-canvas",
+    "rule-repo": "github.com/truwaynegordon/syniti-dq-rule-repo",
+    "academy": "dq-enablement-studio v1 training HTML (archive/academy-v1)",
+    "coe": "authored directly in this knowledge base"
+  }
+}

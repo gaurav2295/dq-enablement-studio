@@ -1,0 +1,149 @@
+{
+  "schema": "em-changeset/1",
+  "exported_at": "2026-08-31T04:04:13.358Z",
+  "author": "SQL_Best_Practices_28_08_2026",
+  "app_build": "2026-08-21-53e4ac4d",
+  "ops": [
+    {
+      "op": "note",
+      "unit_id": "std-cte-rules",
+      "anchor": "The CTE rules (all are mandatory)",
+      "text": "Could fix the numbering under - 'The CTE rules (all are mandatory)'"
+    },
+    {
+      "op": "question",
+      "unit_id": "std-cte-rules",
+      "text": "Why are CTEs preferred over subqueries in the context of DQ rules?"
+    },
+    {
+      "op": "question",
+      "unit_id": "std-cte-rules",
+      "text": "What is meant by 'the main table's system ID'? Does this refer to the source system of the table being queried inside the CTE? or the table that the CTE is ultimately joined to?"
+    },
+    {
+      "op": "note",
+      "unit_id": "std-cte-rules",
+      "anchor": null,
+      "text": "Should we add a note that zSourceID should never be hardcoded ?"
+    },
+    {
+      "op": "note",
+      "unit_id": "std-zsourcesystemid-convention",
+      "anchor": "Format",
+      "text": "Can we add the format for the other z fields (like we did for zSourceSystemID) in the relevant modules?"
+    },
+    {
+      "op": "question",
+      "unit_id": "std-zsourcesystemid-convention",
+      "text": "what is a 'consolidated staging table'?"
+    },
+    {
+      "op": "question",
+      "unit_id": "std-zsourcesystemid-convention",
+      "text": "Why is casing important?"
+    },
+    {
+      "op": "question",
+      "unit_id": "std-sql-comment-standards",
+      "text": "Could we briefly explain what a parity check is, or link to the relevant module if it's covered elsewhere?"
+    },
+    {
+      "op": "question",
+      "unit_id": "std-sql-comment-standards",
+      "text": "I'm finding it difficult to understand the relationship between the block comment vs rule-line banner formats and the fields they contain be explained more clearly?"
+    },
+    {
+      "op": "question",
+      "unit_id": "std-sql-comment-standards",
+      "text": "Could we elaborate on the statement \"Rules never touch the source ERP system\"?"
+    },
+    {
+      "op": "note",
+      "unit_id": "prn-sql-comments-must-match-local-derive-quality",
+      "anchor": null,
+      "text": "Is zIsErrorFlag a Boolean or Integer?"
+    },
+    {
+      "op": "question",
+      "unit_id": "prn-sql-comments-must-match-local-derive-quality",
+      "text": "Is zIsErrorFlag a Boolean or an Integer as mentioned here?"
+    },
+    {
+      "op": "question",
+      "unit_id": "std-rule-name-heuristics",
+      "text": "Is it expected that users understand the regex patterns, or is this section intended primarily as a reference?"
+    },
+    {
+      "op": "note",
+      "unit_id": "std-output-field-sections",
+      "anchor": null,
+      "text": "This module could be placed close to 'SQL Comment Standards' module"
+    },
+    {
+      "op": "question",
+      "unit_id": "std-output-field-sections",
+      "text": "Does the five-section structure apply equally to profiling rules, or is it specific to Error/Info (opportunity) rules?"
+    },
+    {
+      "op": "note",
+      "unit_id": "std-output-field-sections",
+      "anchor": null,
+      "text": "The number of field sections, rules, and ordering requirements introduced in this module feels quite high. We could consider adding a summary or visual reference that can be revisited when building views."
+    },
+    {
+      "op": "note",
+      "unit_id": "std-output-field-sections",
+      "anchor": null,
+      "text": "Could consider introducing a one-page checklist or quick reference sheet summarizing the key points."
+    },
+    {
+      "op": "question",
+      "unit_id": "std-optsel-select-structure",
+      "text": "Which OptSel/RptSel requirements are validated automatically by Studio, and which remain the developer's responsibility?"
+    },
+    {
+      "op": "question",
+      "unit_id": "std-optsel-select-structure",
+      "text": "What is meant by 'second report' in this context? Does it refer to a second Report view built under the same Opportunity view? or is it any view that derives its data from an existing DQ view rather than directly from source tables"
+    },
+    {
+      "op": "note",
+      "unit_id": "std-view-naming-patterns",
+      "anchor": "Knowledge check",
+      "text": "We do not have the CTE for the Scenario - 'Scenario: A colleague submits this CTE for review:'"
+    },
+    {
+      "op": "note",
+      "unit_id": "std-view-naming-patterns",
+      "anchor": null,
+      "text": "Could clarify the distinction between a system alias and a source-system code? when each is used and why both are needed."
+    },
+    {
+      "op": "question",
+      "unit_id": "std-view-naming-patterns",
+      "text": "In the {system} token resolution order, what business problem is the fallback-to-raw-code and fallback-to-\"SYS\" logic solving?"
+    },
+    {
+      "op": "question",
+      "unit_id": "std-view-naming-patterns",
+      "text": "Could we briefly explain what {{SYSTEM}} and {{DATABASE_NAME}} represent and why placeholders are used instead of actual values in the examples?"
+    },
+    {
+      "op": "question",
+      "unit_id": "prc-audit-rule-quality",
+      "text": "For catalog parity, what kinds of differences are typically acceptable before investigation is required?"
+    },
+    {
+      "op": "note",
+      "unit_id": "prc-audit-rule-quality",
+      "anchor": null,
+      "text": "Can we elaborate on ClientRef populated, Per-system fan-out completeness ?"
+    },
+    {
+      "op": "note",
+      "unit_id": "prc-audit-rule-quality",
+      "anchor": "Per-system fan-out completeness",
+      "text": "Can we elaborate this?"
+    }
+  ]
+}

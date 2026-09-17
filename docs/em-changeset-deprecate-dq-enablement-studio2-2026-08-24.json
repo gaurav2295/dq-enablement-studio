@@ -1,0 +1,38 @@
+{
+  "schema": "em-changeset/1",
+  "exported_at": "2026-08-24T13:41:06.078Z",
+  "author": "deprecate_dq_enablement_studio2",
+  "app_build": "2026-08-21-79894ad0",
+  "ops": [
+    {
+      "op": "note",
+      "unit_id": "gls-value-lever",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-value-potential",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-bulk-ratification",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "prn-key-issues-primary-tier",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "prn-governed-ratification",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    }
+  ]
+}

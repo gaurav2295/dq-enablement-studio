@@ -1,0 +1,1537 @@
+{
+ "_about": "Provenance of the corpus seed: which source file produced which unit(s), and the commit hash each source repo was at when seeded. The vault mirror is SEED ONLY - from these hashes forward, this repo is canonical.",
+ "map": {
+  "academy:index.html": {
+   "action": "extract",
+   "note": "Session 3 (DQ Studio Workflow) mined 2026-08-21 - first mining of index.html. Sections studio-intro/create-account/session-config -> new unit prc-studio-onboarding. Sections deterministic-derivation/ai-enhancement/sibling-rules/interpret-output/apply-corrected -> enrichment of prc-derive-a-dq-rule (step-level detail, common first-time mistakes). Plus 6 mcq items in assessments.json (as-studio-01..06). The create-account/session-config narrative describes an account/org/login layer that conflicts with the verified local-app model - see CONFLICT-020.",
+   "units": [
+    "prc-studio-onboarding"
+   ]
+  },
+  "academy:landing.html": {
+   "action": "create",
+   "note": "plus 15 mcq items in assessments.json (11 checks + 4 from the matching exercise, seven-dimension rewrites per CONFLICT-001)",
+   "units": [
+    "con-what-is-data-quality",
+    "con-dq-lifecycle",
+    "std-cte-rules"
+   ]
+  },
+  "academy:sql-pre-assessment.html": {
+   "action": "extract",
+   "note": "14 mcq items in assessments.json (q15 self-assessment excluded); q13 is 2-option true/false",
+   "units": []
+  },
+  "bob-dq:CONTEXT.md": {
+   "action": "create",
+   "units": [
+    "gls-business-outcome",
+    "gls-outcome-category",
+    "gls-value-lever",
+    "gls-key-issue",
+    "gls-business-data-driver",
+    "gls-business-rule",
+    "gls-dq-rule",
+    "gls-adm-rule-name",
+    "gls-provenance",
+    "gls-name-source",
+    "gls-implication",
+    "gls-coverage",
+    "gls-indicative",
+    "gls-value-potential",
+    "gls-one-mode-one-question",
+    "gls-client-instrument",
+    "gls-internal-workbench",
+    "gls-solution-proposal",
+    "gls-the-package",
+    "gls-propose-and-promote",
+    "gls-time-to-value",
+    "gls-work-lanes",
+    "gls-bob-canvas",
+    "gls-dq-studio",
+    "gls-vector-studio",
+    "gls-rule-repository",
+    "gls-snapshot",
+    "gls-ctx-server",
+    "gls-bob-vs-boa",
+    "gls-bob-dq"
+   ]
+  },
+  "bob-dq:bob-canvas/concept-stress-test.md, bob-dq:handover/b2-walkability-2026-08-06.md": {
+   "action": "create",
+   "note": "batch delivery-spine 2026-08-21 - the stress-test questions and the walkability review become the pre-ship QA procedure.",
+   "units": [
+    "prc-qa-a-blueprint"
+   ]
+  },
+  "bob-dq:bob-canvas/enablement-notes.md": {
+   "action": "create",
+   "units": [
+    "std-client-vocabulary",
+    "prc-handle-the-cold-room",
+    "prc-run-the-blueprint-room",
+    "con-audience-altitude"
+   ]
+  },
+  "bob-dq:bob-dq-solution-spec.md": {
+   "action": "create",
+   "note": "batch w3-bob-method - Sec 1.3 outcome hierarchy (L1-L5, D15/D16, v1 catalogue) and Sec 1.4b value model (tier table, headline discipline, two-stage value).",
+   "units": [
+    "con-outcome-hierarchy-l1-l5",
+    "con-value-chain"
+   ]
+  },
+  "bob-dq:bob-dq-solution-spec.md (§1.1-§1.7 delivery spine), bob-dq:business-outcomes-blueprint-solution-overview.md (§3, §4, §8, §9)": {
+   "action": "create",
+   "note": "batch delivery-spine 2026-08-21 - the phases/components/team/estimate/QA/deliverables chain behind the 'Delivering a Blueprint Engagement' learning path. Spec §1.4-§1.5 -> phases and solution components; §1.7 -> team shape; §1.4 #1-d3p + §1.1 -> assess and discover; §1.4 #4-present-vector-studio + overview §4/§5/§7/§9 -> deliverables inventory.",
+   "units": [
+    "con-engagement-phases",
+    "con-solution-components",
+    "con-engagement-team-shape",
+    "prc-assess-and-discover",
+    "ref-deliverables-inventory"
+   ]
+  },
+  "bob-dq:bob-dq-solution-spec.md (§1.3 The business outcome hierarchy — the spine)": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "con-outcome-hierarchy-l1-l5"
+   ]
+  },
+  "bob-dq:bob-dq-solution-spec.md (§1.4b), bob-dq:business-outcomes-blueprint-solution-overview.md (§6-7)": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "prn-value-discipline"
+   ]
+  },
+  "bob-dq:business-outcomes-blueprint-solution-overview.md": {
+   "action": "create",
+   "note": "batch w3-bob-method - Sec 3 traceability spine and Sec 5-9 contract/valuation/auditability/delivery/outputs.",
+   "units": [
+    "con-value-chain",
+    "prn-value-discipline"
+   ]
+  },
+  "bob-dq:business-outcomes-blueprint-solution-overview.md (§3), bob-dq:bob-dq-solution-spec.md (§1.4b), bob-dq:docs/adr/0001-key-issues-are-the-primary-focus-tier.md": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "con-value-chain"
+   ]
+  },
+  "bob-dq:docs/adr/0001-key-issues-are-the-primary-focus-tier.md": {
+   "action": "create",
+   "note": "batch w3-bob-method - ADR 0001 verbatim, kind: decision.",
+   "units": [
+    "prn-key-issues-primary-tier"
+   ]
+  },
+  "bob-dq:docs/resourcing-rubric.md": {
+   "action": "create",
+   "note": "batch w3-bob-method - throughput ladder, object/rule complexity factors, SME allowance, formulas, worked example.",
+   "units": [
+    "prc-estimate-blueprint-effort"
+   ]
+  },
+  "bob-dq:enablement/enablement-guide.md": {
+   "action": "create",
+   "units": [
+    "prc-run-the-blueprint-room",
+    "con-audience-altitude",
+    "std-client-vocabulary",
+    "prc-handle-the-cold-room"
+   ]
+  },
+  "cleanse-canvas:docs/CONTEXT.md": {
+   "action": "merge",
+   "units": [
+    "con-cleanse-execution-model",
+    "con-cleanse-action-categorization"
+   ]
+  },
+  "cleanse-canvas:docs/DATA-MODEL.md": {
+   "action": "split",
+   "units": [
+    "con-cleanse-execution-model",
+    "con-cleanse-task-anatomy",
+    "ref-cleanse-process-areas",
+    "con-cleanse-action-categorization"
+   ]
+  },
+  "cleanse-canvas:docs/DATA-MODEL.md, cleanse-canvas:docs/CONTEXT.md": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "con-cleanse-action-categorization"
+   ]
+  },
+  "cleanse-canvas:docs/DATA-MODEL.md, cleanse-canvas:docs/PLAN-operational-layer.md": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "ref-cleanse-process-areas"
+   ]
+  },
+  "cleanse-canvas:docs/DATA-MODEL.md, cleanse-canvas:docs/PLAN-operational-layer.md, cleanse-canvas:docs/CONTEXT.md, cleanse-canvas:docs/DECISIONS.md": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "con-cleanse-execution-model"
+   ]
+  },
+  "cleanse-canvas:docs/DECISIONS.md": {
+   "action": "merge",
+   "units": [
+    "con-cleanse-execution-model",
+    "ref-cleanse-process-areas"
+   ]
+  },
+  "cleanse-canvas:docs/PLAN-operational-layer.md": {
+   "action": "split",
+   "units": [
+    "con-cleanse-execution-model",
+    "con-cleanse-task-anatomy",
+    "ref-cleanse-process-areas"
+   ]
+  },
+  "cleanse-canvas:docs/PLAN-operational-layer.md, cleanse-canvas:docs/DATA-MODEL.md": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "con-cleanse-task-anatomy"
+   ]
+  },
+  "coe:glossary-consolidation-2026-08-20": {
+   "action": "create",
+   "note": "Wave-4 glossary + coherence consolidation: term units authored from the already-seeded corpus and re-checked against bob-dq:CONTEXT.md, cleanse-canvas:docs/CONTEXT.md and rule-repo:README.md. Each unit's own sources: block names its defining repo(s).",
+   "units": [
+    "gls-activity-context",
+    "gls-adm",
+    "gls-ai-additions",
+    "gls-ai-enhance",
+    "gls-ai-enhancement-stamp",
+    "gls-ai-harness",
+    "gls-ai-sql-review",
+    "gls-as-of-date",
+    "gls-auto-repair",
+    "gls-band",
+    "gls-basic-fields",
+    "gls-batch-summary",
+    "gls-blocking-allowlist",
+    "gls-blueprint",
+    "gls-boa",
+    "gls-bridge-view",
+    "gls-bulk-ratification",
+    "gls-business-friendly-alias",
+    "gls-business-process-area",
+    "gls-candidate",
+    "gls-capacity-check",
+    "gls-cardinality",
+    "gls-catalog-promoter",
+    "gls-check-table",
+    "gls-cleanse-action",
+    "gls-cleanse-atom",
+    "gls-coded-field",
+    "gls-composite-key",
+    "gls-confidence-label",
+    "gls-correlated-subquery",
+    "gls-criticality",
+    "gls-crossover",
+    "gls-cte",
+    "gls-defect-rate",
+    "gls-deletion-detection-rule",
+    "gls-deletion-flag",
+    "gls-deterministic-shell",
+    "gls-distinguishing-predicate",
+    "gls-domain-fixed-values",
+    "gls-domain-unknown",
+    "gls-dq-score",
+    "gls-dqops-id",
+    "gls-eam",
+    "gls-engagement-kit",
+    "gls-evaluation-sheet",
+    "gls-evidenced-volume",
+    "gls-fan-out",
+    "gls-field-classification",
+    "gls-filter-view",
+    "gls-first-writer-wins",
+    "gls-gdc",
+    "gls-governed-vocabulary",
+    "gls-grain",
+    "gls-guardrail",
+    "gls-headline",
+    "gls-infsel",
+    "gls-intent-regex",
+    "gls-iteration-loop",
+    "gls-kpi",
+    "gls-literal-1-fallback",
+    "gls-local-re-derive",
+    "gls-loevm",
+    "gls-logicentry",
+    "gls-lvorm",
+    "gls-mcp",
+    "gls-mdg",
+    "gls-methodology-banner",
+    "gls-mode",
+    "gls-op-report-query",
+    "gls-opportunity-count",
+    "gls-opportunity-universe",
+    "gls-org-vs-central",
+    "gls-organizational-context",
+    "gls-parent-group",
+    "gls-parity-pair",
+    "gls-partialfill",
+    "gls-partner-function",
+    "gls-polarity",
+    "gls-prep-db",
+    "gls-prfsel",
+    "gls-prfsum",
+    "gls-process-area",
+    "gls-project-spec",
+    "gls-readiness-risk",
+    "gls-reference-data",
+    "gls-round-trip-parse",
+    "gls-rptsel",
+    "gls-rule-fulfilment-review",
+    "gls-rule-package",
+    "gls-rule-pattern",
+    "gls-sales-area-key",
+    "gls-schema-profile",
+    "gls-sibling-implementation",
+    "gls-slotfill",
+    "gls-sow",
+    "gls-spras",
+    "gls-sql-skeleton",
+    "gls-status-field",
+    "gls-structured-metadata",
+    "gls-symmetric-field-join",
+    "gls-syniti-technical-fields",
+    "gls-system-alias",
+    "gls-tbd-placeholder",
+    "gls-top-n-distribution",
+    "gls-tracker",
+    "gls-value-context",
+    "gls-value-formula",
+    "gls-variant",
+    "gls-verdict",
+    "gls-walkability",
+    "gls-warn-and-stamp",
+    "gls-working-db",
+    "gls-zconcatenatedkey",
+    "gls-zdomainsegment",
+    "gls-ziserrorflag",
+    "gls-zsourcesystemid"
+   ],
+   "archived_note": {
+    "gls-ai-harness": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "gls-auto-repair": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "gls-blocking-allowlist": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "gls-candidate": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "gls-first-writer-wins": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "gls-guardrail": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "gls-intent-regex": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "gls-partialfill": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "gls-slotfill": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "gls-structured-metadata": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "gls-verdict": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "gls-warn-and-stamp": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "dq-studio:.claude/skills_canonical/studio-architecture.md": {
+   "action": "merge",
+   "units": [
+    "ref-three-database-architecture",
+    "ref-architecture-context-and-project-yamls"
+   ],
+   "archived_note": {
+    "ref-three-database-architecture": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "ref-architecture-context-and-project-yamls": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "dq-studio:.claude/skills_canonical/studio-architecture.md + studio-config-shape.md": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "ref-architecture-context-and-project-yamls"
+   ],
+   "archived_note": {
+    "ref-architecture-context-and-project-yamls": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "dq-studio:.claude/skills_canonical/studio-config-shape.md": {
+   "action": "merge+create",
+   "units": [
+    "std-studio-config-shape",
+    "ref-architecture-context-and-project-yamls"
+   ],
+   "archived_note": {
+    "ref-architecture-context-and-project-yamls": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "dq-studio:.claude/skills_canonical/studio-design-rules.md": {
+   "action": "create",
+   "units": [
+    "prn-studio-design-principles"
+   ],
+   "archived_note": {
+    "prn-studio-design-principles": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "dq-studio:.claude/skills_canonical/studio-multi-impl.md": {
+   "action": "merge",
+   "units": [
+    "ref-multi-impl-fan-out-engine",
+    "con-multi-implementation-model"
+   ],
+   "archived_note": {
+    "ref-multi-impl-fan-out-engine": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "dq-studio:.claude/skills_canonical/studio-naming-rules.md": {
+   "action": "merge",
+   "units": [
+    "std-view-naming-patterns"
+   ]
+  },
+  "dq-studio:.claude/skills_canonical/studio-profiling.md": {
+   "action": "merge",
+   "units": [
+    "ref-profiling-view-generation",
+    "con-profiling-concepts"
+   ],
+   "archived_note": {
+    "ref-profiling-view-generation": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "dq-studio:.claude/skills_canonical/studio-sql-quality.md": {
+   "action": "merge",
+   "units": [
+    "std-sql-comment-standards",
+    "std-output-field-sections"
+   ]
+  },
+  "dq-studio:CLAUDE.md": {
+   "action": "create",
+   "note": "Non-negotiables section - the eight binding output rules.",
+   "units": [
+    "prn-studio-non-negotiables"
+   ]
+  },
+  "dq-studio:docs/AI_ENHANCE_GUARDRAILS_AND_HARNESS_RULES.md": {
+   "action": "create",
+   "units": [
+    "std-ai-enhance-guardrails",
+    "std-ai-enhance-scope",
+    "ref-ai-derive-and-enhance-internals",
+    "ref-ai-static-validator-gate",
+    "ref-ai-client-conventions",
+    "ref-sql-validator"
+   ],
+   "archived_note": {
+    "ref-ai-client-conventions": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "ref-sql-validator": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "dq-studio:docs/DQ_RULE_STANDARDS.md": {
+   "action": "create+merge",
+   "note": "batch w2-standards - highest-authority rule/SQL standard; merged section-by-section into the seeded standards units, 3 new units for material with no existing home (performance, coded-field translation, deletion filter marker). Conflicts CONFLICT-008/009/010/011.",
+   "units": [
+    "std-view-naming-patterns",
+    "std-output-field-sections",
+    "std-zconcatenatedkey-convention",
+    "std-ziserrorflag-convention",
+    "std-sql-comment-standards",
+    "std-optsel-select-structure",
+    "std-sql-performance-standards",
+    "std-coded-field-text-translation",
+    "std-deletion-filter-marker"
+   ]
+  },
+  "dq-studio:docs/DQ_RULE_STANDARDS.md, dq-studio:knowledge/methodology/view_conventions.json": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "std-view-naming-patterns",
+    "std-optsel-select-structure"
+   ]
+  },
+  "dq-studio:docs/RULE_PATTERNS.md": {
+   "action": "create",
+   "units": [
+    "std-rule-pattern-library",
+    "std-pattern-hierarchy-membership",
+    "std-pattern-partner-cardinality",
+    "std-pattern-org-to-central-parity",
+    "std-pattern-status-field-check"
+   ]
+  },
+  "dq-studio:docs/RULE_PATTERNS.md + dq-studio:knowledge/methodology/rule_patterns.json": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "std-rule-pattern-library"
+   ]
+  },
+  "dq-studio:docs/RULE_PATTERNS.md §3.1 + rule_patterns.json patterns[hierarchy_membership]": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "std-pattern-hierarchy-membership"
+   ]
+  },
+  "dq-studio:docs/RULE_PATTERNS.md §3.2 + rule_patterns.json patterns[partner_cardinality] and partner_lexicon": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "std-pattern-partner-cardinality"
+   ]
+  },
+  "dq-studio:docs/RULE_PATTERNS.md §3.3 + §4 + rule_patterns.json patterns[org_to_central_parity]": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "std-pattern-org-to-central-parity"
+   ]
+  },
+  "dq-studio:docs/RULE_PATTERNS.md §3.4 + rule_patterns.json patterns[status_field_check] (incl. its _comment analysis)": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "std-pattern-status-field-check"
+   ]
+  },
+  "dq-studio:docs/Studio_Overview.md": {
+   "action": "create+merge",
+   "note": "S2.1-2.9 guardrails created as a unit; S3.1/3.3/3.4/3.5 merged into existing units.",
+   "units": [
+    "prn-studio-workflow-guardrails",
+    "ref-catalog-promotion",
+    "ref-audit-engine",
+    "ref-bulk-pipeline",
+    "std-zconcatenatedkey-convention"
+   ],
+   "archived_note": {
+    "ref-catalog-promotion": "archived to dev-corpus 2026-08-21 (app-internal)",
+    "ref-audit-engine": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "dq-studio:docs/ai_enhance_instructions.md": {
+   "action": "create",
+   "units": [
+    "std-ai-enhance-scope",
+    "std-ai-enhance-guardrails",
+    "std-output-field-sections",
+    "ref-ai-derive-and-enhance-internals",
+    "ref-ai-client-conventions"
+   ],
+   "archived_note": {
+    "ref-ai-client-conventions": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "dq-studio:knowledge/harness/decisions.json": {
+   "action": "create",
+   "units": [
+    "prn-adr-001",
+    "prn-adr-002",
+    "prn-adr-003",
+    "prn-adr-004",
+    "prn-adr-005",
+    "prn-adr-006",
+    "prn-adr-007",
+    "prn-adr-008",
+    "prn-adr-009",
+    "prn-adr-010",
+    "prn-adr-011",
+    "prn-adr-012",
+    "prn-adr-013",
+    "prn-adr-014",
+    "prn-adr-015",
+    "prn-adr-015a",
+    "prn-adr-016",
+    "prn-adr-017",
+    "prn-adr-018",
+    "prn-adr-019",
+    "prn-adr-020",
+    "prn-adr-021",
+    "prn-adr-022",
+    "prn-adr-023",
+    "prn-adr-024",
+    "prn-adr-025",
+    "prn-adr-026",
+    "prn-adr-027",
+    "prn-adr-028",
+    "prn-adr-029",
+    "prn-adr-030",
+    "prn-adr-031",
+    "prn-adr-032",
+    "prn-adr-033",
+    "prn-adr-034",
+    "prn-adr-035",
+    "prn-adr-036",
+    "prn-adr-037",
+    "prn-adr-038",
+    "prn-adr-039",
+    "prn-adr-040",
+    "prn-adr-041",
+    "prn-adr-042",
+    "prn-adr-043",
+    "prn-adr-044",
+    "prn-adr-045",
+    "prn-adr-046",
+    "prn-adr-047",
+    "prn-adr-048",
+    "prn-adr-049",
+    "prn-adr-050",
+    "prn-adr-051",
+    "prn-adr-052",
+    "prn-adr-053",
+    "prn-adr-054",
+    "prn-adr-055",
+    "prn-adr-056",
+    "prn-adr-057",
+    "prn-adr-058",
+    "prn-adr-059",
+    "prn-adr-060",
+    "prn-adr-061",
+    "prn-adr-062",
+    "prn-adr-063",
+    "prn-adr-064",
+    "prn-adr-065",
+    "prn-adr-066",
+    "prn-adr-067",
+    "prn-studio-decision-registry"
+   ]
+  },
+  "dq-studio:knowledge/harness/requirements.json": {
+   "action": "create",
+   "units": [
+    "std-req-ai-edit-scope",
+    "std-req-export-judged",
+    "std-req-export-no-unresolved-fail",
+    "std-req-export-package-integrity",
+    "std-req-profiling-percentage-nullif-guard",
+    "std-req-profiling-prfsel-no-group-by",
+    "std-req-rulename-full-score",
+    "std-req-rulename-partial-score",
+    "std-req-sql-case-missing-end",
+    "std-req-sql-catalog-methodology-bypass",
+    "std-req-sql-concat-key-missing-concat-function",
+    "std-req-sql-concat-key-missing-field",
+    "std-req-sql-header-comment-incomplete",
+    "std-req-sql-join-without-on",
+    "std-req-sql-literal-flag-fallback",
+    "std-req-sql-missing-optsel",
+    "std-req-sql-missing-rptsel",
+    "std-req-sql-missing-semicolon-before-go",
+    "std-req-sql-missing-tech-columns",
+    "std-req-sql-missing-trailing-semicolon",
+    "std-req-sql-null-compared-eq",
+    "std-req-sql-null-unsafe-key-concat",
+    "std-req-sql-rptsel-flag-filter",
+    "std-req-sql-rptsel-wrapping",
+    "std-req-sql-section-header-order",
+    "std-req-sql-source-system-out-of-scope",
+    "std-req-sql-trailing-comma",
+    "std-req-sql-unbalanced-brackets",
+    "std-req-sql-unbalanced-parens",
+    "std-req-sql-undefined-error-flag",
+    "std-req-sql-unnecessary-select-distinct",
+    "std-req-sql-unresolved-aliases",
+    "std-req-sql-view-name-rule-id-mismatch",
+    "std-req-sql-view-naming-pattern",
+    "std-req-tracker-unresolved-findings",
+    "std-req-trust-ai-unverified-field",
+    "std-harness-requirements"
+   ]
+  },
+  "dq-studio:knowledge/methodology/capabilities.json": {
+   "action": "create",
+   "note": "The four capability briefs (purpose/benefit/impact/when).",
+   "units": [
+    "con-studio-capabilities"
+   ]
+  },
+  "dq-studio:knowledge/methodology/heuristics.json": {
+   "action": "merge",
+   "units": [
+    "std-rule-name-heuristics",
+    "ref-rule-name-scorer"
+   ],
+   "archived_note": {
+    "ref-rule-name-scorer": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "dq-studio:knowledge/methodology/rule_patterns.json": {
+   "action": "create",
+   "units": [
+    "std-rule-pattern-library",
+    "std-pattern-hierarchy-membership",
+    "std-pattern-partner-cardinality",
+    "std-pattern-org-to-central-parity",
+    "std-pattern-status-field-check"
+   ]
+  },
+  "dq-studio:knowledge/methodology/view_conventions.json": {
+   "action": "merge",
+   "note": "batch w2-standards - OptSel/RptSel view contracts and the description_derivation keyword-extraction algorithm.",
+   "units": [
+    "std-view-naming-patterns",
+    "std-optsel-select-structure"
+   ]
+  },
+  "rule-repo:README.md": {
+   "action": "split",
+   "note": "batch w3-rulerepo - rule-record schema, the scope boundary (no rule SQL, no client data), provenance model and linkage shape.",
+   "units": [
+    "ref-rule-record-schema",
+    "con-rule-provenance-model",
+    "ref-key-issue-vocabulary"
+   ]
+  },
+  "rule-repo:README.md; rule-repo:data/catalogue.json(_meta.field_semantics)": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "ref-rule-record-schema"
+   ]
+  },
+  "rule-repo:README.md; rule-repo:data/catalogue.json(_meta.key_issue_vocabulary, _meta.composition)": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "ref-key-issue-vocabulary"
+   ]
+  },
+  "rule-repo:README.md; rule-repo:data/catalogue.json(_meta.provenance_semantics, _meta.provenance_values, _meta.composition)": {
+   "action": "seed-wave-2-3",
+   "units": [
+    "con-rule-provenance-model"
+   ]
+  },
+  "rule-repo:data/catalogue.json": {
+   "action": "merge",
+   "note": "batch w3-rulerepo - _meta only (field_semantics, provenance_semantics, provenance_values, composition, key_issue_vocabulary, known_gaps, update_note). Entries were not read into content.",
+   "units": [
+    "ref-rule-record-schema",
+    "con-rule-provenance-model",
+    "ref-key-issue-vocabulary"
+   ]
+  },
+  "rule-repo:docs/adr/0002-principle-governed-ratification.md": {
+   "action": "create",
+   "note": "batch w3-rulerepo - ADR 0002 incl. first application figures and Amendment 1 (night-run grant + closure), kind: decision.",
+   "units": [
+    "prn-governed-ratification"
+   ]
+  },
+  "vault:README.md": {
+   "action": "exclude",
+   "reason": "mirror readme, not content",
+   "units": []
+  },
+  "vault:ai-related/AI Client Conventions (model & SDK).md": {
+   "action": "create",
+   "units": [
+    "ref-ai-client-conventions"
+   ],
+   "archived_note": {
+    "ref-ai-client-conventions": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:ai-related/AI Derive & Enhance Internals.md": {
+   "action": "create",
+   "units": [
+    "ref-ai-derive-and-enhance-internals"
+   ]
+  },
+  "vault:ai-related/AI Static-Validator Gate.md": {
+   "action": "create",
+   "units": [
+    "ref-ai-static-validator-gate"
+   ]
+  },
+  "vault:dq-methodology/Attribute Usage Analysis.md": {
+   "action": "create",
+   "units": [
+    "con-attribute-usage-analysis"
+   ]
+  },
+  "vault:dq-methodology/Catalog vs Bespoke Rules.md": {
+   "action": "create",
+   "units": [
+    "con-catalog-vs-bespoke-rules"
+   ]
+  },
+  "vault:dq-methodology/Cleanse Action Categorization.md": {
+   "action": "create",
+   "units": [
+    "con-cleanse-action-categorization"
+   ]
+  },
+  "vault:dq-methodology/ClientRef Convention.md": {
+   "action": "create",
+   "units": [
+    "std-clientref-convention"
+   ]
+  },
+  "vault:dq-methodology/DQ Dimensions.md": {
+   "action": "merge",
+   "units": [
+    "con-dq-dimensions",
+    "gls-accuracy",
+    "gls-completeness",
+    "gls-conformity",
+    "gls-consistency",
+    "gls-integrity",
+    "gls-timeliness",
+    "gls-uniqueness"
+   ],
+   "note": "con-dq-dimensions seeded 2026-08-20; the seven per-dimension glossary units split out 2026-08-21 so each dimension is its own linkable term (one definition, SQL testability, worked SAP example). Seven-dimension model per CONFLICT-001."
+  },
+  "vault:dq-methodology/Data Architecture Layers.md": {
+   "action": "create",
+   "units": [
+    "con-data-architecture-layers"
+   ]
+  },
+  "vault:dq-methodology/Deletion Flags vs Status Fields.md": {
+   "action": "create",
+   "units": [
+    "con-deletion-flags-vs-status-fields"
+   ]
+  },
+  "vault:dq-methodology/Filter Presets.md": {
+   "action": "create",
+   "units": [
+    "con-filter-presets"
+   ]
+  },
+  "vault:dq-methodology/Multi-Implementation Model.md": {
+   "action": "create",
+   "units": [
+    "con-multi-implementation-model"
+   ]
+  },
+  "vault:dq-methodology/Output Field Sections.md": {
+   "action": "create",
+   "units": [
+    "std-output-field-sections"
+   ]
+  },
+  "vault:dq-methodology/Profiling Concepts.md": {
+   "action": "create",
+   "units": [
+    "con-profiling-concepts"
+   ]
+  },
+  "vault:dq-methodology/Rule Types — Error, Info, Profiling.md": {
+   "action": "create",
+   "units": [
+    "con-rule-types"
+   ]
+  },
+  "vault:dq-methodology/Rule-Name Heuristics (the 19, enumerated).md": {
+   "action": "create",
+   "units": [
+    "std-rule-name-heuristics"
+   ]
+  },
+  "vault:dq-methodology/SKP_RULE Identifier Convention.md": {
+   "action": "create",
+   "units": [
+    "std-skp-rule-identifier-convention"
+   ]
+  },
+  "vault:dq-methodology/System Aliases Map.md": {
+   "action": "create",
+   "units": [
+    "ref-system-aliases-map"
+   ]
+  },
+  "vault:dq-methodology/Time-Based Filters.md": {
+   "action": "create",
+   "units": [
+    "con-time-based-filters"
+   ]
+  },
+  "vault:dq-methodology/View Naming Patterns.md": {
+   "action": "create",
+   "units": [
+    "std-view-naming-patterns"
+   ]
+  },
+  "vault:dq-methodology/View Types — OptSel RptSel InfSel PrfSel PrfSum.md": {
+   "action": "create",
+   "units": [
+    "con-view-types"
+   ]
+  },
+  "vault:dq-methodology/zConcatenatedKey Convention.md": {
+   "action": "create",
+   "units": [
+    "std-zconcatenatedkey-convention"
+   ]
+  },
+  "vault:dq-methodology/zIsErrorFlag Convention.md": {
+   "action": "create",
+   "units": [
+    "std-ziserrorflag-convention"
+   ]
+  },
+  "vault:dq-methodology/zSourceSystemID Convention.md": {
+   "action": "create",
+   "units": [
+    "std-zsourcesystemid-convention"
+   ]
+  },
+  "vault:sap-knowledge/Building a Per-Client DD%25 Dictionary.md": {
+   "action": "create",
+   "units": [
+    "ref-building-a-per-client-dd-dictionary"
+   ]
+  },
+  "vault:sap-knowledge/Deletion Flag Resolver (3-tier).md": {
+   "action": "create",
+   "units": [
+    "ref-deletion-flag-resolver"
+   ]
+  },
+  "vault:sap-knowledge/ECC vs S-4HANA.md": {
+   "action": "create",
+   "units": [
+    "ref-ecc-vs-s-4hana"
+   ]
+  },
+  "vault:sap-knowledge/SAP Baseline Model (logical vs physical).md": {
+   "action": "create",
+   "units": [
+    "ref-sap-baseline-model"
+   ]
+  },
+  "vault:sap-knowledge/SAP Business Processes — O2C, P2P, R2R.md": {
+   "action": "create",
+   "units": [
+    "ref-sap-business-processes"
+   ]
+  },
+  "vault:sap-knowledge/SAP DD%25 Dictionary Tables.md": {
+   "action": "create",
+   "units": [
+    "ref-sap-dd-dictionary-tables"
+   ]
+  },
+  "vault:sap-knowledge/SAP Data Domains.md": {
+   "action": "create",
+   "units": [
+    "ref-sap-data-domains"
+   ]
+  },
+  "vault:sap-knowledge/SAP Deletion Flags vs Status Fields.md": {
+   "action": "create",
+   "units": [
+    "ref-sap-deletion-flags-vs-status-fields"
+   ]
+  },
+  "vault:sap-knowledge/SAP Key Fields and Critical Data Elements.md": {
+   "action": "create",
+   "units": [
+    "ref-sap-key-fields-and-critical-data-elements"
+   ]
+  },
+  "vault:sap-knowledge/SAP Metadata Validators (Pillars A & B).md": {
+   "action": "create",
+   "units": [
+    "ref-sap-metadata-validators"
+   ],
+   "archived_note": {
+    "ref-sap-metadata-validators": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:sap-knowledge/SAP Modules — FI, CO, MM, SD, PP, QM, PM.md": {
+   "action": "create",
+   "units": [
+    "ref-sap-modules"
+   ]
+  },
+  "vault:sap-knowledge/SAP Table Families.md": {
+   "action": "create",
+   "units": [
+    "ref-sap-table-families"
+   ]
+  },
+  "vault:sap-knowledge/Schema Ingestion (DDL-DBML-CSV).md": {
+   "action": "create",
+   "units": [
+    "ref-schema-ingestion"
+   ],
+   "archived_note": {
+    "ref-schema-ingestion": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:sap-knowledge/Table Validator & Autocomplete.md": {
+   "action": "create",
+   "units": [
+    "ref-table-validator-and-autocomplete"
+   ],
+   "archived_note": {
+    "ref-table-validator-and-autocomplete": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:sap-knowledge/Value-Description Resolution (4 mechanisms).md": {
+   "action": "create",
+   "units": [
+    "ref-value-description-resolution"
+   ]
+  },
+  "vault:sops/SOP — Audit Rule Quality.md": {
+   "action": "create",
+   "units": [
+    "prc-audit-rule-quality"
+   ]
+  },
+  "vault:sops/SOP — Derive a DQ Rule.md": {
+   "action": "create",
+   "units": [
+    "prc-derive-a-dq-rule"
+   ]
+  },
+  "vault:sops/SOP — Fan Out a Rule Per System.md": {
+   "action": "create",
+   "units": [
+    "prc-fan-out-a-rule-per-system"
+   ]
+  },
+  "vault:sops/SOP — Format an Implication.md": {
+   "action": "create",
+   "units": [
+    "prc-format-an-implication"
+   ]
+  },
+  "vault:sops/SOP — Generate a Profile Bundle.md": {
+   "action": "create",
+   "units": [
+    "prc-generate-a-profile-bundle"
+   ]
+  },
+  "vault:sops/SOP — Generate the SKP AssetUpload.md": {
+   "action": "create",
+   "units": [
+    "prc-generate-the-skp-assetupload"
+   ]
+  },
+  "vault:sops/SOP — Ingest a Client DD%25 Dictionary.md": {
+   "action": "create",
+   "units": [
+    "prc-ingest-a-client-dd-dictionary"
+   ]
+  },
+  "vault:sops/SOP — Run an Attribute Usage Analysis.md": {
+   "action": "create",
+   "units": [
+    "prc-run-an-attribute-usage-analysis"
+   ]
+  },
+  "vault:sops/SOP — Run the Bulk Pipeline.md": {
+   "action": "create",
+   "units": [
+    "prc-run-the-bulk-pipeline"
+   ]
+  },
+  "vault:sops/SOP — Sync Code Between Two Computers.md": {
+   "action": "exclude",
+   "reason": "personal estate ops, not DQ methodology",
+   "units": []
+  },
+  "vault:sops/SOP — Vault Cleanup and Maintenance.md": {
+   "action": "exclude",
+   "reason": "personal vault ops, not DQ methodology",
+   "units": []
+  },
+  "vault:sops/SOP — Write a Quality Rule Name.md": {
+   "action": "create",
+   "units": [
+    "prc-write-a-quality-rule-name"
+   ]
+  },
+  "vault:studio-architecture/Studio — Architecture Context & Project YAMLs.md": {
+   "action": "create",
+   "units": [
+    "ref-architecture-context-and-project-yamls"
+   ],
+   "archived_note": {
+    "ref-architecture-context-and-project-yamls": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Attribute Usage Analysis (engine).md": {
+   "action": "create",
+   "units": [
+    "ref-attribute-usage-analysis"
+   ],
+   "archived_note": {
+    "ref-attribute-usage-analysis": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Audit Engine (runtime + cross-rule).md": {
+   "action": "create",
+   "units": [
+    "ref-audit-engine"
+   ],
+   "archived_note": {
+    "ref-audit-engine": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Bulk Pipeline (page).md": {
+   "action": "create",
+   "units": [
+    "ref-bulk-pipeline"
+   ]
+  },
+  "vault:studio-architecture/Studio — Bulk Processor & DQOps ID Invariants.md": {
+   "action": "create",
+   "units": [
+    "ref-bulk-processor-and-dqops-id-invariants"
+   ],
+   "archived_note": {
+    "ref-bulk-processor-and-dqops-id-invariants": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Catalog Deriver.md": {
+   "action": "create",
+   "units": [
+    "ref-catalog-deriver"
+   ],
+   "archived_note": {
+    "ref-catalog-deriver": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Catalog Promotion (wrap not inject).md": {
+   "action": "create",
+   "units": [
+    "ref-catalog-promotion"
+   ],
+   "archived_note": {
+    "ref-catalog-promotion": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Config Editor.md": {
+   "action": "create",
+   "units": [
+    "ref-config-editor"
+   ]
+  },
+  "vault:studio-architecture/Studio — DQRuleSpec Data Model.md": {
+   "action": "create",
+   "units": [
+    "ref-dqrulespec-data-model"
+   ],
+   "archived_note": {
+    "ref-dqrulespec-data-model": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Deletion Flag Normalization in SQL Gen.md": {
+   "action": "create",
+   "units": [
+    "ref-deletion-flag-normalization-in-sql-gen"
+   ],
+   "archived_note": {
+    "ref-deletion-flag-normalization-in-sql-gen": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Exporters (Tracker-Deploy-Audit-Dashboard).md": {
+   "action": "create",
+   "units": [
+    "ref-exporters"
+   ]
+  },
+  "vault:studio-architecture/Studio — Field Matching (longest-key-wins).md": {
+   "action": "create",
+   "units": [
+    "ref-field-matching"
+   ],
+   "archived_note": {
+    "ref-field-matching": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Home Page.md": {
+   "action": "create",
+   "units": [
+    "ref-home-page"
+   ]
+  },
+  "vault:studio-architecture/Studio — Knowledge Base File Inventory.md": {
+   "action": "create",
+   "units": [
+    "ref-knowledge-base-file-inventory"
+   ],
+   "archived_note": {
+    "ref-knowledge-base-file-inventory": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Layer-2-Layer-4 Datastore Views.md": {
+   "action": "create",
+   "units": [
+    "ref-layer-2-layer-4-datastore-views"
+   ],
+   "archived_note": {
+    "ref-layer-2-layer-4-datastore-views": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Local Deriver.md": {
+   "action": "create",
+   "units": [
+    "ref-local-deriver"
+   ]
+  },
+  "vault:studio-architecture/Studio — Logic Builder Templates.md": {
+   "action": "create",
+   "units": [
+    "ref-logic-builder-templates"
+   ],
+   "archived_note": {
+    "ref-logic-builder-templates": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Logic-CASE Predicate Templates.md": {
+   "action": "create",
+   "units": [
+    "ref-logic-case-predicate-templates"
+   ],
+   "archived_note": {
+    "ref-logic-case-predicate-templates": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Markdown Exporter & Round-Trip Contract.md": {
+   "action": "create",
+   "units": [
+    "ref-markdown-exporter-and-round-trip-contract"
+   ],
+   "archived_note": {
+    "ref-markdown-exporter-and-round-trip-contract": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Multi-Impl Fan-out Engine.md": {
+   "action": "create",
+   "units": [
+    "ref-multi-impl-fan-out-engine"
+   ],
+   "archived_note": {
+    "ref-multi-impl-fan-out-engine": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — No Silent Material Fallback (unknown domain).md": {
+   "action": "create",
+   "units": [
+    "ref-no-silent-material-fallback"
+   ],
+   "archived_note": {
+    "ref-no-silent-material-fallback": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Output Section Builders.md": {
+   "action": "create",
+   "units": [
+    "ref-output-section-builders"
+   ],
+   "archived_note": {
+    "ref-output-section-builders": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Ports, Install & Versioning.md": {
+   "action": "create",
+   "units": [
+    "ref-ports-install-and-versioning"
+   ],
+   "archived_note": {
+    "ref-ports-install-and-versioning": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Profiler & Audit Pages.md": {
+   "action": "create",
+   "units": [
+    "ref-profiler-and-audit-pages"
+   ]
+  },
+  "vault:studio-architecture/Studio — Profiling Metrics & Divergence Signals.md": {
+   "action": "create",
+   "units": [
+    "ref-profiling-metrics-and-divergence-signals"
+   ],
+   "archived_note": {
+    "ref-profiling-metrics-and-divergence-signals": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Profiling View Generation (PrfSel-PrfSum).md": {
+   "action": "create",
+   "units": [
+    "ref-profiling-view-generation"
+   ],
+   "archived_note": {
+    "ref-profiling-view-generation": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Repo Workflow & CI.md": {
+   "action": "create",
+   "units": [
+    "ref-repo-workflow-and-ci"
+   ],
+   "archived_note": {
+    "ref-repo-workflow-and-ci": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Rule Catalog Structure.md": {
+   "action": "create",
+   "units": [
+    "ref-rule-catalog-structure"
+   ],
+   "archived_note": {
+    "ref-rule-catalog-structure": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Rule-Name Scorer (engine).md": {
+   "action": "create",
+   "units": [
+    "ref-rule-name-scorer"
+   ],
+   "archived_note": {
+    "ref-rule-name-scorer": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Rule-Type Detection (business categories).md": {
+   "action": "create",
+   "units": [
+    "ref-rule-type-detection"
+   ],
+   "archived_note": {
+    "ref-rule-type-detection": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — SKP AssetUpload & Tracker Flow.md": {
+   "action": "create",
+   "units": [
+    "ref-skp-assetupload-and-tracker-flow"
+   ]
+  },
+  "vault:studio-architecture/Studio — SQL Comment & Formatting Standard (as implemented).md": {
+   "action": "create",
+   "units": [
+    "ref-sql-comment-and-formatting-standard"
+   ],
+   "archived_note": {
+    "ref-sql-comment-and-formatting-standard": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — SQL Generator (OptSel-RptSel skeleton).md": {
+   "action": "create",
+   "units": [
+    "ref-sql-generator"
+   ],
+   "archived_note": {
+    "ref-sql-generator": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — SQL Parser (reverse-engineer specs).md": {
+   "action": "create",
+   "units": [
+    "ref-sql-parser"
+   ],
+   "archived_note": {
+    "ref-sql-parser": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — SQL Validator (static checks).md": {
+   "action": "create",
+   "units": [
+    "ref-sql-validator"
+   ],
+   "archived_note": {
+    "ref-sql-validator": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Schema Profiler (engine).md": {
+   "action": "create",
+   "units": [
+    "ref-schema-profiler"
+   ],
+   "archived_note": {
+    "ref-schema-profiler": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Single Rule Designer.md": {
+   "action": "create",
+   "units": [
+    "ref-single-rule-designer"
+   ]
+  },
+  "vault:studio-architecture/Studio — Table Extraction & Complexity Scoring.md": {
+   "action": "create",
+   "units": [
+    "ref-table-extraction-and-complexity-scoring"
+   ],
+   "archived_note": {
+    "ref-table-extraction-and-complexity-scoring": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Target MDM Model Fit.md": {
+   "action": "create",
+   "units": [
+    "ref-target-mdm-model-fit"
+   ],
+   "archived_note": {
+    "ref-target-mdm-model-fit": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Three-Database Architecture (resolution).md": {
+   "action": "create",
+   "units": [
+    "ref-three-database-architecture"
+   ],
+   "archived_note": {
+    "ref-three-database-architecture": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — Three-Repo Ecosystem.md": {
+   "action": "create",
+   "units": [
+    "ref-three-repo-ecosystem"
+   ],
+   "archived_note": {
+    "ref-three-repo-ecosystem": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — View Name Token Resolution.md": {
+   "action": "create",
+   "units": [
+    "ref-view-name-token-resolution"
+   ],
+   "archived_note": {
+    "ref-view-name-token-resolution": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — View vs Table Qualification.md": {
+   "action": "create",
+   "units": [
+    "ref-view-vs-table-qualification"
+   ],
+   "archived_note": {
+    "ref-view-vs-table-qualification": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — generate_sql Dispatcher.md": {
+   "action": "create",
+   "units": [
+    "ref-generate-sql-dispatcher"
+   ],
+   "archived_note": {
+    "ref-generate-sql-dispatcher": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — zConcatenatedKey & zIsErrorFlag SQL Emission.md": {
+   "action": "create",
+   "units": [
+    "ref-zconcatenatedkey-and-ziserrorflag-sql-emission"
+   ],
+   "archived_note": {
+    "ref-zconcatenatedkey-and-ziserrorflag-sql-emission": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:studio-architecture/Studio — {datastore} Substitution & ERP-Compat Check.md": {
+   "action": "create",
+   "units": [
+    "ref-datastore-substitution-and-erp-compat-check"
+   ],
+   "archived_note": {
+    "ref-datastore-substitution-and-erp-compat-check": "archived to dev-corpus 2026-08-21 (app-internal)"
+   }
+  },
+  "vault:syniti-platform/Get Table Last Refresh Date (DPaaS).md": {
+   "action": "create",
+   "units": [
+    "ref-get-table-last-refresh-date"
+   ]
+  },
+  "vault:templates/AUA Spec Template.md": {
+   "action": "create",
+   "units": [
+    "std-aua-spec-template"
+   ]
+  },
+  "vault:templates/Implication Template.md": {
+   "action": "create",
+   "units": [
+    "std-implication-template"
+   ]
+  },
+  "vault:templates/OptSel SELECT Structure.md": {
+   "action": "create",
+   "units": [
+    "std-optsel-select-structure"
+   ]
+  },
+  "vault:templates/Rule Description Template — Error and Info.md": {
+   "action": "create",
+   "units": [
+    "std-rule-description-template"
+   ]
+  },
+  "vault:templates/Rule Description Template — Profiling.md": {
+   "action": "create",
+   "units": [
+    "std-rule-description-template-profiling"
+   ]
+  },
+  "vault:templates/SQL Comment Standards.md": {
+   "action": "create",
+   "units": [
+    "std-sql-comment-standards"
+   ]
+  },
+  "vault:thought-leadership/3-Tier Description Resolution.md": {
+   "action": "create",
+   "units": [
+    "prn-3-tier-description-resolution"
+   ]
+  },
+  "vault:thought-leadership/Why Catalog Promotion Wraps Instead of Injecting.md": {
+   "action": "create",
+   "units": [
+    "prn-catalog-promotion-wraps-instead-of-injecting"
+   ]
+  },
+  "vault:thought-leadership/Why Deletion Flags Belong in WHERE.md": {
+   "action": "create",
+   "units": [
+    "prn-deletion-flags-belong-in-where"
+   ]
+  },
+  "vault:thought-leadership/Why Fetch-Check-Return.md": {
+   "action": "create",
+   "units": [
+    "prn-fetch-check-return"
+   ]
+  },
+  "vault:thought-leadership/Why No Silent Domain Fallback.md": {
+   "action": "create",
+   "units": [
+    "prn-no-silent-domain-fallback"
+   ]
+  },
+  "vault:thought-leadership/Why OptSel is the Universe and RptSel is the Wrapper.md": {
+   "action": "merge",
+   "units": [
+    "prn-optsel-is-the-universe"
+   ]
+  },
+  "vault:thought-leadership/Why Profiling Has No Pass-Fail.md": {
+   "action": "create",
+   "units": [
+    "prn-profiling-has-no-pass-fail"
+   ]
+  },
+  "vault:thought-leadership/Why SQL Comments Must Match Local-Derive Quality.md": {
+   "action": "create",
+   "units": [
+    "prn-sql-comments-must-match-local-derive-quality"
+   ]
+  },
+  "vault:thought-leadership/Why zIsErrorFlag is Integer.md": {
+   "action": "create",
+   "units": [
+    "prn-ziserrorflag-is-integer"
+   ]
+  }
+ },
+ "seeded": "2026-08-20",
+ "source_commits": {
+  "bob-dq": "bffce64be5698df6c5f28bb2c1219a9c1f80f543",
+  "cleanse-canvas": "b4b531a5e1cb5ad9bf37670a6998f0aff0534796",
+  "dq-studio": "c6d6f9dc47ae3a06c4400318c3b4b112b7d52b4c",
+  "rule-repo": "c279ad3adf8b74f42ad342254200c0cec371f432",
+  "vault (estate-hub)": "8bdde84dfd7acce29f2c176d8a00aea827450d1a"
+ }
+}

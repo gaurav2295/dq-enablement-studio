@@ -1,0 +1,38 @@
+{
+  "schema": "em-changeset/1",
+  "exported_at": "2026-08-24T13:56:42.307Z",
+  "author": "deprecate_dq_enablement_studio3",
+  "app_build": "2026-08-21-bc2ce4e3",
+  "ops": [
+    {
+      "op": "note",
+      "unit_id": "gls-governed-vocabulary",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-band",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-readiness-risk",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-coverage",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    },
+    {
+      "op": "note",
+      "unit_id": "gls-name-source",
+      "anchor": "deprecate",
+      "text": "deprecate"
+    }
+  ]
+}

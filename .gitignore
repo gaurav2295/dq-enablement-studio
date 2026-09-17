@@ -1,0 +1,19 @@
+# dq-enablement-studio — build/ is SOURCE (build.py, template.html) and dist/ is COMMITTED
+# on purpose (consultants open dist/enablement-master.html from a file share without Python).
+# Do not re-add dist/ or build/ here.
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+*.bak
+*.backup
+
+# Python runtime artifacts
+__pycache__/
+*.pyc
+
+# Logs
+*.log

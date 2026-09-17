@@ -1,0 +1,78 @@
+{
+  "schema": "em-changeset/1",
+  "exported_at": "2026-08-28T04:17:41.347Z",
+  "author": "SQL fundamentals_27_08_2026",
+  "app_build": "2026-08-21-53e4ac4d",
+  "ops": [
+    {
+      "op": "question",
+      "unit_id": "con-dq-lifecycle",
+      "text": "What is the difference between profiling and rule execution? Aren't both activities looking for data issues?"
+    },
+    {
+      "op": "question",
+      "unit_id": "con-dq-lifecycle",
+      "text": "How do we determine that data is fit for purpose? Is it based on all rules passing, a quality score threshold, or business sign-off?"
+    },
+    {
+      "op": "note",
+      "unit_id": "con-dq-lifecycle",
+      "anchor": "Cycle detail",
+      "text": "We could consider adding a simple example that follows the entire lifecycle."
+    },
+    {
+      "op": "note",
+      "unit_id": "con-rule-types",
+      "anchor": null,
+      "text": "Could we briefly define OptSel, RptSel, PrfSel, PrfSum, and zIsErrorFlag for first-time readers?"
+    },
+    {
+      "op": "note",
+      "unit_id": "prn-fetch-check-return",
+      "anchor": "The problem we tried to solve",
+      "text": "The numbering for all the points is the same( 1.)"
+    },
+    {
+      "op": "note",
+      "unit_id": "con-rule-types",
+      "anchor": "Error",
+      "text": "Could we elaborate on what is meant by \"scope\" or \"universe\" in the context of a rule?"
+    },
+    {
+      "op": "note",
+      "unit_id": "prn-fetch-check-return",
+      "anchor": "Why <br /> line breaks",
+      "text": "'Why <br /> line breaks' seems out of place in between 'Why Fetch-Check-Return'"
+    },
+    {
+      "op": "note",
+      "unit_id": "prn-fetch-check-return",
+      "anchor": "Why three explicit bullets",
+      "text": "Could we expand slightly on how Fetch isolates data acquisition, Check isolates the defect condition, and Return isolates the business impact, with a simple example?"
+    },
+    {
+      "op": "note",
+      "unit_id": "prn-fetch-check-return",
+      "anchor": "The downstream payoffs",
+      "text": "Could terms like Spec Markdown, AssetUpload, Audit Screen, and Parity Comparison be briefly explained?"
+    },
+    {
+      "op": "note",
+      "unit_id": "con-view-types",
+      "anchor": null,
+      "text": "Could we add a simple example showing the difference between PrfSel and PrfSum? As a new learner, it's hard to visualize the output from the SQL alone."
+    },
+    {
+      "op": "note",
+      "unit_id": "con-view-types",
+      "anchor": null,
+      "text": "Can we reconsider the placement of this module as terms OptSel, RptSel, InfSel, PrfSel, PrfSum are being introduced in 'Rule Types — Error, Info, Profiling' but are being explained here"
+    },
+    {
+      "op": "note",
+      "unit_id": "prn-optsel-is-the-universe",
+      "anchor": "Resisting Drift",
+      "text": "Could the \"Resisting drift\" section include a short introduction?"
+    }
+  ]
+}
