@@ -1,0 +1,77 @@
+# DQ Enablement Studio - Code Owners
+# This file defines who reviews and approves changes to different parts of the codebase
+# GitHub automatically requests reviews from these owners when PRs touch their areas
+
+# =============================================================================
+# Default Owners (entire repository)
+# =============================================================================
+* @gaurav2295
+
+# =============================================================================
+# Documentation
+# =============================================================================
+/docs/ @gaurav2295
+/README.md @gaurav2295
+/*.md @gaurav2295
+
+# =============================================================================
+# Taxonomy & Data Models
+# =============================================================================
+/taxonomy/ @gaurav2295
+/taxonomy/taxonomy.json @gaurav2295
+/taxonomy/assessments.json @gaurav2295
+/taxonomy/paths.json @gaurav2295
+/taxonomy/seed-map.json @gaurav2295
+
+# =============================================================================
+# Configuration Files
+# =============================================================================
+/.github/ @gaurav2295
+/.github/workflows/ @gaurav2295
+/.github/CODEOWNERS @gaurav2295
+/package.json @gaurav2295
+/package-lock.json @gaurav2295
+/tsconfig.json @gaurav2295
+/.gitignore @gaurav2295
+
+# =============================================================================
+# CI/CD & Automation
+# =============================================================================
+/.github/workflows/*.yml @gaurav2295
+/scripts/ @gaurav2295
+
+# =============================================================================
+# Source Code
+# =============================================================================
+/src/ @gaurav2295
+
+# =============================================================================
+# Tests
+# =============================================================================
+/tests/ @gaurav2295
+/test/ @gaurav2295
+*.test.js @gaurav2295
+*.test.ts @gaurav2295
+*.spec.js @gaurav2295
+*.spec.ts @gaurav2295
+
+# =============================================================================
+# Build Artifacts (informational - not reviewable)
+# =============================================================================
+/dist/ @gaurav2295
+/build/ @gaurav2295
+/node_modules/ @gaurav2295
+
+# =============================================================================
+# Security & Compliance
+# =============================================================================
+/security/ @gaurav2295
+/compliance/ @gaurav2295
+.env* @gaurav2295
+secrets.* @gaurav2295
+
+# =============================================================================
+# License & Legal
+# =============================================================================
+/LICENSE @gaurav2295
+/NOTICE @gaurav2295
